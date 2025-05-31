@@ -371,54 +371,76 @@
             padding: 20px;
         }
         
-        .sets-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-        
-        .set-card {
+        .dev-notification {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             background-color: var(--card-bg);
+            padding: 30px;
             border-radius: 10px;
-            padding: 15px;
-            border: 1px solid var(--border);
+            border: 1px solid var(--accent-gold);
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+            z-index: 1001;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            animation: fadeInUp 0.5s ease-out;
         }
         
-        .set-title {
-            font-size: 20px;
+        .dev-notification h2 {
             color: var(--accent-gold);
-            margin-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 24px;
         }
         
-        .set-items {
+        .dev-notification p {
+            color: var(--text-white);
+            line-height: 1.6;
+            margin-bottom: 25px;
+            font-size: 16px;
+        }
+        
+        .dev-notification-buttons {
             display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 15px;
+            justify-content: center;
+            gap: 15px;
         }
         
-        .set-item {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 8px 12px;
+        .dev-notification-btn {
+            padding: 10px 25px;
             border-radius: 5px;
-            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
         }
         
-        .set-button {
-            background: linear-gradient(to right, var(--accent-red), #ff5e5e);
+        .dev-notification-btn-primary {
+            background: var(--accent-red);
             color: white;
             border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
         }
         
-        .dev-notice {
-            text-align: center;
-            margin-top: 30px;
-            color: var(--text-gray);
-            font-style: italic;
+        .dev-notification-btn-secondary {
+            background: transparent;
+            color: var(--accent-gold);
+            border: 1px solid var(--accent-gold);
+        }
+        
+        .dev-notification-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -40%);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
         }
         
         @keyframes slideIn {
@@ -459,8 +481,12 @@
                 grid-template-columns: 1fr;
             }
             
-            .sets-container {
-                grid-template-columns: 1fr;
+            .dev-notification-buttons {
+                flex-direction: column;
+            }
+            
+            .dev-notification-btn {
+                width: 100%;
             }
         }
     </style>
@@ -541,63 +567,30 @@
 
         <!-- Страница сэтов -->
         <div class="sets-page" id="sets-page">
-            <h1 style="text-align: center; margin-bottom: 20px;">Сэты предметов</h1>
-            
-            <div class="sets-container">
-                <!-- Пример сета 1 -->
-                <div class="set-card">
-                    <h3 class="set-title">Базовый сет новичка</h3>
-                    <div class="set-items">
-                        <span class="set-item">Пистолет Glock</span>
-                        <span class="set-item">Бронежилет I</span>
-                        <span class="set-item">$50,000</span>
-                    </div>
-                    <button class="set-button">Собрать за 75,000$</button>
-                </div>
-                
-                <!-- Пример сета 2 -->
-                <div class="set-card">
-                    <h3 class="set-title">Средний сет</h3>
-                    <div class="set-items">
-                        <span class="set-item">AK-47</span>
-                        <span class="set-item">Бронежилет III</span>
-                        <span class="set-item">Шлем</span>
-                        <span class="set-item">$200,000</span>
-                    </div>
-                    <button class="set-button">Собрать за 300,000$</button>
-                </div>
-                
-                <!-- Пример сета 3 -->
-                <div class="set-card">
-                    <h3 class="set-title">Премиум сет</h3>
-                    <div class="set-items">
-                        <span class="set-item">Снайперская винтовка</span>
-                        <span class="set-item">Бронежилет V</span>
-                        <span class="set-item">Шлем с маской</span>
-                        <span class="set-item">$1,000,000</span>
-                    </div>
-                    <button class="set-button">Собрать за 1,500,000$</button>
-                </div>
-                
-                <!-- Пример сета 4 -->
-                <div class="set-card">
-                    <h3 class="set-title">Транспортный сет</h3>
-                    <div class="set-items">
-                        <span class="set-item">Спортивный автомобиль</span>
-                        <span class="set-item">Тюнинг пакет</span>
-                        <span class="set-item">$2,500,000</span>
-                    </div>
-                    <button class="set-button">Собрать за 3,000,000$</button>
-                </div>
-            </div>
-            
-            <p class="dev-notice">Система находится в разработке</p>
+            <!-- Контент будет заменен уведомлением -->
         </div>
     </div>
 
     <!-- Уведомление -->
     <div class="notification" id="notification">
         Недоступно, находится в разработке
+    </div>
+
+    <!-- Модальное окно для сэтов -->
+    <div class="dev-notification" id="sets-notification" style="display: none;">
+        <h2>Система сэтов в разработке</h2>
+        <p>
+            Совсем скоро вы сможете собирать здесь сеты из аксессуаров, примерять их на любом скине
+            и моментально получать информацию о суммарных характеристиках: уроне, защите и других параметрах.
+        </p>
+        <div class="dev-notification-buttons">
+            <button class="dev-notification-btn dev-notification-btn-primary" id="sets-notification-more">
+                Узнать больше
+            </button>
+            <button class="dev-notification-btn dev-notification-btn-secondary" id="sets-notification-back">
+                Назад в магазин
+            </button>
+        </div>
     </div>
 
     <div class="modal" id="item-modal">
@@ -615,14 +608,31 @@
             const mainPage = document.getElementById('main-page');
             const setsPage = document.getElementById('sets-page');
             const setsLink = document.getElementById('sets-link');
+            const setsNotification = document.getElementById('sets-notification');
+            const setsBackBtn = document.getElementById('sets-notification-back');
             
             // Обработчик для кнопки Сэты
             setsLink.addEventListener('click', function(e) {
                 e.preventDefault();
                 mainPage.style.display = 'none';
                 setsPage.style.display = 'block';
+                setsNotification.style.display = 'block';
+                document.body.style.overflow = 'hidden';
             });
             
+            // Обработчик для кнопки Назад
+            setsBackBtn.addEventListener('click', function() {
+                mainPage.style.display = 'block';
+                setsPage.style.display = 'none';
+                setsNotification.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            });
+            
+            // Обработчик для кнопки Узнать больше
+            document.getElementById('sets-notification-more').addEventListener('click', function() {
+                alert('Следите за обновлениями в нашем Discord! Функция будет доступна в ближайшее время.');
+            });
+
             // Обработчик для кнопки Личный кабинет
             document.getElementById('account-btn').addEventListener('click', function() {
                 const notification = document.getElementById('notification');
