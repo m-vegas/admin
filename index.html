@@ -495,13 +495,17 @@
                 .then(response => response.json())
                 .then(data => {
                     const itemsData = Object.entries(data.list).map(([name, item]) => {
+                        // Генерация случайного изображения из интернета
+                        const randomImageId = Math.floor(Math.random() * 1000);
+                        const imageUrl = `https://picsum.photos/400/300?random=${randomImageId}`;
+                        
                         return {
                             id: name,
                             name: name,
                             price: item.sa.price,
                             updated: item.sa.updated,
                             category: determineCategory(name),
-                            image: getImagePath(name)
+                            image: imageUrl
                         };
                     });
 
@@ -532,13 +536,6 @@
                     return 'weapon';
                 }
                 return 'other';
-            }
-
-            // Функция для получения пути к изображению
-            function getImagePath(name) {
-                // Создаем безопасное имя файла
-                const safeName = name.replace(/[^a-zA-Z0-9а-яА-Я]/g, '_') + '.jpg';
-                return 'img/' + safeName;
             }
 
             // Инициализация приложения
