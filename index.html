@@ -273,7 +273,7 @@
         
         .modal-stats {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(2, 1fr));
             gap: 15px;
             margin-bottom: 20px;
         }
@@ -594,8 +594,48 @@
                     });
                     pagination.appendChild(prevBtn);
                     
-                    // Номера страниц
-                    for (let i = 1; i <= totalPages; i++) {
+                    // Номера страниц (максимум 5)
+                    const maxVisiblePages = 5;
+                    let startPage, endPage;
+                    
+                    if (totalPages <= maxVisiblePages) {
+                        startPage = 1;
+                        endPage = totalPages;
+                    } else {
+                        const half = Math.floor(maxVisiblePages / 2);
+                        if (currentPage <= half + 1) {
+                            startPage = 1;
+                            endPage = maxVisiblePages;
+                        } else if (currentPage >= totalPages - half) {
+                            startPage = totalPages - maxVisiblePages + 1;
+                            endPage = totalPages;
+                        } else {
+                            startPage = currentPage - half;
+                            endPage = currentPage + half;
+                        }
+                    }
+                    
+                    // Показать первую страницу, если не видна
+                    if (startPage > 1) {
+                        const firstPageBtn = document.createElement('button');
+                        firstPageBtn.textContent = '1';
+                        firstPageBtn.addEventListener('click', () => {
+                            currentPage = 1;
+                            renderItems();
+                            renderPagination();
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                        });
+                        pagination.appendChild(firstPageBtn);
+                        
+                        if (startPage > 2) {
+                            const ellipsis = document.createElement('span');
+                            ellipsis.textContent = '...';
+                            pagination.appendChild(ellipsis);
+                        }
+                    }
+                    
+                    // Основные кнопки страниц
+                    for (let i = startPage; i <= endPage; i++) {
                         const pageBtn = document.createElement('button');
                         pageBtn.textContent = i;
                         pageBtn.className = i === currentPage ? 'active' : '';
@@ -606,6 +646,25 @@
                             window.scrollTo({ top: 0, behavior: 'smooth' });
                         });
                         pagination.appendChild(pageBtn);
+                    }
+                    
+                    // Показать последнюю страницу, если не видна
+                    if (endPage < totalPages) {
+                        if (endPage < totalPages - 1) {
+                            const ellipsis = document.createElement('span');
+                            ellipsis.textContent = '...';
+                            pagination.appendChild(ellipsis);
+                        }
+                        
+                        const lastPageBtn = document.createElement('button');
+                        lastPageBtn.textContent = totalPages;
+                        lastPageBtn.addEventListener('click', () => {
+                            currentPage = totalPages;
+                            renderItems();
+                            renderPagination();
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                        });
+                        pagination.appendChild(lastPageBtn);
                     }
                     
                     // Кнопка "Вперед"
