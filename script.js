@@ -281,7 +281,7 @@ function openAccessoryModal(slotName) {
                 newImg.dataset.yellow = JSON.stringify(acc.yellow);
                 
                 // Добавляем в слот
-                gridItem.appendChild(newImg);
+                gridItem.prepend(newImg);
                 
                 // Обновляем статистики
                 updateStats();
@@ -297,31 +297,6 @@ function openAccessoryModal(slotName) {
     document.getElementById('modalOverlay').style.display = 'flex';
 }
 
-// Функция для обработки кликов по кнопкам +/-
-function handleZatochkaButtons(e) {
-    // Обработка кнопки "+"
-    if (e.target.classList.contains('plus')) {
-        e.stopPropagation();
-        const span = e.target.closest('.grid-text').querySelector('.zatochka-value');
-        let value = parseInt(span.textContent.replace('+', '')) || 0;
-        if (value < 14) {
-            span.textContent = '+' + (value + 1);
-            updateStats();
-        }
-    }
-    
-    // Обработка кнопки "-"
-    if (e.target.classList.contains('minus')) {
-        e.stopPropagation();
-        const span = e.target.closest('.grid-text').querySelector('.zatochka-value');
-        let value = parseInt(span.textContent.replace('+', '')) || 0;
-        if (value > 0) {
-            span.textContent = '+' + (value - 1);
-            updateStats();
-        }
-    }
-}
-
 // Инициализация при загрузке страницы
 document.addEventListener('DOMContentLoaded', function() {
     // Обработчики для мини-контейнеров (открытие модального окна)
@@ -333,7 +308,33 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Обработчики для кнопок +/- (делегирование событий)
-    document.addEventListener('click', handleZatochkaButtons);
+    document.addEventListener('click', function(e) {
+        // Обработка кнопки "+"
+        if (e.target.classList.contains('plus')) {
+            e.stopPropagation();
+            const zatochkaValue = e.target.closest('.grid-item').querySelector('.zatochka-value');
+            if (zatochkaValue) {
+                let value = parseInt(zatochkaValue.textContent.replace('+', '')) || 0;
+                if (value < 14) {
+                    zatochkaValue.textContent = '+' + (value + 1);
+                    updateStats();
+                }
+            }
+        }
+        
+        // Обработка кнопки "-"
+        if (e.target.classList.contains('minus')) {
+            e.stopPropagation();
+            const zatochkaValue = e.target.closest('.grid-item').querySelector('.zatochka-value');
+            if (zatochkaValue) {
+                let value = parseInt(zatochkaValue.textContent.replace('+', '')) || 0;
+                if (value > 0) {
+                    zatochkaValue.textContent = '+' + (value - 1);
+                    updateStats();
+                }
+            }
+        }
+    });
 
     // Обработчики для нашивок (делегирование событий)
     document.addEventListener('click', function(e) {
