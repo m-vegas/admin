@@ -13,7 +13,6 @@
             --text-white: #ffffff;
             --text-gray: #aaaaaa;
             --border: rgba(255,255,255,0.1);
-            --success-green: #2ecc71;
         }
         
         * {
@@ -62,15 +61,11 @@
             color: var(--text-white);
             text-decoration: none;
             font-weight: bold;
-            transition: all 0.2s;
-            padding: 5px 10px;
-            border-radius: 5px;
+            transition: color 0.2s;
         }
         
         .discord-link:hover, .market-link:hover, .sets-link:hover {
             color: var(--accent-red);
-            background-color: rgba(255,255,255,0.05);
-            transform: translateY(-2px);
         }
         
         .discord-icon {
@@ -86,7 +81,7 @@
         }
         
         .account-btn {
-            background: rgba(255,255,255,0.1);
+            background: none;
             border: none;
             color: var(--text-white);
             cursor: pointer;
@@ -94,15 +89,10 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            padding: 8px 15px;
-            border-radius: 5px;
-            transition: all 0.2s;
         }
         
         .account-btn:hover {
             color: var(--accent-gold);
-            background: rgba(255,204,0,0.1);
-            transform: translateY(-2px);
         }
         
         header {
@@ -130,7 +120,6 @@
             background: linear-gradient(to right, var(--accent-red), var(--accent-gold));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 10px rgba(255, 46, 46, 0.3);
         }
 
         /* Стили для системы сетов */
@@ -153,88 +142,27 @@
             flex-direction: column;
         }
 
-        .character-container {
-            display: flex;
-            flex-direction: column;
+        .character {
+            position: relative;
             margin-bottom: 20px;
             border: 1px solid var(--border);
             border-radius: 10px;
             padding: 15px;
             background-color: var(--card-bg);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            transition: all 0.3s ease;
-        }
-
-        .character-container:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
-        }
-
-        .character-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .character-header h2 {
-            font-size: 1.2rem;
-            color: var(--accent-gold);
-        }
-
-        .select-character-btn {
-            background-color: var(--accent-red);
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .select-character-btn:hover {
-            background-color: #ff1a1a;
-            transform: translateY(-2px);
-        }
-
-        .character-display {
-            display: flex;
-            gap: 20px;
-        }
-
-        .character-image-container {
-            flex: 1;
-            min-height: 300px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: rgba(0,0,0,0.2);
-            border-radius: 5px;
-            overflow: hidden;
         }
 
         #character-image {
-            max-width: 100%;
+            width: 100%;
             max-height: 300px;
             object-fit: contain;
-            transition: all 0.3s ease;
-        }
-
-        .character-stats {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
         }
 
         .info {
+            margin-top: 15px;
             padding: 10px;
             background-color: rgba(0,0,0,0.3);
             border-radius: 5px;
             border: 1px solid var(--border);
-            font-size: 0.9rem;
         }
 
         .highlight {
@@ -264,23 +192,11 @@
             padding: 10px;
             cursor: pointer;
             transition: all 0.2s;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-            overflow: hidden;
         }
 
         .grid-item:hover {
             border-color: var(--accent-gold);
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(255, 204, 0, 0.2);
-        }
-
-        .grid-item::before {
-            content: attr(ru-name);
-            position: absolute;
-            top: 5px;
-            left: 5px;
-            font-size: 0.7rem;
-            color: var(--text-gray);
+            transform: translateY(-3px);
         }
 
         .grid-text {
@@ -288,17 +204,12 @@
             justify-content: space-between;
             align-items: center;
             gap: 5px;
-            z-index: 2;
-            background-color: rgba(0,0,0,0.7);
-            padding: 5px;
-            border-radius: 3px;
         }
 
-        .zatochka-value {
+        .grid-item span {
             flex-grow: 1;
             text-align: center;
             font-size: 0.9rem;
-            font-weight: bold;
         }
 
         .btn {
@@ -312,12 +223,10 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.2s;
         }
 
         .btn:hover {
             background-color: var(--accent-red);
-            transform: scale(1.1);
         }
 
         .nashivka {
@@ -351,7 +260,6 @@
             transition: opacity 0.2s;
             pointer-events: none;
             z-index: 10;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
         .grid-item:hover .tooltip {
@@ -365,14 +273,6 @@
             padding: 15px;
             margin-bottom: 15px;
             min-height: auto;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .mini-container:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
 
         .mini-container h3 {
@@ -433,13 +333,11 @@
             cursor: pointer;
             opacity: 0.7;
             transition: all 0.2s;
-            box-shadow: 0 3px 10px rgba(255, 46, 46, 0.3);
         }
 
         .trash:hover {
             opacity: 1;
-            transform: scale(1.1) translateY(-5px);
-            box-shadow: 0 5px 15px rgba(255, 46, 46, 0.5);
+            transform: scale(1.1);
         }
 
         .trash i {
@@ -462,30 +360,22 @@
             padding-top: 20px;
         }
 
-        /* Уведомление о заточке */
-        .zatochka-notification {
+        /* Уведомление о доработке */
+        .dev-banner {
             position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: linear-gradient(90deg, var(--accent-gold), #ffdb58);
-            color: #000;
-            padding: 12px 25px;
-            border-radius: 30px;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(90deg, var(--accent-red), #ff5e5e);
+            color: white;
+            text-align: center;
+            padding: 10px;
             font-weight: bold;
-            box-shadow: 0 5px 15px rgba(255, 204, 0, 0.3);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            z-index: 50;
             animation: pulse 2s infinite;
+            z-index: 100;
         }
 
-        .zatochka-notification i {
-            font-size: 1.2rem;
-        }
-
-        /* Модальные окна */
+        /* Добавляем стили для модальных окон */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -509,7 +399,6 @@
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
             gap: 15px;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.5);
         }
         
         .modal-accs img {
@@ -525,7 +414,6 @@
         .modal-accs img:hover {
             transform: scale(1.05);
             border-color: var(--accent-gold);
-            box-shadow: 0 3px 10px rgba(255, 204, 0, 0.3);
         }
         
         .accessory-item {
@@ -543,7 +431,6 @@
         .accessory-item:hover {
             border-color: var(--accent-gold);
             background-color: rgba(255, 204, 0, 0.05);
-            transform: translateY(-3px);
         }
         
         .accessory-name {
@@ -571,7 +458,6 @@
             border-radius: 10px;
             max-width: 90%;
             text-align: center;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.5);
         }
         
         .modal-buttons {
@@ -586,7 +472,6 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            transition: all 0.2s;
         }
         
         #yesDelete {
@@ -594,19 +479,9 @@
             color: white;
         }
         
-        #yesDelete:hover {
-            background-color: #ff1a1a;
-            transform: translateY(-2px);
-        }
-        
         #noDelete {
             background-color: var(--text-gray);
             color: white;
-        }
-        
-        #noDelete:hover {
-            background-color: #999999;
-            transform: translateY(-2px);
         }
 
         /* Стили для аксессуаров */
@@ -634,7 +509,6 @@
             display: flex;
             flex-direction: column;
             gap: 5px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.3);
         }
 
         .nashivka-menu button {
@@ -644,80 +518,16 @@
             color: var(--text-white);
             cursor: pointer;
             font-size: 0.7rem;
-            transition: all 0.2s;
         }
 
         .nashivka-menu button:hover {
             background-color: var(--accent-red);
-            transform: scale(1.05);
-        }
-
-        /* Модальное окно выбора персонажа */
-        #characterModal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0,0,0,0.7);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .character-selection {
-            background-color: var(--card-bg);
-            padding: 20px;
-            border-radius: 10px;
-            max-width: 800px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.5);
-        }
-
-        .character-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 15px;
-            margin-top: 15px;
-        }
-
-        .character-option {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            cursor: pointer;
-            padding: 10px;
-            border: 1px solid var(--border);
-            border-radius: 5px;
-            transition: all 0.2s;
-        }
-
-        .character-option:hover {
-            border-color: var(--accent-gold);
-            transform: scale(1.05);
-            box-shadow: 0 3px 10px rgba(255, 204, 0, 0.2);
-        }
-
-        .character-option img {
-            width: 100px;
-            height: 100px;
-            object-fit: contain;
-            border-radius: 5px;
-        }
-
-        .character-option span {
-            margin-top: 5px;
-            font-size: 0.8rem;
-            text-align: center;
         }
 
         @keyframes pulse {
-            0% { transform: translateX(-50%) scale(1); }
-            50% { transform: translateX(-50%) scale(1.05); }
-            100% { transform: translateX(-50%) scale(1); }
+            0% { opacity: 0.7; }
+            50% { opacity: 1; }
+            100% { opacity: 0.7; }
         }
 
         @media (max-width: 1200px) {
@@ -731,10 +541,6 @@
             
             .grid {
                 grid-template-columns: repeat(2, 1fr);
-            }
-
-            .character-display {
-                flex-direction: column;
             }
         }
 
@@ -762,17 +568,6 @@
             .modal-accs img {
                 width: 80px;
                 height: 80px;
-            }
-
-            .character-grid {
-                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-            }
-            
-            .zatochka-notification {
-                width: 90%;
-                text-align: center;
-                padding: 10px 15px;
-                font-size: 0.9rem;
             }
         }
     </style>
@@ -811,82 +606,79 @@
 
         <div class="sets-main">
             <div class="left-section">
-                <div class="character-container">
-                    <div class="character-header">
-                        <h2>Ваш персонаж</h2>
-                        <button class="select-character-btn" id="select-character-btn">
-                            <i class="fas fa-user-edit"></i> Выбрать
-                        </button>
+                <div class="character">
+                    <div style="cursor: pointer; position: relative;" id="character">
+                        <img src="https://via.placeholder.com/400x300/111111/cccccc?text=Character+Preview" alt="Character" id="character-image">
+                        <div class="tooltip" style="bottom: 101%;">Нажмите чтобы сменить персонажа</div>
                     </div>
-                    <div class="character-display">
-                        <div class="character-image-container">
-                            <img src="https://via.placeholder.com/400x300/111111/cccccc?text=Character+Preview" alt="Character" id="character-image">
-                        </div>
-                        <div class="character-stats">
-                            <div class="info">
-                                <span class="highlight white">Защита: <span class="highlight" id="deff">[-0% урона]</span></span><br>
-                                <span class="highlight white">Регенерация: <span class="highlight" id="hpmin">[0 HP в мин.]</span></span><br>
-                                <span class="highlight white">Урон: <span class="highlight" id="damage">[+0 урона]</span></span><br>
-                                <span class="highlight white">Удача: <span class="highlight" id="krit">[шанс 0% крит.урона]</span></span><br>
-                                <span class="highlight white">Макс. HP: <span class="highlight" id="hpmax">[+0 макс. HP]</span></span><br>
-                                <span class="highlight white">Макс. Брони: <span class="highlight" id="armourmax">[+0 макс. Брони]</span></span><br>
-                                <span class="highlight white">Шанс оглушения: <span class="highlight" id="oglysh">[+0%]</span></span><br>
-                                <span class="highlight white">Шанс опьянения: <span class="highlight" id="opyan">[+0%]</span></span><br>
-                                <span class="highlight white">Шанс избежать оглушения: <span class="highlight" id="neoglysh">[+0%]</span></span><br>
-                                <span class="highlight white">Отражение урона: <span class="highlight" id="otrazh">[-0%]</span></span>
-                            </div>
-                        </div>
+                    <div class="info">
+                        <span class="highlight white">Защита: <span class="highlight" id="deff">[-0% урона]</span></span><br>
+                        <span class="highlight white">Регенерация: <span class="highlight" id="hpmin">[0 HP в мин.]</span></span><br>
+                        <span class="highlight white">Урон: <span class="highlight" id="damage">[+0 урона]</span></span><br>
+                        <span class="highlight white">Удача: <span class="highlight" id="krit">[шанс 0% крит.урона]</span></span><br>
+                        <span class="highlight white">Макс. HP: <span class="highlight" id="hpmax">[+0 макс. HP]</span></span><br>
+                        <span class="highlight white">Макс. Брони: <span class="highlight" id="armourmax">[+0 макс. Брони]</span></span><br>
+                        <span class="highlight white">Шанс оглушения: <span class="highlight" id="oglysh">[+0%]</span></span><br>
+                        <span class="highlight white">Шанс опьянения: <span class="highlight" id="opyan">[+0%]</span></span><br>
+                        <span class="highlight white">Шанс избежать оглушения: <span class="highlight" id="neoglysh">[+0%]</span></span><br>
+                        <span class="highlight white">Отражение урона: <span class="highlight" id="otrazh">[-0%]</span></span>
                     </div>
                 </div>
 
                 <div class="grid">
-                    <div class="grid-item" id="head" ru-name="Голова">
+                    <div class="grid-item" id="head" ru-name="Аксессуар на голову">
                         <div class="grid-text">
                             <button class="btn nashivka">N</button>
-                            <span class="zatochka-value">+0</span>
+                            <span>+0</span>
                             <button class="btn minus">-</button>
                             <button class="btn plus">+</button>
                         </div>
+                        <div class="tooltip">Аксессуар на голову</div>
                     </div>
-                    <div class="grid-item" id="face" ru-name="Лицо">
+                    <div class="grid-item" id="face" ru-name="Аксессуар на лицо">
                         <div class="grid-text">
                             <button class="btn nashivka">N</button>
-                            <span class="zatochka-value">+0</span>
+                            <span>+0</span>
                             <button class="btn minus">-</button>
                             <button class="btn plus">+</button>
                         </div>
+                        <div class="tooltip">Аксессуар на лицо</div>
                     </div>
-                    <div class="grid-item" id="hand" ru-name="Рука">
+                    <div class="grid-item" id="hand" ru-name="Аксессуар в руку">
                         <div class="grid-text">
                             <button class="btn nashivka">N</button>
-                            <span class="zatochka-value">+0</span>
+                            <span>+0</span>
                             <button class="btn minus">-</button>
                             <button class="btn plus">+</button>
                         </div>
+                        <div class="tooltip">Аксессуар в руку</div>
                     </div>
-                    <div class="grid-item" id="breast" ru-name="Грудь">
+                    <div class="grid-item" id="breast" ru-name="Аксессуар на грудь">
                         <div class="grid-text">
                             <button class="btn nashivka">N</button>
-                            <span class="zatochka-value">+0</span>
+                            <span>+0</span>
                             <button class="btn minus">-</button>
                             <button class="btn plus">+</button>
                         </div>
+                        <div class="tooltip">Аксессуар на грудь</div>
                     </div>
-                    <div class="grid-item" id="shoulder" ru-name="Плечо">
+                    <div class="grid-item" id="shoulder" ru-name="Аксессуар на плечо">
                         <div class="grid-text">
                             <button class="btn nashivka">N</button>
-                            <span class="zatochka-value">+0</span>
+                            <span>+0</span>
                             <button class="btn minus">-</button>
                             <button class="btn plus">+</button>
                         </div>
+                        <div class="tooltip">Аксессуар на плечо</div>
                     </div>
-                    <div class="grid-item" id="spine" ru-name="Спина">
+                    <div class="grid-item" id="spine" ru-name="Аксессуар на спину">
                         <div class="grid-text">
                             <button class="btn nashivka">N</button>
-                            <span class="zatochka-value">+0</span>
+                            <span>+0</span>
                             <button class="btn minus">-</button>
                             <button class="btn plus">+</button>
                         </div>
+                        <div class="tooltip">Аксессуар на спину</div>
                     </div>
                 </div>
 
@@ -894,15 +686,17 @@
                     <div class="grid-item" id="armour" ru-name="Бронежилет">
                         <div class="grid-text">
                             <button class="btn nashivkabronik">N</button>
-                            <span class="zatochka-value">+0</span>
+                            <span>+0</span>
                             <button class="btn minus">-</button>
                             <button class="btn plus">+</button>
                         </div>
+                        <div class="tooltip">Бронежилет</div>
                     </div>
                     <div class="grid-item" id="case" ru-name="Чемодан">
                         <div class="grid-text">
-                            <span class="zatochka-value">+0</span>
+                            <span>+0</span>
                         </div>
+                        <div class="tooltip">Чемодан</div>
                     </div>
                 </div>
 
@@ -910,35 +704,35 @@
             </div>
 
             <div class="right-section">
-                <div class="mini-container" slot-name="head" data-slot="head">
+                <div class="mini-container" slot-name="head">
                     <h3>Аксессуары на голову</h3>
                     <p>Выберите аксессуар для головы</p>
                 </div>
-                <div class="mini-container" slot-name="face" data-slot="face">
+                <div class="mini-container" slot-name="face">
                     <h3>Аксессуары на лицо</h3>
                     <p>Выберите аксессуар для лица</p>
                 </div>
-                <div class="mini-container" slot-name="hand" data-slot="hand">
+                <div class="mini-container" slot-name="hand">
                     <h3>Аксессуары в руку</h3>
                     <p>Выберите аксессуар для руки</p>
                 </div>
-                <div class="mini-container" slot-name="breast" data-slot="breast">
+                <div class="mini-container" slot-name="breast">
                     <h3>Аксессуары на грудь</h3>
                     <p>Выберите аксессуар для груди</p>
                 </div>
-                <div class="mini-container" slot-name="shoulder" data-slot="shoulder">
+                <div class="mini-container" slot-name="shoulder">
                     <h3>Аксессуары на плечо</h3>
                     <p>Выберите аксессуар для плеча</p>
                 </div>
-                <div class="mini-container" slot-name="spine" data-slot="spine">
+                <div class="mini-container" slot-name="spine">
                     <h3>Аксессуары на спину</h3>
                     <p>Выберите аксессуар для спины</p>
                 </div>
-                <div class="mini-container" slot-name="armour" data-slot="armour">
+                <div class="mini-container" slot-name="armour">
                     <h3>Бронежилеты</h3>
                     <p>Выберите бронежилет</p>
                 </div>
-                <div class="mini-container" slot-name="case" data-slot="case">
+                <div class="mini-container" slot-name="case">
                     <h3>Чемоданы</h3>
                     <p>Выберите чемодан</p>
                 </div>
@@ -949,12 +743,6 @@
     <div class="trash">
         <i class="fas fa-trash"></i>
         <div class="tooltip" id="trashtooltip">Перетащите сюда предмет, чтобы его выкинуть!</div>
-    </div>
-    
-    <!-- Уведомление о заточке -->
-    <div class="zatochka-notification">
-        <i class="fas fa-exclamation-circle"></i>
-        <span>Перед выбором аксессуара не забудьте выставить заточку!</span>
     </div>
     
     <div id="modalOverlay" class="modal-overlay">
@@ -974,607 +762,477 @@
         </div>
     </div>
 
-    <!-- Модальное окно выбора персонажа -->
-    <div id="characterModal" class="modal-overlay">
-        <div class="character-selection">
-            <h2>Выберите персонажа</h2>
-            <div class="character-grid">
-                <div class="character-option" data-img="imgs/characters/lego.png">
-                    <img src="imgs/characters/lego.png" alt="Character 1">
-                    <span>Персонаж 1</span>
-                </div>
-                <div class="character-option" data-img="imgs/characters/homelander.png">
-                    <img src="imgs/characters/homelander.png" alt="Character 2">
-                    <span>Персонаж 2</span>
-                </div>
-                <div class="character-option" data-img="imgs/characters/rilay.png">
-                    <img src="imgs/characters/rilay.png" alt="Character 3">
-                    <span>Персонаж 3</span>
-                </div>
-                <div class="character-option" data-img="imgs/characters/template.png">
-                    <img src="imgs/characters/template.png" alt="Character 4">
-                    <span>Персонаж 4</span>
-                </div>
-            </div>
-            <button id="closeCharacterModal" class="btn" style="margin-top: 20px; width: 100px;">
-                Закрыть
-            </button>
-        </div>
-    </div>
-
     <script>
- $(document).ready(function() {
-    // Define base path for images
-    const basePath = 'https://raw.githubusercontent.com/m-vegas/Vegas-Informations/main/';
-
-    // Основной массив с аксессуарами
-    const accessoriesData = {
-        'head': [
-            {
-                imageSrc: `${basePath}imgs/head/deadinside.png`,
-                stats: { damage: 1, krit: 10, oglysh: 1 },
-                upg: 'krit',
-                yellow: {}
-            },
-            {
-                imageSrc: `${basePath}imgs/head/bad.png`,
-                stats: { krit: 10 },
-                upg: 'krit',
-                yellow: {}
-            },
-            {
-                imageSrc: `${basePath}imgs/head/ironman.png`,
-                stats: { krit: 2 },
-                upg: 'krit',
-                yellow: {}
-            }
-        ],
-        'face': [
-            {
-                imageSrc: `${basePath}imgs/face/netri.png`,
-                stats: { deff: 2, krit: 25 },
-                upg: 'deff',
-                yellow: {}
-            },
-            {
-                imageSrc: `${basePath}imgs/face/maskinvisible.png`,
-                stats: { deff: 0, oglysh: 3 },
-                upg: 'deff',
-                yellow: {}
-            }
-        ],
-        'hand': [
-            {
-                imageSrc: `${basePath}imgs/hand/duff.png`,
-                stats: { damage: 4 },
-                upg: 'damage',
-                yellow: {}
-            },
-            {
-                imageSrc: `${basePath}imgs/hand/fraps.png`,
-                stats: { deff: 2, damage: 2, krit: 2 },
-                upg: 'damage',
-                yellow: {}
-            }
-        ],
-        'breast': [
-            {
-                imageSrc: `${basePath}imgs/breast/mahi.png`,
-                stats: { deff: 2, damage: 1, krit: 10, armourmax: 25 },
-                upg: 'damage',
-                yellow: {}
-            },
-            {
-                imageSrc: `${basePath}imgs/breast/energomahi.png`,
-                stats: { deff: 4, damage: 2, krit: 12, armourmax: 25 },
-                upg: 'damage',
-                yellow: { damage: 2, hpmax: 5 }
-            }
-        ],
-        'shoulder': [
-            {
-                imageSrc: `${basePath}imgs/shoulder/magshar2.png`,
-                stats: { deff: 2, damage: 1, krit: 10, armourmax: 25 },
-                upg: 'deff',
-                yellow: {}
-            },
-            {
-                imageSrc: `${basePath}imgs/shoulder/energoshar.png`,
-                stats: { deff: 4, damage: 4, krit: 24, hpmax: 5, armourmax: 27, neoglysh: 10 },
-                upg: 'deff',
-                yellow: {}
-            },
-            {
-                imageSrc: `${basePath}imgs/shoulder/pexpress.png`,
-                stats: { deff: 0, krit: 10, armourmax: 20, oglysh: 4 },
-                upg: 'deff',
-                yellow: {}
-            }
-        ],
-        'spine': [
-            {
-                imageSrc: `${basePath}imgs/spine/tor.png`,
-                stats: { damage: 4 },
-                upg: 'damage',
-                yellow: {}
-            },
-            {
-                imageSrc: `${basePath}imgs/spine/rbt.png`,
-                stats: { deff: 4 },
-                upg: 'deff',
-                yellow: {}
-            }
-        ],
-        'armour': [
-            {
-                imageSrc: `${basePath}imgs/armour/bronik.png`,
-                stats: { deff: 2, krit: 1, armourmax: 0 },
-                upg: 'armour',
-                yellow: {}
-            },
-            {
-                imageSrc: `${basePath}imgs/armour/genbronik.png`,
-                stats: { deff: 2, damage: 2, krit: 1, armourmax: 35 },
-                upg: 'armour',
-                yellow: {}
-            }
-        ],
-        'case': [
-            {
-                imageSrc: `${basePath}imgs/case/enegrochem.png`,
-                stats: { damage: 3, oglysh: 13, neoglysh: 4 },
-                upg: '',
-                yellow: {}
-            },
-            {
-                imageSrc: `${basePath}imgs/case/chem.png`,
-                stats: { oglysh: 6 },
-                upg: '',
-                yellow: {}
-            }
-        ]
-    };
-
-    // Русские названия типов статистик
-    const RuTypes = {
-        deff: 'Защита',
-        hpmin: 'HP в мин.',
-        damage: 'Урон',
-        krit: 'Удача',
-        hpmax: 'Макс. HP',
-        armourmax: 'Макс. Брони',
-        oglysh: 'Шанс оглушения',
-        opyan: 'Шанс опьянения',
-        neoglysh: 'Шанс избежать оглушения',
-        otrazh: 'Отражение урона'
-    };
-
-    // Русские названия слотов
-    const RuSlots = {
-        head: 'Голова',
-        face: 'Лицо',
-        hand: 'Рука',
-        breast: 'Грудь',
-        shoulder: 'Плечо',
-        spine: 'Спина',
-        armour: 'Бронежилет',
-        case: 'Чемодан'
-    };
-
-    // Функция для загрузки персонажа по ID
-    function loadCharacter(characterId) {
-        const characterImage = document.getElementById('character-image');
-        if (!characterImage) {
-            console.error('Element #character-image not found');
-            return;
-        }
-
-        characterImage.src = `${basePath}imgs/characters/${characterId}.png`;
-        characterImage.onerror = function() {
-            this.src = 'https://via.placeholder.com/200/333333/ffffff?text=No+Character';
+        // Основной массив с аксессуарами
+        const accessoriesData = {
+            'head': [
+                {
+                    imageSrc: 'https://via.placeholder.com/100/333333/ffffff?text=DeadInside',
+                    stats: { damage: 1, krit: 10, oglysh: 1 },
+                    upg: 'krit',
+                    yellow: {}
+                },
+                {
+                    imageSrc: 'https://via.placeholder.com/100/333333/ffffff?text=Bad',
+                    stats: { krit: 10 },
+                    upg: 'krit',
+                    yellow: {}
+                },
+                {
+                    imageSrc: 'https://via.placeholder.com/100/333333/ffffff?text=IronMan',
+                    stats: { krit: 2 },
+                    upg: 'krit',
+                    yellow: {}
+                }
+            ],
+            'face': [
+                {
+                    imageSrc: 'https://via.placeholder.com/100/333333/ffffff?text=Netri',
+                    stats: { deff: 2, krit: 25 },
+                    upg: 'deff',
+                    yellow: {}
+                },
+                {
+                    imageSrc: 'https://via.placeholder.com/100/333333/ffffff?text=Mask',
+                    stats: { deff: 0, oglysh: 3 },
+                    upg: 'deff',
+                    yellow: {}
+                }
+            ],
+            'hand': [
+                {
+                    imageSrc: 'https://via.placeholder.com/100/333333/ffffff?text=Duff',
+                    stats: { damage: 4 },
+                    upg: 'damage',
+                    yellow: {}
+                },
+                {
+                    imageSrc: 'https://via.placeholder.com/100/333333/ffffff?text=Fraps',
+                    stats: { deff: 2, damage: 2, krit: 2 },
+                    upg: 'damage',
+                    yellow: {}
+                }
+            ],
+            'breast': [
+                {
+                    imageSrc: 'https://via.placeholder.com/100/333333/ffffff?text=Mahi',
+                    stats: { deff: 2, damage: 1, krit: 10, armourmax: 25 },
+                    upg: 'damage',
+                    yellow: {}
+                },
+                {
+                    imageSrc: 'https://via.placeholder.com/100/333333/ffffff?text=EnergoMahi',
+                    stats: { deff: 4, damage: 2, krit: 12, armourmax: 25 },
+                    upg: 'damage',
+                    yellow: { damage: 2, hpmax: 5 }
+                }
+            ],
+            'shoulder': [
+                {
+                    imageSrc: 'https://via.placeholder.com/100/333333/ffffff?text=MagShar',
+                    stats: { deff: 2, damage: 1, krit: 10, armourmax: 25 },
+                    upg: 'deff',
+                    yellow: {}
+                },
+                {
+                    imageSrc: 'https://via.placeholder.com/100/333333/ffffff?text=EnergoShar',
+                    stats: { deff: 4, damage: 4, krit: 24, hpmax: 5, armourmax: 27, neoglysh: 10 },
+                    upg: 'deff',
+                    yellow: {}
+                },
+                {
+                    imageSrc: 'https://via.placeholder.com/100/333333/ffffff?text=PExpress',
+                    stats: { deff: 0, krit: 10, armourmax: 20, oglysh: 4 },
+                    upg: 'deff',
+                    yellow: {}
+                }
+            ],
+            'spine': [
+                {
+                    imageSrc: 'https://via.placeholder.com/100/333333/ffffff?text=Tor',
+                    stats: { damage: 4 },
+                    upg: 'damage',
+                    yellow: {}
+                },
+                {
+                    imageSrc: 'https://via.placeholder.com/100/333333/ffffff?text=RBT',
+                    stats: { deff: 4 },
+                    upg: 'deff',
+                    yellow: {}
+                }
+            ],
+            'armour': [
+                {
+                    imageSrc: 'https://via.placeholder.com/100/333333/ffffff?text=Bronik',
+                    stats: { deff: 2, krit: 1, armourmax: 0 },
+                    upg: 'armour',
+                    yellow: {}
+                },
+                {
+                    imageSrc: 'imgs/armour/genbronik.png',
+                    stats: { deff: 2, damage: 2, krit: 1, armourmax: 35 },
+                    upg: 'armour',
+                    yellow: {}
+                }
+            ],
+            'case': [
+                {
+                    imageSrc: 'https://via.placeholder.com/100/333333/ffffff?text=EnegroChem',
+                    stats: { damage: 3, oglysh: 13, neoglysh: 4 },
+                    upg: '',
+                    yellow: {}
+                },
+                {
+                    imageSrc: 'https://via.placeholder.com/100/333333/ffffff?text=Chem',
+                    stats: { oglysh: 6 },
+                    upg: '',
+                    yellow: {}
+                }
+            ]
         };
 
-        // Обновляем подсказку
-        const tooltip = document.querySelector('#character .tooltip');
-        if (tooltip) {
-            tooltip.textContent = `Текущий персонаж: Персонаж ${characterId}`;
-        }
-    }
-
-    // Функция для обновления статистик персонажа
-    function updateStats() {
-        let stats = {
-            deff: 0,
-            hpmin: 0,
-            damage: 0,
-            krit: 0,
-            hpmax: 0,
-            armourmax: 0,
-            oglysh: 0,
-            opyan: 0,
-            neoglysh: 0,
-            otrazh: 0
+        // Русские названия типов статистик
+        const RuTypes = {
+            deff: 'Защита',
+            hpmin: 'HP в мин.',
+            damage: 'Урон',
+            krit: 'Удача',
+            hpmax: 'Макс. HP',
+            armourmax: 'Макс. Брони',
+            oglysh: 'Шанс оглушения',
+            opyan: 'Шанс опьянения',
+            neoglysh: 'Шанс избежать оглушения',
+            otrazh: 'Отражение урона'
         };
 
-        // Собираем статистики со всех аксессуаров
-        document.querySelectorAll('.grid-item').forEach(item => {
-            const img = item.querySelector('img.main');
-            if (img) {
-                const itemStats = JSON.parse(img.dataset.stats || '{}');
-                const yellowStats = JSON.parse(img.dataset.yellow || '{}');
-                const nashivkaStats = JSON.parse(img.dataset.nashivka || '{}');
-                const upgType = img.dataset.upg;
-                const zatochka = parseInt(item.querySelector('.zatochka-value')?.textContent.replace('+', '') || 0);
+        // Русские названия слотов
+        const RuSlots = {
+            head: 'Голова',
+            face: 'Лицо',
+            hand: 'Рука',
+            breast: 'Грудь',
+            shoulder: 'Плечо',
+            spine: 'Спина',
+            armour: 'Бронежилет',
+            case: 'Чемодан'
+        };
 
-                // Добавляем базовые статистики
-                for (const stat in itemStats) {
-                    stats[stat] += itemStats[stat] || 0;
-                }
+        // Функция для обновления статистик персонажа
+        function updateStats() {
+            let stats = {
+                deff: 0,
+                hpmin: 0,
+                damage: 0,
+                krit: 0,
+                hpmax: 0,
+                armourmax: 0,
+                oglysh: 0,
+                opyan: 0,
+                neoglysh: 0,
+                otrazh: 0
+            };
 
-                // Добавляем желтые статистики
-                for (const stat in yellowStats) {
-                    stats[stat] += yellowStats[stat] || 0;
-                }
+            // Собираем статистики со всех аксессуаров
+            document.querySelectorAll('.grid-item').forEach(item => {
+                const img = item.querySelector('img.main');
+                if (img) {
+                    const itemStats = JSON.parse(img.dataset.stats || '{}');
+                    const yellowStats = JSON.parse(img.dataset.yellow || '{}');
+                    const nashivkaStats = JSON.parse(img.dataset.nashivka || '{}');
+                    const upgType = img.dataset.upg;
+                    const zatochka = parseInt(item.querySelector('span')?.textContent.replace('+', '') || 0);
 
-                // Добавляем статистики нашивок
-                for (const stat in nashivkaStats) {
-                    stats[stat] += nashivkaStats[stat] || 0;
-                }
+                    // Добавляем базовые статистики
+                    for (const stat in itemStats) {
+                        stats[stat] += itemStats[stat] || 0;
+                    }
 
-                // Учитываем заточку
-                if (upgType && zatochka > 0) {
-                    const multiplier = upgType === 'armour' ? 5 : 
-                                     upgType === 'deff' ? 2 : 1;
-                    
-                    if (upgType === 'armour') {
-                        stats.armourmax += zatochka * multiplier;
-                    } else if (zatochka >= 4) {
-                        stats[upgType] += (zatochka - 3) * multiplier;
+                    // Добавляем желтые статистики
+                    for (const stat in yellowStats) {
+                        stats[stat] += yellowStats[stat] || 0;
+                    }
+
+                    // Добавляем статистики нашивок
+                    for (const stat in nashivkaStats) {
+                        stats[stat] += nashivkaStats[stat] || 0;
+                    }
+
+                    // Учитываем заточку
+                    if (upgType && zatochka > 0) {
+                        const multiplier = upgType === 'armour' ? 5 : 
+                                         upgType === 'deff' ? 2 : 1;
                         
-                        if (zatochka >= 13) {
-                            stats.armourmax = (stats.armourmax || 0) + 9;
-                            stats.hpmax = (stats.hpmax || 0) + 4;
-                        }
-                        
-                        if (zatochka === 14) {
-                            stats.armourmax = (stats.armourmax || 0) + 5;
-                            stats.hpmin = (stats.hpmin || 0) + 3;
-                            stats.otrazh = (stats.otrazh || 0) + 1;
+                        if (upgType === 'armour') {
+                            stats.armourmax += zatochka * multiplier;
+                        } else if (zatochka >= 4) {
+                            stats[upgType] += (zatochka - 3) * multiplier;
+                            
+                            if (zatochka >= 13) {
+                                stats.armourmax = (stats.armourmax || 0) + 9;
+                                stats.hpmax = (stats.hpmax || 0) + 4;
+                            }
+                            
+                            if (zatochka === 14) {
+                                stats.armourmax = (stats.armourmax || 0) + 5;
+                                stats.hpmin = (stats.hpmin || 0) + 3;
+                                stats.otrazh = (stats.otrazh || 0) + 1;
+                            }
                         }
                     }
                 }
-            }
-        });
+            });
 
-        // Ограничения
-        stats.armourmax = Math.min(stats.armourmax, 160);
-        stats.deff = Math.min(stats.deff, 90);
+            // Ограничения
+            stats.armourmax = Math.min(stats.armourmax, 160);
+            stats.deff = Math.min(stats.deff, 90);
 
-        // Обновляем отображение статистик
-        const updateStatElement = (id, value, prefix = '+', suffix = '') => {
-            const element = document.getElementById(id);
-            if (element) element.textContent = `[${prefix}${value}${suffix}]`;
-        };
+            // Обновляем отображение статистик
+            document.getElementById('deff').textContent = `[-${stats.deff}% урона]`;
+            document.getElementById('hpmin').textContent = `[${stats.hpmin} HP в мин.]`;
+            document.getElementById('damage').textContent = `[+${stats.damage} урона]`;
+            document.getElementById('krit').textContent = `[шанс ${stats.krit}% крит.урона]`;
+            document.getElementById('hpmax').textContent = `[+${stats.hpmax} макс. HP]`;
+            document.getElementById('armourmax').textContent = `[+${stats.armourmax} макс. Брони]`;
+            document.getElementById('oglysh').textContent = `[+${stats.oglysh}%]`;
+            document.getElementById('opyan').textContent = `[+${stats.opyan}%]`;
+            document.getElementById('neoglysh').textContent = `[+${stats.neoglysh}%]`;
+            document.getElementById('otrazh').textContent = `[-${stats.otrazh}%]`;
+        }
 
-        updateStatElement('deff', stats.deff, '-', '% урона');
-        updateStatElement('hpmin', stats.hpmin, '', ' HP в мин.');
-        updateStatElement('damage', stats.damage, '+', ' урона');
-        updateStatElement('krit', stats.krit, 'шанс ', '% крит.урона');
-        updateStatElement('hpmax', stats.hpmax, '+', ' макс. HP');
-        updateStatElement('armourmax', stats.armourmax, '+', ' макс. Брони');
-        updateStatElement('oglysh', stats.oglysh, '+', '%');
-        updateStatElement('opyan', stats.opyan, '+', '%');
-        updateStatElement('neoglysh', stats.neoglysh, '+', '%');
-        updateStatElement('otrazh', stats.otrazh, '-', '%');
-    }
+        // Функция для открытия модального окна с аксессуарами
+        function openAccessoryModal(slotName) {
+            const modalAccs = document.querySelector('.modal-accs');
+            modalAccs.innerHTML = `
+                <div style="grid-column: 1 / -1; text-align: center; margin-bottom: 10px;">
+                    <h3>Выберите ${RuSlots[slotName].toLowerCase()}</h3>
+                </div>`;
 
-    // Функция для создания элемента аксессуара
-    function createAccessoryElement(acc, slotName) {
-        const accItem = document.createElement('div');
-        accItem.className = 'accessory-item';
-        
-        const img = document.createElement('img');
-        img.src = acc.imageSrc;
-        img.alt = acc.imageSrc.split('/').pop();
-        img.onerror = () => {
-            img.src = 'https://via.placeholder.com/100/333333/ffffff?text=No+Image';
-        };
-        
-        const nameDiv = document.createElement('div');
-        nameDiv.className = 'accessory-name';
-        nameDiv.textContent = acc.imageSrc.split('/').pop().split('.')[0];
-        
-        accItem.appendChild(img);
-        accItem.appendChild(nameDiv);
-        
-        accItem.addEventListener('click', () => {
-            const gridItem = document.querySelector(`.grid-item#${slotName}`);
-            if (gridItem) {
-                // Удаляем старый аксессуар, если есть
-                const oldImg = gridItem.querySelector('img.main');
-                if (oldImg) oldImg.remove();
+            // Добавляем аксессуары для выбранного слота
+            accessoriesData[slotName]?.forEach(acc => {
+                const accItem = document.createElement('div');
+                accItem.className = 'accessory-item';
                 
-                // Создаем новый элемент аксессуара
-                const newImg = document.createElement('img');
-                newImg.src = acc.imageSrc;
-                newImg.className = 'main';
-                newImg.draggable = true;
-                newImg.dataset.stats = JSON.stringify(acc.stats);
-                newImg.dataset.upg = acc.upg;
-                newImg.dataset.yellow = JSON.stringify(acc.yellow);
+                const img = document.createElement('img');
+                img.src = acc.imageSrc;
+                img.alt = acc.imageSrc.split('/').pop();
+                img.onerror = () => {
+                    img.src = 'https://via.placeholder.com/100/333333/ffffff?text=No+Image';
+                };
                 
-                // Добавляем в слот
-                gridItem.prepend(newImg);
+                const nameDiv = document.createElement('div');
+                nameDiv.className = 'accessory-name';
+                nameDiv.textContent = img.alt.split('.')[0];
                 
-                // Включаем кнопки заточки
-                gridItem.querySelectorAll('.btn.plus, .btn.minus').forEach(btn => {
-                    btn.disabled = false;
+                accItem.appendChild(img);
+                accItem.appendChild(nameDiv);
+                
+                accItem.addEventListener('click', () => {
+                    const gridItem = document.querySelector(`.grid-item#${slotName}`);
+                    if (gridItem) {
+                        // Удаляем старый аксессуар, если есть
+                        const oldImg = gridItem.querySelector('img.main');
+                        if (oldImg) oldImg.remove();
+                        
+                        // Создаем новый элемент аксессуара
+                        const newImg = document.createElement('img');
+                        newImg.src = acc.imageSrc;
+                        newImg.className = 'main';
+                        newImg.draggable = true;
+                        newImg.dataset.stats = JSON.stringify(acc.stats);
+                        newImg.dataset.upg = acc.upg;
+                        newImg.dataset.yellow = JSON.stringify(acc.yellow);
+                        
+                        // Добавляем в слот
+                        gridItem.appendChild(newImg);
+                        
+                        // Обновляем статистики
+                        updateStats();
+                        
+                        // Закрываем модальное окно
+                        document.getElementById('modalOverlay').style.display = 'none';
+                    }
                 });
                 
-                // Обновляем статистики
-                updateStats();
+                modalAccs.appendChild(accItem);
+            });
+
+            document.getElementById('modalOverlay').style.display = 'flex';
+        }
+
+        // Инициализация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            // Обработчик для кнопки Личный кабинет
+            document.getElementById('account-btn').addEventListener('click', function() {
+                const notification = document.createElement('div');
+                notification.className = 'notification';
+                notification.textContent = 'Личный кабинет находится в разработке';
+                document.body.appendChild(notification);
                 
-                // Закрываем модальное окно
+                notification.style.display = 'block';
+                
+                // Скрываем уведомление через 3 секунды
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                    setTimeout(() => document.body.removeChild(notification), 300);
+                }, 3000);
+            });
+
+            // Имитация смены персонажа
+            document.getElementById('character').addEventListener('click', function() {
+                const charImg = document.getElementById('character-image');
+                const random = Math.floor(Math.random() * 1000);
+                charImg.src = `https://via.placeholder.com/400x300/111111/cccccc?text=Character+${random}`;
+            });
+
+            // Обработчики для модальных окон
+            document.getElementById('closeModal')?.addEventListener('click', function() {
                 document.getElementById('modalOverlay').style.display = 'none';
-            }
-        });
-        
-        return accItem;
-    }
+            });
 
-    // Функция для открытия модального окна с аксессуарами
-    function openAccessoryModal(slotName) {
-        const modalAccs = document.querySelector('.modal-accs');
-        if (!modalAccs) {
-            console.error('Element .modal-accs not found');
-            return;
-        }
+            document.getElementById('noDelete')?.addEventListener('click', function() {
+                document.getElementById('modalDelete').style.display = 'none';
+            });
 
-        modalAccs.innerHTML = `
-            <div style="grid-column: 1 / -1; text-align: center; margin-bottom: 10px;">
-                <h3>Выберите ${RuSlots[slotName]?.toLowerCase() || slotName}</h3>
-            </div>`;
+            // Обработчики для мини-контейнеров (открытие модального окна)
+            document.querySelectorAll('.mini-container').forEach(container => {
+                container.addEventListener('click', function() {
+                    const slotName = this.getAttribute('slot-name');
+                    openAccessoryModal(slotName);
+                });
+            });
 
-        // Проверяем наличие аксессуаров для этого слота
-        if (!accessoriesData[slotName] || accessoriesData[slotName].length === 0) {
-            modalAccs.innerHTML += `
-                <div style="grid-column: 1 / -1; text-align: center;">
-                    <p>Нет доступных аксессуаров для этого слота</p>
-                </div>`;
-            return;
-        }
+            // Обработчики для кнопок +/-
+            document.querySelectorAll('.btn.plus').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const span = this.closest('.grid-text').querySelector('span');
+                    let value = parseInt(span.textContent.replace('+', '')) || 0;
+                    if (value < 14) {
+                        span.textContent = '+' + (value + 1);
+                        updateStats();
+                    }
+                });
+            });
 
-        // Добавляем аксессуары для выбранного слота
-        accessoriesData[slotName].forEach(acc => {
-            const accItem = createAccessoryElement(acc, slotName);
-            modalAccs.appendChild(accItem);
-        });
+            document.querySelectorAll('.btn.minus').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const span = this.closest('.grid-text').querySelector('span');
+                    let value = parseInt(span.textContent.replace('+', '')) || 0;
+                    if (value > 0) {
+                        span.textContent = '+' + (value - 1);
+                        updateStats();
+                    }
+                });
+            });
 
-        document.getElementById('modalOverlay').style.display = 'flex';
-    }
-
-    // Инициализация при загрузке страницы
-    // Загружаем персонажа 4 по умолчанию
-    loadCharacter(4);
-
-    // Обработчики для мини-контейнеров (открытие модального окна)
-    document.querySelectorAll('.mini-container').forEach(container => {
-        container.addEventListener('click', function() {
-            const slotName = this.getAttribute('slot-name');
-            if (slotName) {
-                openAccessoryModal(slotName);
-            }
-        });
-    });
-
-    // Обработчики для кнопок +/- (делегирование событий)
-    document.addEventListener('click', function(e) {
-        // Обработка кнопки "+"
-        if (e.target.classList.contains('plus')) {
-            e.stopPropagation();
-            const gridItem = e.target.closest('.grid-item');
-            const zatochkaValue = gridItem?.querySelector('.zatochka-value');
-            const hasAccessory = gridItem?.querySelector('img.main');
-            
-            if (zatochkaValue && hasAccessory) {
-                let value = parseInt(zatochkaValue.textContent.replace('+', '')) || 0;
-                if (value < 14) {
-                    zatochkaValue.textContent = '+' + (value + 1);
-                    updateStats();
-                }
-            }
-        }
-        
-        // Обработка кнопки "-"
-        if (e.target.classList.contains('minus')) {
-            e.stopPropagation();
-            const gridItem = e.target.closest('.grid-item');
-            const zatochkaValue = gridItem?.querySelector('.zatochka-value');
-            const hasAccessory = gridItem?.querySelector('img.main');
-            
-            if (zatochkaValue && hasAccessory) {
-                let value = parseInt(zatochkaValue.textContent.replace('+', '')) || 0;
-                if (value > 0) {
-                    zatochkaValue.textContent = '+' + (value - 1);
-                    updateStats();
-                }
-            }
-        }
-    });
-
-    // Обработчики для нашивок (делегирование событий)
-    document.addEventListener('click', function(e) {
-        if (e.target.classList.contains('nashivka')) {
-            e.stopPropagation();
-            const gridItem = e.target.closest('.grid-item');
-            const img = gridItem?.querySelector('img.main');
-            
-            if (img) {
-                // Удаляем старое меню, если есть
-                const oldMenu = gridItem.querySelector('.nashivka-menu');
-                if (oldMenu) oldMenu.remove();
-                
-                // Создаем новое меню выбора нашивки
-                const menu = document.createElement('div');
-                menu.className = 'nashivka-menu';
-                menu.innerHTML = `
-                    <button data-type="deff" data-value="6">ДЕФФ (+6)</button>
-                    <button data-type="damage" data-value="3">УРОН (+3)</button>
-                    <button data-type="krit" data-value="3">КРИТ (+3)</button>
-                    <button data-type="otrazh" data-value="3">ОТРАЖЕНИЕ (+3)</button>
-                `;
-                
-                // Обработчики для кнопок нашивок
-                menu.querySelectorAll('button').forEach(menuBtn => {
-                    menuBtn.addEventListener('click', function() {
-                        const type = this.dataset.type;
-                        const value = parseInt(this.dataset.value);
+            // Обработчики для нашивок
+            document.querySelectorAll('.btn.nashivka').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const gridItem = this.closest('.grid-item');
+                    const img = gridItem.querySelector('img.main');
+                    
+                    if (img) {
+                        // Создаем меню выбора нашивки
+                        const menu = document.createElement('div');
+                        menu.className = 'nashivka-menu';
+                        menu.innerHTML = `
+                            <button data-type="deff" data-value="6">ДЕФФ (+6)</button>
+                            <button data-type="damage" data-value="3">УРОН (+3)</button>
+                            <button data-type="krit" data-value="3">КРИТ (+3)</button>
+                            <button data-type="otrazh" data-value="3">ОТРАЖЕНИЕ (+3)</button>
+                        `;
                         
-                        img.dataset.nashivka = JSON.stringify({ [type]: value });
+                        // Обработчики для кнопок нашивок
+                        menu.querySelectorAll('button').forEach(menuBtn => {
+                            menuBtn.addEventListener('click', function() {
+                                const type = this.dataset.type;
+                                const value = parseInt(this.dataset.value);
+                                
+                                img.dataset.nashivka = JSON.stringify({ [type]: value });
+                                
+                                // Обновляем подсказку
+                                const tooltip = gridItem.querySelector('.tooltip');
+                                tooltip.innerHTML = `${gridItem.getAttribute('ru-name')}<br>Нашивка: ${RuTypes[type]}`;
+                                
+                                updateStats();
+                                menu.remove();
+                            });
+                        });
+                        
+                        gridItem.appendChild(menu);
+                    }
+                });
+            });
+
+            // Обработчик для нашивки бронежилета
+            document.querySelectorAll('.btn.nashivkabronik').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const gridItem = this.closest('.grid-item');
+                    const img = gridItem.querySelector('img.main');
+                    
+                    if (img) {
+                        img.dataset.nashivka = JSON.stringify({ neoglysh: 20 });
                         
                         // Обновляем подсказку
                         const tooltip = gridItem.querySelector('.tooltip');
-                        if (tooltip) {
-                            tooltip.innerHTML = `${gridItem.getAttribute('ru-name')}<br>Нашивка: ${RuTypes[type]}`;
-                        }
-                        
-                        updateStats();
-                        menu.remove();
-                    });
-                });
-                
-                gridItem.appendChild(menu);
-            }
-        }
-        
-        // Обработчик для нашивки бронежилета
-        if (e.target.classList.contains('nashivkabronik')) {
-            e.stopPropagation();
-            const gridItem = e.target.closest('.grid-item');
-            const img = gridItem?.querySelector('img.main');
-            
-            if (img) {
-                img.dataset.nashivka = JSON.stringify({ neoglysh: 20 });
-                
-                // Обновляем подсказку
-                const tooltip = gridItem.querySelector('.tooltip');
-                if (tooltip) {
-                    tooltip.innerHTML = `${gridItem.getAttribute('ru-name')}<br>Нашивка: Есть`;
-                }
-                
-                updateStats();
-            }
-        }
-    });
-
-    // Инициализация корзины
-    const trash = document.querySelector('.trash');
-    if (trash) {
-        trash.addEventListener('dragover', (e) => {
-            e.preventDefault();
-        });
-
-        trash.addEventListener('drop', (e) => {
-            e.preventDefault();
-            const imgHtml = e.dataTransfer.getData('img-html');
-            
-            if (imgHtml) {
-                const tempDiv = document.createElement('div');
-                tempDiv.innerHTML = imgHtml;
-                const img = tempDiv.querySelector('img');
-                
-                if (img) {
-                    const gridItem = img.closest('.grid-item');
-                    if (gridItem) {
-                        img.remove();
-                        
-                        // Отключаем кнопки заточки при удалении аксессуара
-                        gridItem.querySelectorAll('.btn.plus, .btn.minus').forEach(btn => {
-                            btn.disabled = true;
-                        });
+                        tooltip.innerHTML = `${gridItem.getAttribute('ru-name')}<br>Нашивка: Есть`;
                         
                         updateStats();
                     }
-                }
-            }
-        });
-    }
-
-    // Инициализация модальных окон
-    document.getElementById('closeModal')?.addEventListener('click', () => {
-        document.getElementById('modalOverlay').style.display = 'none';
-    });
-
-    // Добавляем обработчики для модального окна удаления
-    document.getElementById('noDelete')?.addEventListener('click', () => {
-        document.getElementById('modalDelete').style.display = 'none';
-    });
-
-    document.getElementById('yesDelete')?.addEventListener('click', () => {
-        const activeSlot = document.querySelector('.grid-item.active');
-        if (activeSlot) {
-            const img = activeSlot.querySelector('img.main');
-            if (img) img.remove();
-            
-            // Отключаем кнопки заточки при удалении аксессуара
-            activeSlot.querySelectorAll('.btn.plus, .btn.minus').forEach(btn => {
-                btn.disabled = true;
+                });
             });
-            
+
+            // Инициализация корзины
+            const trash = document.querySelector('.trash');
+            if (trash) {
+                trash.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                });
+
+                trash.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    const imgHtml = e.dataTransfer.getData('img-html');
+                    
+                    if (imgHtml) {
+                        const tempDiv = document.createElement('div');
+                        tempDiv.innerHTML = imgHtml;
+                        const img = tempDiv.querySelector('img');
+                        
+                        if (img) {
+                            const gridItem = img.closest('.grid-item');
+                            if (gridItem) {
+                                img.remove();
+                                updateStats();
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Добавляем обработчики drag-and-drop для аксессуаров
+            document.addEventListener('dragstart', function(e) {
+                if (e.target.classList.contains('main')) {
+                    e.dataTransfer.setData('img-html', e.target.outerHTML);
+                }
+            });
+
+            // Обработчик для кнопки удаления в модальном окне
+            document.getElementById('yesDelete')?.addEventListener('click', function() {
+                const activeSlot = document.querySelector('.grid-item.active');
+                if (activeSlot) {
+                    const img = activeSlot.querySelector('img.main');
+                    if (img) img.remove();
+                    updateStats();
+                }
+                document.getElementById('modalDelete').style.display = 'none';
+            });
+
+            // Первоначальное обновление статистик
             updateStats();
-        }
-        document.getElementById('modalDelete').style.display = 'none';
-    });
-
-    // Обработчик для кнопки аккаунта
-    document.getElementById('account-btn')?.addEventListener('click', () => {
-        alert('Личный кабинет находится в разработке');
-    });
-
-    // Обработчик для кнопки выбора персонажа
-    document.getElementById('select-character-btn')?.addEventListener('click', function() {
-        document.getElementById('characterModal').style.display = 'flex';
-    });
-
-    // Обработчик для закрытия модального окна выбора персонажа
-    document.getElementById('closeCharacterModal')?.addEventListener('click', function() {
-        document.getElementById('characterModal').style.display = 'none';
-    });
-
-    // Обработчики для выбора персонажа
-    document.querySelectorAll('.character-option').forEach(option => {
-        option.addEventListener('click', function() {
-            const imgSrc = this.dataset.img;
-            if (imgSrc) {
-                document.getElementById('character-image').src = imgSrc;
-                document.getElementById('characterModal').style.display = 'none';
-                
-                // Обновляем подсказку для превью персонажа
-                const characterName = this.querySelector('span')?.textContent || 'Неизвестный';
-                const tooltip = document.querySelector('#character .tooltip');
-                if (tooltip) {
-                    tooltip.textContent = `Текущий персонаж: ${characterName}`;
-                }
-            }
         });
-    });
-
-    // Первоначальное обновление статистик
-    updateStats();
-    
-    // Отключаем кнопки заточки при отсутствии аксессуаров
-    document.querySelectorAll('.grid-item').forEach(item => {
-        if (!item.querySelector('img.main')) {
-            item.querySelectorAll('.btn.plus, .btn.minus').forEach(btn => {
-                btn.disabled = true;
-            });
-        }
-    });
-
-    // Делаем данные доступными глобально
-    window.accessoriesData = accessoriesData;
-    window.RuTypes = RuTypes;
-    window.RuSlots = RuSlots;
-    window.updateStats = updateStats;
-    window.loadCharacter = loadCharacter;
-});
+    </script>
+</body>
+</html>
