@@ -397,19 +397,18 @@
             max-height: 80vh;
             overflow-y: auto;
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
-            gap: 10px;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 15px;
         }
         
         .modal-accs img {
-            width: 80px;
-            height: 80px;
+            width: 100px;
+            height: 100px;
             object-fit: cover;
-            margin: 5px;
-            transition: transform 0.2s;
             border: 1px solid var(--border);
             border-radius: 5px;
             cursor: pointer;
+            transition: all 0.2s;
         }
         
         .modal-accs img:hover {
@@ -432,6 +431,12 @@
         .accessory-item:hover {
             border-color: var(--accent-gold);
             background-color: rgba(255, 204, 0, 0.05);
+        }
+        
+        .accessory-name {
+            margin-top: 5px;
+            font-size: 0.8rem;
+            text-align: center;
         }
         
         #modalDelete {
@@ -514,6 +519,15 @@
             
             .bottom-row .grid-item {
                 width: 100%;
+            }
+            
+            .modal-accs {
+                grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+            }
+            
+            .modal-accs img {
+                width: 80px;
+                height: 80px;
             }
         }
     </style>
@@ -707,6 +721,49 @@
     </div>
 
     <script>
+        // Массив с изображениями аксессуаров для каждого слота
+        const accessoriesData = {
+            'head': [
+                { name: 'Кепка', image: 'https://via.placeholder.com/100/ff9900/000000?text=Кепка' },
+                { name: 'Шляпа', image: 'https://via.placeholder.com/100/cc6600/ffffff?text=Шляпа' },
+                { name: 'Каска', image: 'https://via.placeholder.com/100/999999/000000?text=Каска' },
+                { name: 'Бандана', image: 'https://via.placeholder.com/100/ff3333/ffffff?text=Бандана' },
+                { name: 'Шлем', image: 'https://via.placeholder.com/100/666666/ffffff?text=Шлем' }
+            ],
+            'face': [
+                { name: 'Очки', image: 'https://via.placeholder.com/100/333333/ffffff?text=Очки' },
+                { name: 'Маска', image: 'https://via.placeholder.com/100/000000/ffffff?text=Маска' },
+                { name: 'Повязка', image: 'https://via.placeholder.com/100/ffffff/000000?text=Повязка' }
+            ],
+            'hand': [
+                { name: 'Перчатки', image: 'https://via.placeholder.com/100/663300/ffffff?text=Перчатки' },
+                { name: 'Браслет', image: 'https://via.placeholder.com/100/ffcc00/000000?text=Браслет' },
+                { name: 'Часы', image: 'https://via.placeholder.com/100/0066cc/ffffff?text=Часы' }
+            ],
+            'breast': [
+                { name: 'Цепь', image: 'https://via.placeholder.com/100/cccccc/000000?text=Цепь' },
+                { name: 'Крест', image: 'https://via.placeholder.com/100/ffffff/000000?text=Крест' },
+                { name: 'Медальон', image: 'https://via.placeholder.com/100/ffcc00/000000?text=Медальон' }
+            ],
+            'shoulder': [
+                { name: 'Погоны', image: 'https://via.placeholder.com/100/993333/ffffff?text=Погоны' },
+                { name: 'Наплечники', image: 'https://via.placeholder.com/100/666699/ffffff?text=Наплечники' }
+            ],
+            'spine': [
+                { name: 'Плащ', image: 'https://via.placeholder.com/100/330066/ffffff?text=Плащ' },
+                { name: 'Рюкзак', image: 'https://via.placeholder.com/100/663300/ffffff?text=Рюкзак' }
+            ],
+            'armour': [
+                { name: 'Броник 1', image: 'https://via.placeholder.com/100/ff0000/ffffff?text=Броник+1' },
+                { name: 'Броник 2', image: 'https://via.placeholder.com/100/cc0000/ffffff?text=Броник+2' },
+                { name: 'Броник 3', image: 'https://via.placeholder.com/100/990000/ffffff?text=Броник+3' }
+            ],
+            'case': [
+                { name: 'Чемодан 1', image: 'https://via.placeholder.com/100/ffffff/000000?text=Чемодан+1' },
+                { name: 'Чемодан 2', image: 'https://via.placeholder.com/100/000000/ffffff?text=Чемодан+2' }
+            ]
+        };
+
         document.addEventListener('DOMContentLoaded', function() {
             // Обработчик для кнопки Личный кабинет
             document.getElementById('account-btn').addEventListener('click', function() {
@@ -756,7 +813,7 @@
             function updateStats() {
                 // Собираем все значения с кнопок
                 const values = Array.from(document.querySelectorAll('.grid-item span'))
-                    .map(el => parseInt(el.textContent.replace('+', '')) || 0);
+                    .map(el => parseInt(el.textContent.replace('+', '')) || 0;
                 
                 // Вычисляем общий уровень сета
                 const totalLevel = values.reduce((sum, val) => sum + val, 0);
@@ -786,7 +843,7 @@
                 document.getElementById('modalDelete').style.display = 'none';
             });
 
-            // Добавляем обработчики для мини-контейнеров (для демонстрации)
+            // Добавляем обработчики для мини-контейнеров
             document.querySelectorAll('.mini-container').forEach(container => {
                 container.addEventListener('click', function() {
                     const slotName = this.getAttribute('slot-name');
@@ -796,39 +853,28 @@
                             <h3>Выберите ${this.querySelector('h3').textContent.toLowerCase()}</h3>
                         </div>`;
                     
-                    // Генерируем аксессуары с иконками вместо изображений
-                    for (let i = 1; i <= 8; i++) {
-                        const acc = document.createElement('div');
-                        acc.className = 'accessory-item';
-                        acc.innerHTML = `
-                            <i class="fas fa-${getIconForSlot(slotName)}" style="font-size: 1.5rem; margin-bottom: 5px;"></i>
-                            <div>${slotName} ${i}</div>
+                    // Получаем аксессуары для текущего слота
+                    const accessories = accessoriesData[slotName] || [];
+                    
+                    // Добавляем аксессуары в модальное окно
+                    accessories.forEach(acc => {
+                        const accItem = document.createElement('div');
+                        accItem.className = 'accessory-item';
+                        accItem.innerHTML = `
+                            <img src="${acc.image}" alt="${acc.name}">
+                            <div class="accessory-name">${acc.name}</div>
                         `;
-                        acc.addEventListener('click', function() {
+                        accItem.addEventListener('click', function() {
                             // Логика выбора аксессуара
-                            alert(`Выбран ${slotName} ${i}`);
+                            alert(`Выбран ${acc.name}`);
                             document.getElementById('modalOverlay').style.display = 'none';
                         });
-                        modalAccs.appendChild(acc);
-                    }
+                        modalAccs.appendChild(accItem);
+                    });
                     
                     document.getElementById('modalOverlay').style.display = 'flex';
                 });
             });
-            
-            function getIconForSlot(slotName) {
-                const icons = {
-                    'head': 'hat-cowboy',
-                    'face': 'glasses',
-                    'hand': 'hand-holding',
-                    'breast': 'tshirt',
-                    'shoulder': 'vest',
-                    'spine': 'hood-cloak',
-                    'armour': 'shield-alt',
-                    'case': 'suitcase'
-                };
-                return icons[slotName] || 'question';
-            }
         });
     </script>
     <script src="script.js"></script>
