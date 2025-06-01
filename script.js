@@ -304,40 +304,44 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Обработчики для кнопок +/-
-    document.querySelectorAll('.btn.plus').forEach(btn => {
-        btn.addEventListener('click', function(e) {
+    // Обработчики для кнопок +/- (делегирование событий)
+    document.addEventListener('click', function(e) {
+        // Обработка кнопки "+"
+        if (e.target.classList.contains('plus')) {
             e.stopPropagation();
-            const span = this.closest('.grid-text').querySelector('span');
+            const span = e.target.closest('.grid-text').querySelector('span');
             let value = parseInt(span.textContent.replace('+', '')) || 0;
             if (value < 14) {
                 span.textContent = '+' + (value + 1);
                 updateStats();
             }
-        });
-    });
-
-    document.querySelectorAll('.btn.minus').forEach(btn => {
-        btn.addEventListener('click', function(e) {
+        }
+        
+        // Обработка кнопки "-"
+        if (e.target.classList.contains('minus')) {
             e.stopPropagation();
-            const span = this.closest('.grid-text').querySelector('span');
+            const span = e.target.closest('.grid-text').querySelector('span');
             let value = parseInt(span.textContent.replace('+', '')) || 0;
             if (value > 0) {
                 span.textContent = '+' + (value - 1);
                 updateStats();
             }
-        });
+        }
     });
 
-    // Обработчики для нашивок
-    document.querySelectorAll('.btn.nashivka').forEach(btn => {
-        btn.addEventListener('click', function(e) {
+    // Обработчики для нашивок (делегирование событий)
+    document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('nashivka')) {
             e.stopPropagation();
-            const gridItem = this.closest('.grid-item');
+            const gridItem = e.target.closest('.grid-item');
             const img = gridItem.querySelector('img.main');
             
             if (img) {
-                // Создаем меню выбора нашивки
+                // Удаляем старое меню, если есть
+                const oldMenu = gridItem.querySelector('.nashivka-menu');
+                if (oldMenu) oldMenu.remove();
+                
+                // Создаем новое меню выбора нашивки
                 const menu = document.createElement('div');
                 menu.className = 'nashivka-menu';
                 menu.innerHTML = `
@@ -366,14 +370,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 gridItem.appendChild(menu);
             }
-        });
-    });
-
-    // Обработчик для нашивки бронежилета
-    document.querySelectorAll('.btn.nashivkabronik').forEach(btn => {
-        btn.addEventListener('click', function(e) {
+        }
+        
+        // Обработчик для нашивки бронежилета
+        if (e.target.classList.contains('nashivkabronik')) {
             e.stopPropagation();
-            const gridItem = this.closest('.grid-item');
+            const gridItem = e.target.closest('.grid-item');
             const img = gridItem.querySelector('img.main');
             
             if (img) {
@@ -385,7 +387,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 updateStats();
             }
-        });
+        }
     });
 
     // Инициализация корзины
