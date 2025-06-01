@@ -458,3 +458,21 @@ window.accessoriesData = accessoriesData;
 window.RuTypes = RuTypes;
 window.RuSlots = RuSlots;
 window.updateStats = updateStats;
+// Обработчик для открытия модального окна выбора персонажа
+document.getElementById('character').addEventListener('click', function() {
+    document.getElementById('characterModal').style.display = 'flex';
+});
+
+// Обработчик для закрытия модального окна выбора персонажа
+document.getElementById('closeCharacterModal').addEventListener('click', function() {
+    document.getElementById('characterModal').style.display = 'none';
+});
+
+// Обработчики для выбора персонажа
+document.querySelectorAll('.character-option').forEach(option => {
+    option.addEventListener('click', function() {
+        const imgSrc = this.dataset.img;
+        document.getElementById('character-image').src = imgSrc;
+        document.getElementById('characterModal').style.display = 'none';
+    });
+});
