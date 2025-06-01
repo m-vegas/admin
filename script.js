@@ -178,7 +178,7 @@ function updateStats() {
             const yellowStats = JSON.parse(img.dataset.yellow || '{}');
             const nashivkaStats = JSON.parse(img.dataset.nashivka || '{}');
             const upgType = img.dataset.upg;
-            const zatochka = parseInt(item.querySelector('.zatochka-value')?.textContent.replace('+', '') || 0);
+            const zatochka = parseInt(item.querySelector('.zatochka-value')?.textContent.replace('+', '') || 0;
 
             // Добавляем базовые статистики
             for (const stat in itemStats) {
@@ -283,6 +283,11 @@ function openAccessoryModal(slotName) {
                 // Добавляем в слот
                 gridItem.prepend(newImg);
                 
+                // Включаем кнопки заточки
+                gridItem.querySelectorAll('.btn.plus, .btn.minus').forEach(btn => {
+                    btn.disabled = false;
+                });
+                
                 // Обновляем статистики
                 updateStats();
                 
@@ -312,8 +317,11 @@ document.addEventListener('DOMContentLoaded', function() {
         // Обработка кнопки "+"
         if (e.target.classList.contains('plus')) {
             e.stopPropagation();
-            const zatochkaValue = e.target.closest('.grid-item').querySelector('.zatochka-value');
-            if (zatochkaValue) {
+            const gridItem = e.target.closest('.grid-item');
+            const zatochkaValue = gridItem.querySelector('.zatochka-value');
+            const hasAccessory = gridItem.querySelector('img.main');
+            
+            if (zatochkaValue && hasAccessory) {
                 let value = parseInt(zatochkaValue.textContent.replace('+', '')) || 0;
                 if (value < 14) {
                     zatochkaValue.textContent = '+' + (value + 1);
@@ -325,8 +333,11 @@ document.addEventListener('DOMContentLoaded', function() {
         // Обработка кнопки "-"
         if (e.target.classList.contains('minus')) {
             e.stopPropagation();
-            const zatochkaValue = e.target.closest('.grid-item').querySelector('.zatochka-value');
-            if (zatochkaValue) {
+            const gridItem = e.target.closest('.grid-item');
+            const zatochkaValue = gridItem.querySelector('.zatochka-value');
+            const hasAccessory = gridItem.querySelector('img.main');
+            
+            if (zatochkaValue && hasAccessory) {
                 let value = parseInt(zatochkaValue.textContent.replace('+', '')) || 0;
                 if (value > 0) {
                     zatochkaValue.textContent = '+' + (value - 1);
@@ -417,6 +428,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     const gridItem = img.closest('.grid-item');
                     if (gridItem) {
                         img.remove();
+                        
+                        // Отключаем кнопки заточки при удалении аксессуара
+                        gridItem.querySelectorAll('.btn.plus, .btn.minus').forEach(btn => {
+                            btn.disabled = true;
+                        });
+                        
                         updateStats();
                     }
                 }
@@ -439,6 +456,12 @@ document.addEventListener('DOMContentLoaded', function() {
         if (activeSlot) {
             const img = activeSlot.querySelector('img.main');
             if (img) img.remove();
+            
+            // Отключаем кнопки заточки при удалении аксессуара
+            activeSlot.querySelectorAll('.btn.plus, .btn.minus').forEach(btn => {
+                btn.disabled = true;
+            });
+            
             updateStats();
         }
         document.getElementById('modalDelete').style.display = 'none';
@@ -449,8 +472,41 @@ document.addEventListener('DOMContentLoaded', function() {
         alert('Личный кабинет находится в разработке');
     });
 
+    // Обработчик для открытия модального окна выбора персонажа
+    document.getElementById('character').addEventListener('click', function() {
+        document.getElementById('characterModal').style.display = 'flex';
+    });
+
+    // Обработчик для закрытия модального окна выбора персонажа
+    document.getElementById('closeCharacterModal').addEventListener('click', function() {
+        document.getElementById('characterModal').style.display = 'none';
+    });
+
+    // Обработчики для выбора персонажа
+    document.querySelectorAll('.character-option').forEach(option => {
+        option.addEventListener('click', function() {
+            const imgSrc = this.dataset.img;
+            document.getElementById('character-image').src = imgSrc;
+            document.getElementById('characterModal').style.display = 'none';
+            
+            // Обновляем подсказку для превью персонажа
+            const characterName = this.querySelector('span').textContent;
+            const tooltip = document.querySelector('#character .tooltip');
+            tooltip.textContent = `Текущий персонаж: ${characterName}`;
+        });
+    });
+
     // Первоначальное обновление статистик
     updateStats();
+    
+    // Отключаем кнопки заточки при отсутствии аксессуаров
+    document.querySelectorAll('.grid-item').forEach(item => {
+        if (!item.querySelector('img.main')) {
+            item.querySelectorAll('.btn.plus, .btn.minus').forEach(btn => {
+                btn.disabled = true;
+            });
+        }
+    });
 });
 
 // Делаем данные доступными глобально
@@ -458,21 +514,3 @@ window.accessoriesData = accessoriesData;
 window.RuTypes = RuTypes;
 window.RuSlots = RuSlots;
 window.updateStats = updateStats;
-// Обработчик для открытия модального окна выбора персонажа
-document.getElementById('character').addEventListener('click', function() {
-    document.getElementById('characterModal').style.display = 'flex';
-});
-
-// Обработчик для закрытия модального окна выбора персонажа
-document.getElementById('closeCharacterModal').addEventListener('click', function() {
-    document.getElementById('characterModal').style.display = 'none';
-});
-
-// Обработчики для выбора персонажа
-document.querySelectorAll('.character-option').forEach(option => {
-    option.addEventListener('click', function() {
-        const imgSrc = this.dataset.img;
-        document.getElementById('character-image').src = imgSrc;
-        document.getElementById('characterModal').style.display = 'none';
-    });
-});
