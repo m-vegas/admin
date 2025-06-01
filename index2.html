@@ -356,6 +356,84 @@
             z-index: 100;
         }
 
+        /* Добавляем стили для модальных окон */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-accs {
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 15px;
+        }
+        
+        .modal-accs img {
+            width: 100%;
+            cursor: pointer;
+            border: 1px solid var(--border);
+            border-radius: 5px;
+        }
+        
+        #modalDelete {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal {
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 90%;
+            text-align: center;
+        }
+        
+        .modal-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .modal-buttons button {
+            padding: 8px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        #yesDelete {
+            background-color: var(--accent-red);
+            color: white;
+        }
+        
+        #noDelete {
+            background-color: var(--text-gray);
+            color: white;
+        }
+
         @keyframes pulse {
             0% { opacity: 0.7; }
             50% { opacity: 1; }
@@ -394,6 +472,7 @@
             }
         }
     </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
@@ -569,6 +648,24 @@
         Система находится на доработке, некоторые функции могут работать нестабильно
     </div>
 
+    <!-- Добавляем модальные окна перед закрывающим тегом body -->
+    <div id="modalOverlay" class="modal-overlay">
+        <div class="modal-accs"></div>
+        <button id="closeModal" class="btn" style="position: absolute; top: 20px; right: 20px; width: 40px; height: 40px;">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+    
+    <div id="modalDelete">
+        <div class="modal">
+            <h2>Вы уверены что хотите удалить аксессуар?</h2>
+            <div class="modal-buttons">
+                <button id="yesDelete">Да</button>
+                <button id="noDelete">Нет</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Обработчик для кнопки Личный кабинет
@@ -639,6 +736,34 @@
 
             // Инициализация начальных значений
             updateStats();
+
+            // Обработчики для модальных окон
+            document.getElementById('closeModal').addEventListener('click', function() {
+                document.getElementById('modalOverlay').style.display = 'none';
+            });
+
+            document.getElementById('noDelete').addEventListener('click', function() {
+                document.getElementById('modalDelete').style.display = 'none';
+            });
+
+            // Добавляем обработчики для мини-контейнеров (для демонстрации)
+            document.querySelectorAll('.mini-container').forEach(container => {
+                container.addEventListener('click', function() {
+                    const slotName = this.getAttribute('slot-name');
+                    const modalAccs = document.querySelector('.modal-accs');
+                    modalAccs.innerHTML = '';
+                    
+                    // Генерируем демонстрационные аксессуары
+                    for (let i = 1; i <= 12; i++) {
+                        const acc = document.createElement('img');
+                        acc.src = `https://via.placeholder.com/100/111111/cccccc?text=${slotName}+${i}`;
+                        acc.alt = `${slotName} ${i}`;
+                        modalAccs.appendChild(acc);
+                    }
+                    
+                    document.getElementById('modalOverlay').style.display = 'flex';
+                });
+            });
         });
     </script>
 </body>
