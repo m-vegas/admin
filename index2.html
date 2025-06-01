@@ -153,8 +153,9 @@
             flex-direction: column;
         }
 
-        .character {
-            position: relative;
+        .character-container {
+            display: flex;
+            flex-direction: column;
             margin-bottom: 20px;
             border: 1px solid var(--border);
             border-radius: 10px;
@@ -164,21 +165,71 @@
             transition: all 0.3s ease;
         }
 
-        .character:hover {
+        .character-container:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 25px rgba(0,0,0,0.4);
         }
 
+        .character-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .character-header h2 {
+            font-size: 1.2rem;
+            color: var(--accent-gold);
+        }
+
+        .select-character-btn {
+            background-color: var(--accent-red);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .select-character-btn:hover {
+            background-color: #ff1a1a;
+            transform: translateY(-2px);
+        }
+
+        .character-display {
+            display: flex;
+            gap: 20px;
+        }
+
+        .character-image-container {
+            flex: 1;
+            min-height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0,0,0,0.2);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
         #character-image {
-            width: 100%;
+            max-width: 100%;
             max-height: 300px;
             object-fit: contain;
-            border-radius: 5px;
             transition: all 0.3s ease;
         }
 
+        .character-stats {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
         .info {
-            margin-top: 15px;
             padding: 10px;
             background-color: rgba(0,0,0,0.3);
             border-radius: 5px;
@@ -316,6 +367,7 @@
             min-height: auto;
             box-shadow: 0 3px 10px rgba(0,0,0,0.2);
             transition: all 0.3s ease;
+            cursor: pointer;
         }
 
         .mini-container:hover {
@@ -680,6 +732,10 @@
             .grid {
                 grid-template-columns: repeat(2, 1fr);
             }
+
+            .character-display {
+                flex-direction: column;
+            }
         }
 
         @media (max-width: 768px) {
@@ -756,22 +812,31 @@
 
         <div class="sets-main">
             <div class="left-section">
-                <div class="character">
-                    <div style="cursor: pointer; position: relative;" id="character">
-                        <img src="https://via.placeholder.com/400x300/111111/cccccc?text=Character+Preview" alt="Character" id="character-image">
-                        <div class="tooltip" style="bottom: 101%;">Нажмите чтобы сменить персонажа</div>
+                <div class="character-container">
+                    <div class="character-header">
+                        <h2>Ваш персонаж</h2>
+                        <button class="select-character-btn" id="select-character-btn">
+                            <i class="fas fa-user-edit"></i> Выбрать
+                        </button>
                     </div>
-                    <div class="info">
-                        <span class="highlight white">Защита: <span class="highlight" id="deff">[-0% урона]</span></span><br>
-                        <span class="highlight white">Регенерация: <span class="highlight" id="hpmin">[0 HP в мин.]</span></span><br>
-                        <span class="highlight white">Урон: <span class="highlight" id="damage">[+0 урона]</span></span><br>
-                        <span class="highlight white">Удача: <span class="highlight" id="krit">[шанс 0% крит.урона]</span></span><br>
-                        <span class="highlight white">Макс. HP: <span class="highlight" id="hpmax">[+0 макс. HP]</span></span><br>
-                        <span class="highlight white">Макс. Брони: <span class="highlight" id="armourmax">[+0 макс. Брони]</span></span><br>
-                        <span class="highlight white">Шанс оглушения: <span class="highlight" id="oglysh">[+0%]</span></span><br>
-                        <span class="highlight white">Шанс опьянения: <span class="highlight" id="opyan">[+0%]</span></span><br>
-                        <span class="highlight white">Шанс избежать оглушения: <span class="highlight" id="neoglysh">[+0%]</span></span><br>
-                        <span class="highlight white">Отражение урона: <span class="highlight" id="otrazh">[-0%]</span></span>
+                    <div class="character-display">
+                        <div class="character-image-container">
+                            <img src="https://via.placeholder.com/400x300/111111/cccccc?text=Character+Preview" alt="Character" id="character-image">
+                        </div>
+                        <div class="character-stats">
+                            <div class="info">
+                                <span class="highlight white">Защита: <span class="highlight" id="deff">[-0% урона]</span></span><br>
+                                <span class="highlight white">Регенерация: <span class="highlight" id="hpmin">[0 HP в мин.]</span></span><br>
+                                <span class="highlight white">Урон: <span class="highlight" id="damage">[+0 урона]</span></span><br>
+                                <span class="highlight white">Удача: <span class="highlight" id="krit">[шанс 0% крит.урона]</span></span><br>
+                                <span class="highlight white">Макс. HP: <span class="highlight" id="hpmax">[+0 макс. HP]</span></span><br>
+                                <span class="highlight white">Макс. Брони: <span class="highlight" id="armourmax">[+0 макс. Брони]</span></span><br>
+                                <span class="highlight white">Шанс оглушения: <span class="highlight" id="oglysh">[+0%]</span></span><br>
+                                <span class="highlight white">Шанс опьянения: <span class="highlight" id="opyan">[+0%]</span></span><br>
+                                <span class="highlight white">Шанс избежать оглушения: <span class="highlight" id="neoglysh">[+0%]</span></span><br>
+                                <span class="highlight white">Отражение урона: <span class="highlight" id="otrazh">[-0%]</span></span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -846,35 +911,35 @@
             </div>
 
             <div class="right-section">
-                <div class="mini-container" slot-name="head">
+                <div class="mini-container" slot-name="head" data-slot="head">
                     <h3>Аксессуары на голову</h3>
                     <p>Выберите аксессуар для головы</p>
                 </div>
-                <div class="mini-container" slot-name="face">
+                <div class="mini-container" slot-name="face" data-slot="face">
                     <h3>Аксессуары на лицо</h3>
                     <p>Выберите аксессуар для лица</p>
                 </div>
-                <div class="mini-container" slot-name="hand">
+                <div class="mini-container" slot-name="hand" data-slot="hand">
                     <h3>Аксессуары в руку</h3>
                     <p>Выберите аксессуар для руки</p>
                 </div>
-                <div class="mini-container" slot-name="breast">
+                <div class="mini-container" slot-name="breast" data-slot="breast">
                     <h3>Аксессуары на грудь</h3>
                     <p>Выберите аксессуар для груди</p>
                 </div>
-                <div class="mini-container" slot-name="shoulder">
+                <div class="mini-container" slot-name="shoulder" data-slot="shoulder">
                     <h3>Аксессуары на плечо</h3>
                     <p>Выберите аксессуар для плеча</p>
                 </div>
-                <div class="mini-container" slot-name="spine">
+                <div class="mini-container" slot-name="spine" data-slot="spine">
                     <h3>Аксессуары на спину</h3>
                     <p>Выберите аксессуар для спины</p>
                 </div>
-                <div class="mini-container" slot-name="armour">
+                <div class="mini-container" slot-name="armour" data-slot="armour">
                     <h3>Бронежилеты</h3>
                     <p>Выберите бронежилет</p>
                 </div>
-                <div class="mini-container" slot-name="case">
+                <div class="mini-container" slot-name="case" data-slot="case">
                     <h3>Чемоданы</h3>
                     <p>Выберите чемодан</p>
                 </div>
@@ -915,20 +980,20 @@
         <div class="character-selection">
             <h2>Выберите персонажа</h2>
             <div class="character-grid">
-                <div class="character-option" data-img="https://via.placeholder.com/400x300/111111/cccccc?text=Character+1">
-                    <img src="https://via.placeholder.com/100/111111/cccccc?text=C1" alt="Character 1">
+                <div class="character-option" data-img="/imgs/characters/character1.png">
+                    <img src="/imgs/characters/character1_thumb.png" alt="Character 1">
                     <span>Персонаж 1</span>
                 </div>
-                <div class="character-option" data-img="https://via.placeholder.com/400x300/111111/cccccc?text=Character+2">
-                    <img src="https://via.placeholder.com/100/111111/cccccc?text=C2" alt="Character 2">
+                <div class="character-option" data-img="/imgs/characters/character2.png">
+                    <img src="/imgs/characters/character2_thumb.png" alt="Character 2">
                     <span>Персонаж 2</span>
                 </div>
-                <div class="character-option" data-img="https://via.placeholder.com/400x300/111111/cccccc?text=Character+3">
-                    <img src="https://via.placeholder.com/100/111111/cccccc?text=C3" alt="Character 3">
+                <div class="character-option" data-img="/imgs/characters/character3.png">
+                    <img src="/imgs/characters/character3_thumb.png" alt="Character 3">
                     <span>Персонаж 3</span>
                 </div>
-                <div class="character-option" data-img="https://via.placeholder.com/400x300/111111/cccccc?text=Character+4">
-                    <img src="https://via.placeholder.com/100/111111/cccccc?text=C4" alt="Character 4">
+                <div class="character-option" data-img="/imgs/characters/character4.png">
+                    <img src="/imgs/characters/character4_thumb.png" alt="Character 4">
                     <span>Персонаж 4</span>
                 </div>
             </div>
@@ -937,5 +1002,65 @@
             </button>
         </div>
     </div>
-</body>
-</html>
+
+    <script>
+        $(document).ready(function() {
+            // Обработчики для кнопок + и -
+            $('.plus').click(function() {
+                const valueElement = $(this).siblings('.zatochka-value');
+                let value = parseInt(valueElement.text().replace('+', '')) || 0;
+                if (value < 10) {
+                    value++;
+                    valueElement.text('+' + value);
+                    updateStats();
+                }
+            });
+
+            $('.minus').click(function() {
+                const valueElement = $(this).siblings('.zatochka-value');
+                let value = parseInt(valueElement.text().replace('+', '')) || 0;
+                if (value > 0) {
+                    value--;
+                    valueElement.text('+' + value);
+                    updateStats();
+                }
+            });
+
+            // Обработчик для выбора персонажа
+            $('#select-character-btn').click(function() {
+                $('#characterModal').css('display', 'flex');
+            });
+
+            $('#closeCharacterModal').click(function() {
+                $('#characterModal').hide();
+            });
+
+            $('.character-option').click(function() {
+                const imgUrl = $(this).data('img');
+             $('#character-image').attr('src', imgUrl);
+              $('#characterModal').hide();
+            });
+             // Обработчики для мини-контейнеров (выбор аксессуаров)
+        $('.mini-container').click(function() {
+            const slot = $(this).data('slot');
+            openAccessoryModal(slot);
+        });
+
+        // Обработчик закрытия модального окна аксессуаров
+        $('#closeModal').click(function() {
+            $('#modalOverlay').hide();
+        });
+
+        // Функция открытия модального окна с аксессуарами
+        function openAccessoryModal(slot) {
+            $('#modalOverlay').css('display', 'flex');
+            // Здесь должен быть код для загрузки аксессуаров по слоту
+        }
+
+        // Функция обновления статистики персонажа
+        function updateStats() {
+            // Здесь должен быть код для пересчета статистик
+        }
+    });
+</script>
+</body> </html>
