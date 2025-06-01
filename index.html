@@ -700,7 +700,7 @@
                     return date.toLocaleDateString('ru-RU');
                 }
 
-                // Отображение пагинации
+                // Отображение пагинации (обновленная версия)
                 function renderPagination() {
                     pagination.innerHTML = '';
                     
@@ -721,8 +721,35 @@
                     });
                     pagination.appendChild(prevBtn);
                     
-                    // Номера страниц
-                    for (let i = 1; i <= totalPages; i++) {
+                    // Всегда показываем первую страницу
+                    if (currentPage > 1) {
+                        const firstPageBtn = document.createElement('button');
+                        firstPageBtn.textContent = '1';
+                        firstPageBtn.className = 1 === currentPage ? 'active' : '';
+                        firstPageBtn.addEventListener('click', () => {
+                            currentPage = 1;
+                            renderItems();
+                            renderPagination();
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                        });
+                        pagination.appendChild(firstPageBtn);
+                        
+                        // Многоточие, если текущая страница далеко от начала
+                        if (currentPage > 3) {
+                            const ellipsis = document.createElement('span');
+                            ellipsis.textContent = '...';
+                            ellipsis.style.padding = '8px 15px';
+                            pagination.appendChild(ellipsis);
+                        }
+                    }
+                    
+                    // Показываем страницы вокруг текущей
+                    const startPage = Math.max(2, currentPage - 1);
+                    const endPage = Math.min(totalPages - 1, currentPage + 1);
+                    
+                    for (let i = startPage; i <= endPage; i++) {
+                        if (i === 1 || i === totalPages) continue; // Уже обработали или обработаем позже
+                        
                         const pageBtn = document.createElement('button');
                         pageBtn.textContent = i;
                         pageBtn.className = i === currentPage ? 'active' : '';
@@ -733,6 +760,28 @@
                             window.scrollTo({ top: 0, behavior: 'smooth' });
                         });
                         pagination.appendChild(pageBtn);
+                    }
+                    
+                    // Многоточие, если текущая страница далеко от конца
+                    if (currentPage < totalPages - 2) {
+                        const ellipsis = document.createElement('span');
+                        ellipsis.textContent = '...';
+                        ellipsis.style.padding = '8px 15px';
+                        pagination.appendChild(ellipsis);
+                    }
+                    
+                    // Всегда показываем последнюю страницу
+                    if (totalPages > 1 && currentPage < totalPages) {
+                        const lastPageBtn = document.createElement('button');
+                        lastPageBtn.textContent = totalPages;
+                        lastPageBtn.className = totalPages === currentPage ? 'active' : '';
+                        lastPageBtn.addEventListener('click', () => {
+                            currentPage = totalPages;
+                            renderItems();
+                            renderPagination();
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                        });
+                        pagination.appendChild(lastPageBtn);
                     }
                     
                     // Кнопка "Вперед"
