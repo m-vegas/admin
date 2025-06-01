@@ -13,6 +13,7 @@
             --text-white: #ffffff;
             --text-gray: #aaaaaa;
             --border: rgba(255,255,255,0.1);
+            --success-green: #2ecc71;
         }
         
         * {
@@ -61,11 +62,15 @@
             color: var(--text-white);
             text-decoration: none;
             font-weight: bold;
-            transition: color 0.2s;
+            transition: all 0.2s;
+            padding: 5px 10px;
+            border-radius: 5px;
         }
         
         .discord-link:hover, .market-link:hover, .sets-link:hover {
             color: var(--accent-red);
+            background-color: rgba(255,255,255,0.05);
+            transform: translateY(-2px);
         }
         
         .discord-icon {
@@ -81,7 +86,7 @@
         }
         
         .account-btn {
-            background: none;
+            background: rgba(255,255,255,0.1);
             border: none;
             color: var(--text-white);
             cursor: pointer;
@@ -89,10 +94,15 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: all 0.2s;
         }
         
         .account-btn:hover {
             color: var(--accent-gold);
+            background: rgba(255,204,0,0.1);
+            transform: translateY(-2px);
         }
         
         header {
@@ -120,6 +130,7 @@
             background: linear-gradient(to right, var(--accent-red), var(--accent-gold));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 10px rgba(255, 46, 46, 0.3);
         }
 
         /* Стили для системы сетов */
@@ -149,12 +160,21 @@
             border-radius: 10px;
             padding: 15px;
             background-color: var(--card-bg);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .character:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
         }
 
         #character-image {
             width: 100%;
             max-height: 300px;
             object-fit: contain;
+            border-radius: 5px;
+            transition: all 0.3s ease;
         }
 
         .info {
@@ -163,6 +183,7 @@
             background-color: rgba(0,0,0,0.3);
             border-radius: 5px;
             border: 1px solid var(--border);
+            font-size: 0.9rem;
         }
 
         .highlight {
@@ -192,11 +213,23 @@
             padding: 10px;
             cursor: pointer;
             transition: all 0.2s;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            overflow: hidden;
         }
 
         .grid-item:hover {
             border-color: var(--accent-gold);
-            transform: translateY(-3px);
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(255, 204, 0, 0.2);
+        }
+
+        .grid-item::before {
+            content: attr(ru-name);
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            font-size: 0.7rem;
+            color: var(--text-gray);
         }
 
         .grid-text {
@@ -204,12 +237,17 @@
             justify-content: space-between;
             align-items: center;
             gap: 5px;
+            z-index: 2;
+            background-color: rgba(0,0,0,0.7);
+            padding: 5px;
+            border-radius: 3px;
         }
 
         .zatochka-value {
             flex-grow: 1;
             text-align: center;
             font-size: 0.9rem;
+            font-weight: bold;
         }
 
         .btn {
@@ -223,10 +261,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: all 0.2s;
         }
 
         .btn:hover {
             background-color: var(--accent-red);
+            transform: scale(1.1);
         }
 
         .nashivka {
@@ -260,6 +300,7 @@
             transition: opacity 0.2s;
             pointer-events: none;
             z-index: 10;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
         .grid-item:hover .tooltip {
@@ -273,6 +314,13 @@
             padding: 15px;
             margin-bottom: 15px;
             min-height: auto;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .mini-container:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
 
         .mini-container h3 {
@@ -333,11 +381,13 @@
             cursor: pointer;
             opacity: 0.7;
             transition: all 0.2s;
+            box-shadow: 0 3px 10px rgba(255, 46, 46, 0.3);
         }
 
         .trash:hover {
             opacity: 1;
-            transform: scale(1.1);
+            transform: scale(1.1) translateY(-5px);
+            box-shadow: 0 5px 15px rgba(255, 46, 46, 0.5);
         }
 
         .trash i {
@@ -360,22 +410,30 @@
             padding-top: 20px;
         }
 
-        /* Уведомление о доработке */
-        .dev-banner {
+        /* Уведомление о заточке */
+        .zatochka-notification {
             position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(90deg, var(--accent-red), #ff5e5e);
-            color: white;
-            text-align: center;
-            padding: 10px;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(90deg, var(--accent-gold), #ffdb58);
+            color: #000;
+            padding: 12px 25px;
+            border-radius: 30px;
             font-weight: bold;
+            box-shadow: 0 5px 15px rgba(255, 204, 0, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 50;
             animation: pulse 2s infinite;
-            z-index: 100;
         }
 
-        /* Добавляем стили для модальных окон */
+        .zatochka-notification i {
+            font-size: 1.2rem;
+        }
+
+        /* Модальные окна */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -399,6 +457,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
             gap: 15px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.5);
         }
         
         .modal-accs img {
@@ -414,6 +473,7 @@
         .modal-accs img:hover {
             transform: scale(1.05);
             border-color: var(--accent-gold);
+            box-shadow: 0 3px 10px rgba(255, 204, 0, 0.3);
         }
         
         .accessory-item {
@@ -431,6 +491,7 @@
         .accessory-item:hover {
             border-color: var(--accent-gold);
             background-color: rgba(255, 204, 0, 0.05);
+            transform: translateY(-3px);
         }
         
         .accessory-name {
@@ -458,6 +519,7 @@
             border-radius: 10px;
             max-width: 90%;
             text-align: center;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.5);
         }
         
         .modal-buttons {
@@ -472,6 +534,7 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            transition: all 0.2s;
         }
         
         #yesDelete {
@@ -479,9 +542,19 @@
             color: white;
         }
         
+        #yesDelete:hover {
+            background-color: #ff1a1a;
+            transform: translateY(-2px);
+        }
+        
         #noDelete {
             background-color: var(--text-gray);
             color: white;
+        }
+        
+        #noDelete:hover {
+            background-color: #999999;
+            transform: translateY(-2px);
         }
 
         /* Стили для аксессуаров */
@@ -509,6 +582,7 @@
             display: flex;
             flex-direction: column;
             gap: 5px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.3);
         }
 
         .nashivka-menu button {
@@ -518,10 +592,12 @@
             color: var(--text-white);
             cursor: pointer;
             font-size: 0.7rem;
+            transition: all 0.2s;
         }
 
         .nashivka-menu button:hover {
             background-color: var(--accent-red);
+            transform: scale(1.05);
         }
 
         /* Модальное окно выбора персонажа */
@@ -546,6 +622,7 @@
             width: 90%;
             max-height: 80vh;
             overflow-y: auto;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.5);
         }
 
         .character-grid {
@@ -569,12 +646,14 @@
         .character-option:hover {
             border-color: var(--accent-gold);
             transform: scale(1.05);
+            box-shadow: 0 3px 10px rgba(255, 204, 0, 0.2);
         }
 
         .character-option img {
             width: 100px;
             height: 100px;
             object-fit: contain;
+            border-radius: 5px;
         }
 
         .character-option span {
@@ -584,9 +663,9 @@
         }
 
         @keyframes pulse {
-            0% { opacity: 0.7; }
-            50% { opacity: 1; }
-            100% { opacity: 0.7; }
+            0% { transform: translateX(-50%) scale(1); }
+            50% { transform: translateX(-50%) scale(1.05); }
+            100% { transform: translateX(-50%) scale(1); }
         }
 
         @media (max-width: 1200px) {
@@ -631,6 +710,13 @@
 
             .character-grid {
                 grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+            
+            .zatochka-notification {
+                width: 90%;
+                text-align: center;
+                padding: 10px 15px;
+                font-size: 0.9rem;
             }
         }
     </style>
@@ -799,6 +885,12 @@
     <div class="trash">
         <i class="fas fa-trash"></i>
         <div class="tooltip" id="trashtooltip">Перетащите сюда предмет, чтобы его выкинуть!</div>
+    </div>
+    
+    <!-- Уведомление о заточке -->
+    <div class="zatochka-notification">
+        <i class="fas fa-exclamation-circle"></i>
+        <span>Перед выбором аксессуара не забудьте выставить заточку!</span>
     </div>
     
     <div id="modalOverlay" class="modal-overlay">
