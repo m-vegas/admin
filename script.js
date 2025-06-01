@@ -1,5 +1,5 @@
 // Define base path for images
-const basePath = ''; // or path to images folder, e.g. '/assets/'
+const basePath = 'https://raw.githubusercontent.com/m-vegas/Vegas-Informations/main/';
 
 // Основной массив с аксессуарами
 const accessoriesData = {
@@ -155,6 +155,26 @@ const RuSlots = {
     case: 'Чемодан'
 };
 
+// Функция для загрузки персонажа по ID
+function loadCharacter(characterId) {
+    const characterImage = document.getElementById('character-image');
+    if (!characterImage) {
+        console.error('Element #character-image not found');
+        return;
+    }
+
+    characterImage.src = `${basePath}imgs/characters/${characterId}.png`;
+    characterImage.onerror = function() {
+        this.src = 'https://via.placeholder.com/200/333333/ffffff?text=No+Character';
+    };
+
+    // Обновляем подсказку
+    const tooltip = document.querySelector('#character .tooltip');
+    if (tooltip) {
+        tooltip.textContent = `Текущий персонаж: Персонаж ${characterId}`;
+    }
+}
+
 // Функция для обновления статистик персонажа
 function updateStats() {
     let stats = {
@@ -178,7 +198,7 @@ function updateStats() {
             const yellowStats = JSON.parse(img.dataset.yellow || '{}');
             const nashivkaStats = JSON.parse(img.dataset.nashivka || '{}');
             const upgType = img.dataset.upg;
-            const zatochka = parseInt(item.querySelector('.zatochka-value')?.textContent.replace('+', '') || 0;
+            const zatochka = parseInt(item.querySelector('.zatochka-value')?.textContent.replace('+', '') || 0);
 
             // Добавляем базовые статистики
             for (const stat in itemStats) {
@@ -225,77 +245,102 @@ function updateStats() {
     stats.deff = Math.min(stats.deff, 90);
 
     // Обновляем отображение статистик
-    document.getElementById('deff').textContent = `[-${stats.deff}% урона]`;
-    document.getElementById('hpmin').textContent = `[${stats.hpmin} HP в мин.]`;
-    document.getElementById('damage').textContent = `[+${stats.damage} урона]`;
-    document.getElementById('krit').textContent = `[шанс ${stats.krit}% крит.урона]`;
-    document.getElementById('hpmax').textContent = `[+${stats.hpmax} макс. HP]`;
-    document.getElementById('armourmax').textContent = `[+${stats.armourmax} макс. Брони]`;
-    document.getElementById('oglysh').textContent = `[+${stats.oglysh}%]`;
-    document.getElementById('opyan').textContent = `[+${stats.opyan}%]`;
-    document.getElementById('neoglysh').textContent = `[+${stats.neoglysh}%]`;
-    document.getElementById('otrazh').textContent = `[-${stats.otrazh}%]`;
+    const updateStatElement = (id, value, prefix = '+', suffix = '') => {
+        const element = document.getElementById(id);
+        if (element) element.textContent = `[${prefix}${value}${suffix}]`;
+    };
+
+    updateStatElement('deff', stats.deff, '-', '% урона');
+    updateStatElement('hpmin', stats.hpmin, '', ' HP в мин.');
+    updateStatElement('damage', stats.damage, '+', ' урона');
+    updateStatElement('krit', stats.krit, 'шанс ', '% крит.урона');
+    updateStatElement('hpmax', stats.hpmax, '+', ' макс. HP');
+    updateStatElement('armourmax', stats.armourmax, '+', ' макс. Брони');
+    updateStatElement('oglysh', stats.oglysh, '+', '%');
+    updateStatElement('opyan', stats.opyan, '+', '%');
+    updateStatElement('neoglysh', stats.neoglysh, '+', '%');
+    updateStatElement('otrazh', stats.otrazh, '-', '%');
+}
+
+// Функция для создания элемента аксессуара
+function createAccessoryElement(acc, slotName) {
+    const accItem = document.createElement('div');
+    accItem.className = 'accessory-item';
+    
+    const img = document.createElement('img');
+    img.src = acc.imageSrc;
+    img.alt = acc.imageSrc.split('/').pop();
+    img.onerror = () => {
+        img.src = 'https://via.placeholder.com/100/333333/ffffff?text=No+Image';
+    };
+    
+    const nameDiv = document.createElement('div');
+    nameDiv.className = 'accessory-name';
+    nameDiv.textContent = acc.imageSrc.split('/').pop().split('.')[0];
+    
+    accItem.appendChild(img);
+    accItem.appendChild(nameDiv);
+    
+    accItem.addEventListener('click', () => {
+        const gridItem = document.querySelector(`.grid-item#${slotName}`);
+        if (gridItem) {
+            // Удаляем старый аксессуар, если есть
+            const oldImg = gridItem.querySelector('img.main');
+            if (oldImg) oldImg.remove();
+            
+            // Создаем новый элемент аксессуара
+            const newImg = document.createElement('img');
+            newImg.src = acc.imageSrc;
+            newImg.className = 'main';
+            newImg.draggable = true;
+            newImg.dataset.stats = JSON.stringify(acc.stats);
+            newImg.dataset.upg = acc.upg;
+            newImg.dataset.yellow = JSON.stringify(acc.yellow);
+            
+            // Добавляем в слот
+            gridItem.prepend(newImg);
+            
+            // Включаем кнопки заточки
+            gridItem.querySelectorAll('.btn.plus, .btn.minus').forEach(btn => {
+                btn.disabled = false;
+            });
+            
+            // Обновляем статистики
+            updateStats();
+            
+            // Закрываем модальное окно
+            document.getElementById('modalOverlay').style.display = 'none';
+        }
+    });
+    
+    return accItem;
 }
 
 // Функция для открытия модального окна с аксессуарами
 function openAccessoryModal(slotName) {
     const modalAccs = document.querySelector('.modal-accs');
+    if (!modalAccs) {
+        console.error('Element .modal-accs not found');
+        return;
+    }
+
     modalAccs.innerHTML = `
         <div style="grid-column: 1 / -1; text-align: center; margin-bottom: 10px;">
-            <h3>Выберите ${RuSlots[slotName].toLowerCase()}</h3>
+            <h3>Выберите ${RuSlots[slotName]?.toLowerCase() || slotName}</h3>
         </div>`;
 
+    // Проверяем наличие аксессуаров для этого слота
+    if (!accessoriesData[slotName] || accessoriesData[slotName].length === 0) {
+        modalAccs.innerHTML += `
+            <div style="grid-column: 1 / -1; text-align: center;">
+                <p>Нет доступных аксессуаров для этого слота</p>
+            </div>`;
+        return;
+    }
+
     // Добавляем аксессуары для выбранного слота
-    accessoriesData[slotName]?.forEach(acc => {
-        const accItem = document.createElement('div');
-        accItem.className = 'accessory-item';
-        
-        const img = document.createElement('img');
-        img.src = acc.imageSrc;
-        img.alt = acc.imageSrc.split('/').pop();
-        img.onerror = () => {
-            img.src = 'https://via.placeholder.com/100/333333/ffffff?text=No+Image';
-        };
-        
-        const nameDiv = document.createElement('div');
-        nameDiv.className = 'accessory-name';
-        nameDiv.textContent = acc.imageSrc.split('/').pop().split('.')[0];
-        
-        accItem.appendChild(img);
-        accItem.appendChild(nameDiv);
-        
-        accItem.addEventListener('click', () => {
-            const gridItem = document.querySelector(`.grid-item#${slotName}`);
-            if (gridItem) {
-                // Удаляем старый аксессуар, если есть
-                const oldImg = gridItem.querySelector('img.main');
-                if (oldImg) oldImg.remove();
-                
-                // Создаем новый элемент аксессуара
-                const newImg = document.createElement('img');
-                newImg.src = acc.imageSrc;
-                newImg.className = 'main';
-                newImg.draggable = true;
-                newImg.dataset.stats = JSON.stringify(acc.stats);
-                newImg.dataset.upg = acc.upg;
-                newImg.dataset.yellow = JSON.stringify(acc.yellow);
-                
-                // Добавляем в слот
-                gridItem.prepend(newImg);
-                
-                // Включаем кнопки заточки
-                gridItem.querySelectorAll('.btn.plus, .btn.minus').forEach(btn => {
-                    btn.disabled = false;
-                });
-                
-                // Обновляем статистики
-                updateStats();
-                
-                // Закрываем модальное окно
-                document.getElementById('modalOverlay').style.display = 'none';
-            }
-        });
-        
+    accessoriesData[slotName].forEach(acc => {
+        const accItem = createAccessoryElement(acc, slotName);
         modalAccs.appendChild(accItem);
     });
 
@@ -304,11 +349,16 @@ function openAccessoryModal(slotName) {
 
 // Инициализация при загрузке страницы
 document.addEventListener('DOMContentLoaded', function() {
+    // Загружаем персонажа 4 по умолчанию
+    loadCharacter(4);
+
     // Обработчики для мини-контейнеров (открытие модального окна)
     document.querySelectorAll('.mini-container').forEach(container => {
         container.addEventListener('click', function() {
             const slotName = this.getAttribute('slot-name');
-            openAccessoryModal(slotName);
+            if (slotName) {
+                openAccessoryModal(slotName);
+            }
         });
     });
 
@@ -318,8 +368,8 @@ document.addEventListener('DOMContentLoaded', function() {
         if (e.target.classList.contains('plus')) {
             e.stopPropagation();
             const gridItem = e.target.closest('.grid-item');
-            const zatochkaValue = gridItem.querySelector('.zatochka-value');
-            const hasAccessory = gridItem.querySelector('img.main');
+            const zatochkaValue = gridItem?.querySelector('.zatochka-value');
+            const hasAccessory = gridItem?.querySelector('img.main');
             
             if (zatochkaValue && hasAccessory) {
                 let value = parseInt(zatochkaValue.textContent.replace('+', '')) || 0;
@@ -334,8 +384,8 @@ document.addEventListener('DOMContentLoaded', function() {
         if (e.target.classList.contains('minus')) {
             e.stopPropagation();
             const gridItem = e.target.closest('.grid-item');
-            const zatochkaValue = gridItem.querySelector('.zatochka-value');
-            const hasAccessory = gridItem.querySelector('img.main');
+            const zatochkaValue = gridItem?.querySelector('.zatochka-value');
+            const hasAccessory = gridItem?.querySelector('img.main');
             
             if (zatochkaValue && hasAccessory) {
                 let value = parseInt(zatochkaValue.textContent.replace('+', '')) || 0;
@@ -352,7 +402,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (e.target.classList.contains('nashivka')) {
             e.stopPropagation();
             const gridItem = e.target.closest('.grid-item');
-            const img = gridItem.querySelector('img.main');
+            const img = gridItem?.querySelector('img.main');
             
             if (img) {
                 // Удаляем старое меню, если есть
@@ -379,7 +429,9 @@ document.addEventListener('DOMContentLoaded', function() {
                         
                         // Обновляем подсказку
                         const tooltip = gridItem.querySelector('.tooltip');
-                        tooltip.innerHTML = `${gridItem.getAttribute('ru-name')}<br>Нашивка: ${RuTypes[type]}`;
+                        if (tooltip) {
+                            tooltip.innerHTML = `${gridItem.getAttribute('ru-name')}<br>Нашивка: ${RuTypes[type]}`;
+                        }
                         
                         updateStats();
                         menu.remove();
@@ -394,14 +446,16 @@ document.addEventListener('DOMContentLoaded', function() {
         if (e.target.classList.contains('nashivkabronik')) {
             e.stopPropagation();
             const gridItem = e.target.closest('.grid-item');
-            const img = gridItem.querySelector('img.main');
+            const img = gridItem?.querySelector('img.main');
             
             if (img) {
                 img.dataset.nashivka = JSON.stringify({ neoglysh: 20 });
                 
                 // Обновляем подсказку
                 const tooltip = gridItem.querySelector('.tooltip');
-                tooltip.innerHTML = `${gridItem.getAttribute('ru-name')}<br>Нашивка: Есть`;
+                if (tooltip) {
+                    tooltip.innerHTML = `${gridItem.getAttribute('ru-name')}<br>Нашивка: Есть`;
+                }
                 
                 updateStats();
             }
@@ -473,12 +527,12 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Обработчик для открытия модального окна выбора персонажа
-    document.getElementById('character').addEventListener('click', function() {
+    document.getElementById('character')?.addEventListener('click', function() {
         document.getElementById('characterModal').style.display = 'flex';
     });
 
     // Обработчик для закрытия модального окна выбора персонажа
-    document.getElementById('closeCharacterModal').addEventListener('click', function() {
+    document.getElementById('closeCharacterModal')?.addEventListener('click', function() {
         document.getElementById('characterModal').style.display = 'none';
     });
 
@@ -486,13 +540,17 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.character-option').forEach(option => {
         option.addEventListener('click', function() {
             const imgSrc = this.dataset.img;
-            document.getElementById('character-image').src = imgSrc;
-            document.getElementById('characterModal').style.display = 'none';
-            
-            // Обновляем подсказку для превью персонажа
-            const characterName = this.querySelector('span').textContent;
-            const tooltip = document.querySelector('#character .tooltip');
-            tooltip.textContent = `Текущий персонаж: ${characterName}`;
+            if (imgSrc) {
+                document.getElementById('character-image').src = imgSrc;
+                document.getElementById('characterModal').style.display = 'none';
+                
+                // Обновляем подсказку для превью персонажа
+                const characterName = this.querySelector('span')?.textContent || 'Неизвестный';
+                const tooltip = document.querySelector('#character .tooltip');
+                if (tooltip) {
+                    tooltip.textContent = `Текущий персонаж: ${characterName}`;
+                }
+            }
         });
     });
 
@@ -514,3 +572,4 @@ window.accessoriesData = accessoriesData;
 window.RuTypes = RuTypes;
 window.RuSlots = RuSlots;
 window.updateStats = updateStats;
+window.loadCharacter = loadCharacter;
