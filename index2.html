@@ -1004,62 +1004,6 @@
 
     <script>
         $(document).ready(function() {
-            // Обработчики для кнопок + и -
-            $('.plus').click(function() {
-                const valueElement = $(this).siblings('.zatochka-value');
-                let value = parseInt(valueElement.text().replace('+', '')) || 0;
-                if (value < 10) {
-                    value++;
-                    valueElement.text('+' + value);
-                    updateStats();
-                }
-            });
 
-            $('.minus').click(function() {
-                const valueElement = $(this).siblings('.zatochka-value');
-                let value = parseInt(valueElement.text().replace('+', '')) || 0;
-                if (value > 0) {
-                    value--;
-                    valueElement.text('+' + value);
-                    updateStats();
-                }
-            });
-
-            // Обработчик для выбора персонажа
-            $('#select-character-btn').click(function() {
-                $('#characterModal').css('display', 'flex');
-            });
-
-            $('#closeCharacterModal').click(function() {
-                $('#characterModal').hide();
-            });
-
-            $('.character-option').click(function() {
-                const imgUrl = $(this).data('img');
-             $('#character-image').attr('src', imgUrl);
-              $('#characterModal').hide();
-            });
-             // Обработчики для мини-контейнеров (выбор аксессуаров)
-        $('.mini-container').click(function() {
-            const slot = $(this).data('slot');
-            openAccessoryModal(slot);
-        });
-
-        // Обработчик закрытия модального окна аксессуаров
-        $('#closeModal').click(function() {
-            $('#modalOverlay').hide();
-        });
-
-        // Функция открытия модального окна с аксессуарами
-        function openAccessoryModal(slot) {
-            $('#modalOverlay').css('display', 'flex');
-            // Здесь должен быть код для загрузки аксессуаров по слоту
-        }
-
-        // Функция обновления статистики персонажа
-        function updateStats() {
-            // Здесь должен быть код для пересчета статистик
-        }
-    });
 </script>
 </body> </html>
