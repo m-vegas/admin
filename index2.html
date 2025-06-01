@@ -721,49 +721,6 @@
     </div>
 
     <script>
-        // Массив с изображениями аксессуаров для каждого слота
-        const accessoriesData = {
-            'head': [
-                { name: 'Кепка', image: 'https://via.placeholder.com/100/ff9900/000000?text=Кепка' },
-                { name: 'Шляпа', image: 'https://via.placeholder.com/100/cc6600/ffffff?text=Шляпа' },
-                { name: 'Каска', image: 'https://via.placeholder.com/100/999999/000000?text=Каска' },
-                { name: 'Бандана', image: 'https://via.placeholder.com/100/ff3333/ffffff?text=Бандана' },
-                { name: 'Шлем', image: 'https://via.placeholder.com/100/666666/ffffff?text=Шлем' }
-            ],
-            'face': [
-                { name: 'Очки', image: 'https://via.placeholder.com/100/333333/ffffff?text=Очки' },
-                { name: 'Маска', image: 'https://via.placeholder.com/100/000000/ffffff?text=Маска' },
-                { name: 'Повязка', image: 'https://via.placeholder.com/100/ffffff/000000?text=Повязка' }
-            ],
-            'hand': [
-                { name: 'Перчатки', image: 'https://via.placeholder.com/100/663300/ffffff?text=Перчатки' },
-                { name: 'Браслет', image: 'https://via.placeholder.com/100/ffcc00/000000?text=Браслет' },
-                { name: 'Часы', image: 'https://via.placeholder.com/100/0066cc/ffffff?text=Часы' }
-            ],
-            'breast': [
-                { name: 'Цепь', image: 'https://via.placeholder.com/100/cccccc/000000?text=Цепь' },
-                { name: 'Крест', image: 'https://via.placeholder.com/100/ffffff/000000?text=Крест' },
-                { name: 'Медальон', image: 'https://via.placeholder.com/100/ffcc00/000000?text=Медальон' }
-            ],
-            'shoulder': [
-                { name: 'Погоны', image: 'https://via.placeholder.com/100/993333/ffffff?text=Погоны' },
-                { name: 'Наплечники', image: 'https://via.placeholder.com/100/666699/ffffff?text=Наплечники' }
-            ],
-            'spine': [
-                { name: 'Плащ', image: 'https://via.placeholder.com/100/330066/ffffff?text=Плащ' },
-                { name: 'Рюкзак', image: 'https://via.placeholder.com/100/663300/ffffff?text=Рюкзак' }
-            ],
-            'armour': [
-                { name: 'Броник 1', image: 'https://via.placeholder.com/100/ff0000/ffffff?text=Броник+1' },
-                { name: 'Броник 2', image: 'https://via.placeholder.com/100/cc0000/ffffff?text=Броник+2' },
-                { name: 'Броник 3', image: 'https://via.placeholder.com/100/990000/ffffff?text=Броник+3' }
-            ],
-            'case': [
-                { name: 'Чемодан 1', image: 'https://via.placeholder.com/100/ffffff/000000?text=Чемодан+1' },
-                { name: 'Чемодан 2', image: 'https://via.placeholder.com/100/000000/ffffff?text=Чемодан+2' }
-            ]
-        };
-
         document.addEventListener('DOMContentLoaded', function() {
             // Обработчик для кнопки Личный кабинет
             document.getElementById('account-btn').addEventListener('click', function() {
@@ -813,7 +770,7 @@
             function updateStats() {
                 // Собираем все значения с кнопок
                 const values = Array.from(document.querySelectorAll('.grid-item span'))
-                    .map(el => parseInt(el.textContent.replace('+', '')) || 0;
+                    .map(el => parseInt(el.textContent.replace('+', '')) || 0);
                 
                 // Вычисляем общий уровень сета
                 const totalLevel = values.reduce((sum, val) => sum + val, 0);
@@ -853,8 +810,9 @@
                             <h3>Выберите ${this.querySelector('h3').textContent.toLowerCase()}</h3>
                         </div>`;
                     
-                    // Получаем аксессуары для текущего слота
-                    const accessories = accessoriesData[slotName] || [];
+                    // Получаем аксессуары для текущего слота из внешнего файла
+                    // (предполагается, что массив accessoriesData будет определен в script.js)
+                    const accessories = window.accessoriesData && window.accessoriesData[slotName] || [];
                     
                     // Добавляем аксессуары в модальное окно
                     accessories.forEach(acc => {
