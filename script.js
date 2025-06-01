@@ -1,3 +1,6 @@
+// Define base path for images
+const basePath = ''; // or path to images folder, e.g. '/assets/'
+
 // Основной массив с аксессуарами
 const accessoriesData = {
     'head': [
@@ -420,6 +423,26 @@ document.addEventListener('DOMContentLoaded', function() {
     // Инициализация модальных окон
     document.getElementById('closeModal')?.addEventListener('click', () => {
         document.getElementById('modalOverlay').style.display = 'none';
+    });
+
+    // Добавляем обработчики для модального окна удаления
+    document.getElementById('noDelete')?.addEventListener('click', () => {
+        document.getElementById('modalDelete').style.display = 'none';
+    });
+
+    document.getElementById('yesDelete')?.addEventListener('click', () => {
+        const activeSlot = document.querySelector('.grid-item.active');
+        if (activeSlot) {
+            const img = activeSlot.querySelector('img.main');
+            if (img) img.remove();
+            updateStats();
+        }
+        document.getElementById('modalDelete').style.display = 'none';
+    });
+
+    // Обработчик для кнопки аккаунта
+    document.getElementById('account-btn')?.addEventListener('click', () => {
+        alert('Личный кабинет находится в разработке');
     });
 
     // Первоначальное обновление статистик
