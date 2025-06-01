@@ -28,16 +28,12 @@
             background-image: 
                 radial-gradient(circle at 20% 30%, rgba(255, 46, 46, 0.05) 0%, transparent 20%),
                 radial-gradient(circle at 80% 70%, rgba(255, 204, 0, 0.05) 0%, transparent 20%);
-            overflow-x: hidden;
         }
         
         .container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 1rem;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
+            padding: 2rem;
         }
         
         .top-bar {
@@ -54,7 +50,7 @@
             gap: 20px;
         }
         
-        .discord-link, .market-link, .sets-link {
+        .discord-link, .sets-link {
             display: flex;
             align-items: center;
             gap: 0.5rem;
@@ -64,16 +60,12 @@
             transition: color 0.2s;
         }
         
-        .discord-link:hover, .market-link:hover, .sets-link:hover {
+        .discord-link:hover, .sets-link:hover {
             color: var(--accent-red);
         }
         
         .discord-icon {
             color: #5865F2;
-        }
-        
-        .market-icon {
-            color: var(--accent-gold);
         }
         
         .sets-icon {
@@ -100,7 +92,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 1.5rem 0;
-            margin-bottom: 1rem;
+            margin-bottom: 2rem;
             border-bottom: 1px solid var(--border);
         }
         
@@ -121,8 +113,7 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-
-        /* Стили для маркета */
+        
         .search-bar {
             display: flex;
             flex-grow: 1;
@@ -264,227 +255,7 @@
             opacity: 0.5;
             cursor: not-allowed;
         }
-
-        /* Стили для системы сетов */
-        .sets-main {
-            display: flex;
-            flex: 1;
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .left-section {
-            width: 70%;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .right-section {
-            width: 30%;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .character {
-            position: relative;
-            margin-bottom: 20px;
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 15px;
-            background-color: var(--card-bg);
-        }
-
-        #character-image {
-            width: 100%;
-            max-height: 300px;
-            object-fit: contain;
-        }
-
-        .info {
-            margin-top: 15px;
-            padding: 10px;
-            background-color: rgba(0,0,0,0.3);
-            border-radius: 5px;
-            border: 1px solid var(--border);
-        }
-
-        .highlight {
-            color: var(--accent-gold);
-        }
-
-        .white {
-            color: var(--text-white);
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
-        .grid-item {
-            position: relative;
-            height: 100px;
-            background-color: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 5px;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            padding: 10px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .grid-item:hover {
-            border-color: var(--accent-gold);
-            transform: translateY(-3px);
-        }
-
-        .grid-text {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .btn {
-            background-color: rgba(0,0,0,0.3);
-            border: 1px solid var(--border);
-            color: var(--text-white);
-            width: 25px;
-            height: 25px;
-            border-radius: 3px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .btn:hover {
-            background-color: var(--accent-red);
-        }
-
-        .nashivka {
-            background-color: rgba(255, 204, 0, 0.1);
-            border-color: var(--accent-gold);
-        }
-
-        .nashivkabronik {
-            background-color: rgba(255, 46, 46, 0.1);
-            border-color: var(--accent-red);
-        }
-
-        .bottom-row {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .bottom-row .grid-item {
-            width: 50%;
-        }
-
-        .tooltip {
-            position: absolute;
-            background-color: var(--card-bg);
-            border: 1px solid var(--border);
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 0.8rem;
-            opacity: 0;
-            transition: opacity 0.2s;
-            pointer-events: none;
-            z-index: 10;
-        }
-
-        .grid-item:hover .tooltip {
-            opacity: 1;
-        }
-
-        .mini-container {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 5px;
-            padding: 10px;
-            margin-bottom: 15px;
-            min-height: 100px;
-        }
-
-        .mini-container[slot-name="head"] {
-            border-top: 3px solid var(--accent-gold);
-        }
-
-        .mini-container[slot-name="face"] {
-            border-top: 3px solid #ff5e5e;
-        }
-
-        .mini-container[slot-name="hand"] {
-            border-top: 3px solid #5eff5e;
-        }
-
-        .mini-container[slot-name="breast"] {
-            border-top: 3px solid #5e5eff;
-        }
-
-        .mini-container[slot-name="shoulder"] {
-            border-top: 3px solid #ff5eff;
-        }
-
-        .mini-container[slot-name="spine"] {
-            border-top: 3px solid #5effff;
-        }
-
-        .mini-container[slot-name="armour"] {
-            border-top: 3px solid var(--accent-red);
-        }
-
-        .mini-container[slot-name="case"] {
-            border-top: 3px solid #ffffff;
-        }
-
-        .trash {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 60px;
-            height: 60px;
-            background-color: var(--accent-red);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            opacity: 0.7;
-            transition: all 0.2s;
-        }
-
-        .trash:hover {
-            opacity: 1;
-            transform: scale(1.1);
-        }
-
-        .trash i {
-            font-size: 1.5rem;
-            color: white;
-        }
-
-        #trashtooltip {
-            bottom: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            white-space: nowrap;
-        }
-
-        .copyright {
-            font-size: 0.8rem;
-            color: var(--text-gray);
-            text-align: center;
-            margin-top: auto;
-            padding-top: 20px;
-        }
-
-        /* Общие стили */
+        
         .modal {
             display: none;
             position: fixed;
@@ -593,28 +364,243 @@
             display: none;
             animation: slideIn 0.3s ease-out;
         }
-
-        /* Уведомление о доработке */
-        .dev-banner {
+        
+        /* Стили для страницы сэтов */
+        .sets-page {
+            display: none;
+            padding: 20px;
+        }
+        
+        .dev-notification {
             position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(90deg, var(--accent-red), #ff5e5e);
-            color: white;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: 10px;
+            border: 1px solid var(--accent-gold);
+            max-width: 600px;
+            width: 90%;
             text-align: center;
-            padding: 10px;
+            z-index: 1001;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            animation: fadeInUp 0.5s ease-out;
+        }
+        
+        .dev-notification h2 {
+            color: var(--accent-gold);
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        
+        .dev-notification p {
+            color: var(--text-white);
+            line-height: 1.6;
+            margin-bottom: 25px;
+            font-size: 16px;
+        }
+        
+        .dev-notification-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .dev-notification-btn {
+            padding: 10px 25px;
+            border-radius: 5px;
             font-weight: bold;
-            animation: pulse 2s infinite;
-            z-index: 100;
+            cursor: pointer;
+            transition: all 0.2s;
         }
-
-        @keyframes pulse {
-            0% { opacity: 0.7; }
-            50% { opacity: 1; }
-            100% { opacity: 0.7; }
+        
+        .dev-notification-btn-primary {
+            background: var(--accent-red);
+            color: white;
+            border: none;
         }
-
+        
+        .dev-notification-btn-secondary {
+            background: transparent;
+            color: var(--accent-gold);
+            border: 1px solid var(--accent-gold);
+        }
+        
+        .dev-notification-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Стили для системы сэтов */
+        .character-builder {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .grid-item {
+            position: relative;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            padding: 10px;
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .grid-item img {
+            max-width: 100%;
+            max-height: 80px;
+            margin-bottom: 5px;
+        }
+        
+        .grid-text {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            margin-top: 5px;
+        }
+        
+        .grid-text span {
+            font-weight: bold;
+            color: var(--accent-gold);
+        }
+        
+        .btn {
+            background-color: var(--accent-red);
+            color: white;
+            border: none;
+            border-radius: 3px;
+            padding: 3px 6px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .btn:hover {
+            opacity: 0.8;
+        }
+        
+        .tooltip {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0,0,0,0.8);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            display: none;
+            z-index: 10;
+            white-space: nowrap;
+        }
+        
+        .mini-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            justify-content: center;
+        }
+        
+        .mini-container img {
+            max-width: 40px;
+            max-height: 40px;
+            cursor: pointer;
+        }
+        
+        .stats-container {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .stats-container div {
+            margin-bottom: 5px;
+        }
+        
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-accs {
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+        
+        .modal-accs img {
+            max-width: 60px;
+            max-height: 60px;
+            cursor: pointer;
+        }
+        
+        /* Модальное окно подтверждения удаления */
+        #modalDelete {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            z-index: 1001;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        #modalDelete > div {
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        #modalDelete h2 {
+            margin-bottom: 20px;
+        }
+        
+        #modalDelete div {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -40%);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+        }
+        
         @keyframes slideIn {
             from {
                 transform: translateX(100%);
@@ -625,61 +611,58 @@
                 opacity: 1;
             }
         }
-
-        /* Страницы */
-        #main-page {
-            display: block;
-        }
-
-        #sets-page {
-            display: none;
-        }
-
-        @media (max-width: 1200px) {
-            .sets-main {
-                flex-direction: column;
-            }
-            
-            .left-section, .right-section {
-                width: 100%;
-            }
-            
-            .grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
+        
         @media (max-width: 768px) {
             .container {
-                padding: 0.5rem;
+                padding: 1rem;
             }
             
-            .grid {
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .search-bar {
+                max-width: 100%;
+            }
+            
+            .items-grid {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            }
+            
+            .modal-content {
+                margin: 20px auto;
+                width: 95%;
+            }
+            
+            .modal-stats {
                 grid-template-columns: 1fr;
             }
             
-            .bottom-row {
+            .dev-notification-buttons {
                 flex-direction: column;
             }
             
-            .bottom-row .grid-item {
+            .dev-notification-btn {
                 width: 100%;
+            }
+            
+            .character-builder {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <div class="container">
+        <!-- Верхняя панель с Discord, Сэтами и Личным кабинетом -->
         <div class="top-bar">
             <div class="top-links">
                 <a href="https://discord.gg/YCg9JXPmCN" class="discord-link" target="_blank">
                     <i class="fab fa-discord discord-icon"></i>
                     <span>Наш Дискорд</span>
-                </a>
-                <a href="index.html" class="market-link">
-                    <i class="fas fa-store market-icon"></i>
-                    <span>Маркет</span>
                 </a>
                 <a href="#" class="sets-link" id="sets-link">
                     <i class="fas fa-layer-group sets-icon"></i>
@@ -705,6 +688,111 @@
                 </div>
             </header>
 
+            <!-- Система сэтов -->
+            <div class="character-builder">
+                <div class="grid-item" id="head" ru-name="Голова">
+                    <div class="tooltip">Голова</div>
+                    <div class="mini-container" slot-name="head"></div>
+                    <div class="grid-text">
+                        <button class="btn minus">-</button>
+                        <span>+0</span>
+                        <button class="btn plus">+</button>
+                        <button class="btn nashivka">Нашивка</button>
+                    </div>
+                </div>
+                
+                <div class="grid-item" id="face" ru-name="Лицо">
+                    <div class="tooltip">Лицо</div>
+                    <div class="mini-container" slot-name="face"></div>
+                    <div class="grid-text">
+                        <button class="btn minus">-</button>
+                        <span>+0</span>
+                        <button class="btn plus">+</button>
+                        <button class="btn nashivka">Нашивка</button>
+                    </div>
+                </div>
+                
+                <div class="grid-item" id="hand" ru-name="Рука">
+                    <div class="tooltip">Рука</div>
+                    <div class="mini-container" slot-name="hand"></div>
+                    <div class="grid-text">
+                        <button class="btn minus">-</button>
+                        <span>+0</span>
+                        <button class="btn plus">+</button>
+                        <button class="btn nashivka">Нашивка</button>
+                    </div>
+                </div>
+                
+                <div class="grid-item" id="breast" ru-name="Грудь">
+                    <div class="tooltip">Грудь</div>
+                    <div class="mini-container" slot-name="breast"></div>
+                    <div class="grid-text">
+                        <button class="btn minus">-</button>
+                        <span>+0</span>
+                        <button class="btn plus">+</button>
+                        <button class="btn nashivka">Нашивка</button>
+                    </div>
+                </div>
+                
+                <div class="grid-item" id="shoulder" ru-name="Плечо">
+                    <div class="tooltip">Плечо</div>
+                    <div class="mini-container" slot-name="shoulder"></div>
+                    <div class="grid-text">
+                        <button class="btn minus">-</button>
+                        <span>+0</span>
+                        <button class="btn plus">+</button>
+                        <button class="btn nashivka">Нашивка</button>
+                    </div>
+                </div>
+                
+                <div class="grid-item" id="spine" ru-name="Спина">
+                    <div class="tooltip">Спина</div>
+                    <div class="mini-container" slot-name="spine"></div>
+                    <div class="grid-text">
+                        <button class="btn minus">-</button>
+                        <span>+0</span>
+                        <button class="btn plus">+</button>
+                        <button class="btn nashivka">Нашивка</button>
+                    </div>
+                </div>
+                
+                <div class="grid-item" id="armour" ru-name="Бронежилет">
+                    <div class="tooltip">Бронежилет</div>
+                    <div class="mini-container" slot-name="armour"></div>
+                    <div class="grid-text">
+                        <button class="btn minus">-</button>
+                        <span>+0</span>
+                        <button class="btn plus">+</button>
+                        <button class="btn nashivkabronik">Нашивка</button>
+                    </div>
+                </div>
+                
+                <div class="grid-item" id="character" ru-name="Персонаж">
+                    <div class="tooltip">Нажмите для смены персонажа</div>
+                    <img id="character-image" src="./imgs/characters/fenny.png" alt="Персонаж">
+                </div>
+                
+                <div class="grid-item trash" id="trash" ru-name="Удалить">
+                    <i class="fas fa-trash"></i>
+                    <div class="tooltip" id="trashtooltip">Перетащите сюда предмет, чтобы удалить его</div>
+                </div>
+            </div>
+
+            <!-- Статистика персонажа -->
+            <div class="stats-container">
+                <div><span id="deff">[-0% урона]</span></div>
+                <div><span id="hpmin">[0 HP в мин.]</span></div>
+                <div><span id="damage">[+0 урона]</span></div>
+                <div><span id="krit">[шанс 0% крит.урона]</span></div>
+                <div><span id="hpmax">[+0 макс. HP]</span></div>
+                <div><span id="armourmax">[+0 макс. Брони]</span></div>
+                <div><span id="oglysh">[+0%]</span></div>
+                <div><span id="opyan">[+0%]</span></div>
+                <div><span id="neoglysh">[+0%]</span></div>
+                <div><span id="otrazh">[-0%]</span></div>
+            </div>
+
+            <!-- Фильтры магазина -->
             <div class="filters">
                 <div class="filter-group">
                     <label for="category-filter">Категория:</label>
@@ -736,230 +824,123 @@
                 </div>
             </div>
 
+            <!-- Сетка товаров -->
             <div class="items-grid" id="items-container">
                 <div class="loading">Загрузка данных...</div>
             </div>
 
+            <!-- Пагинация -->
             <div class="pagination" id="pagination">
                 <!-- Пагинация будет создана через JavaScript -->
             </div>
         </div>
 
         <!-- Страница сэтов -->
-        <div id="sets-page">
-            <header>
-                <div class="logo">
-                    <i class="fas fa-layer-group logo-icon"></i>
-                    <span class="logo-text">VEGAS+ | СИСТЕМА СЕТОВ</span>
+        <div class="sets-page" id="sets-page">
+            <!-- Контент будет заменен уведомлением -->
+        </div>
+
+        <!-- Модальное окно для выбора аксессуаров -->
+        <div class="modal-overlay" id="modalOverlay">
+            <div class="modal-accs"></div>
+            <button id="closeModal" class="btn" style="position: absolute; top: 20px; right: 20px;">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <!-- Модальное окно подтверждения удаления (для мобильных) -->
+        <div id="modalDelete" style="display: none;">
+            <div>
+                <h2>Удалить предмет?</h2>
+                <div>
+                    <button id="yesDelete" class="btn">Да</button>
+                    <button id="noDelete" class="btn">Нет</button>
                 </div>
-            </header>
+            </div>
+        </div>
 
-            <div class="sets-main">
-                <div class="left-section">
-                    <div class="character">
-                        <div style="cursor: pointer; position: relative;" id="character">
-                            <img src="https://via.placeholder.com/400x300/111111/cccccc?text=Character+Preview" alt="Character" id="character-image">
-                            <div class="tooltip" style="bottom: 101%;">Нажмите чтобы сменить персонажа</div>
-                        </div>
-                        <div class="info">
-                            <span class="highlight white">Защита: <span class="highlight" id="deff">[-0% урона]</span></span><br>
-                            <span class="highlight white">Регенерация: <span class="highlight" id="hpmin">[0 HP в мин.]</span></span><br>
-                            <span class="highlight white">Урон: <span class="highlight" id="damage">[+0 урона]</span></span><br>
-                            <span class="highlight white">Удача: <span class="highlight" id="krit">[шанс 0% крит.урона]</span></span><br>
-                            <span class="highlight white">Макс. HP: <span class="highlight" id="hpmax">[+0 макс. HP]</span></span><br>
-                            <span class="highlight white">Макс. Брони: <span class="highlight" id="armourmax">[+0 макс. Брони]</span></span><br>
-                            <span class="highlight white">Шанс оглушения: <span class="highlight" id="oglysh">[+0%]</span></span><br>
-                            <span class="highlight white">Шанс опьянения: <span class="highlight" id="opyan">[+0%]</span></span><br>
-                            <span class="highlight white">Шанс избежать оглушения: <span class="highlight" id="neoglysh">[+0%]</span></span><br>
-                            <span class="highlight white">Отражение урона: <span class="highlight" id="otrazh">[-0%]</span></span>
-                        </div>
-                    </div>
+        <!-- Уведомление -->
+        <div class="notification" id="notification">
+            Недоступно, находится в разработке
+        </div>
 
-                    <div class="grid">
-                        <div class="grid-item" id="head" ru-name="Аксессуар на голову">
-                            <div class="grid-text">
-                                <button class="btn nashivka">N</button>
-                                <span class="">+14</span>
-                                <button class="btn minus">-</button>
-                                <button class="btn plus">+</button>
-                            </div>
-                            <div class="tooltip">Аксессуар на голову</div>
-                        </div>
-                        <div class="grid-item" id="face" ru-name="Аксессуар на лицо">
-                            <div class="grid-text">
-                                <button class="btn nashivka">N</button>
-                                <span class="">+14</span>
-                                <button class="btn minus">-</button>
-                                <button class="btn plus">+</button>
-                            </div>
-                            <div class="tooltip">Аксессуар на лицо</div>
-                        </div>
-                        <div class="grid-item" id="hand" ru-name="Аксессуар в руку">
-                            <div class="grid-text">
-                                <button class="btn nashivka">N</button>
-                                <span class="">+14</span>
-                                <button class="btn minus">-</button>
-                                <button class="btn plus">+</button>
-                            </div>
-                            <div class="tooltip">Аксессуар в руку</div>
-                        </div>
-                        <div class="grid-item" id="breast" ru-name="Аксессуар на грудь">
-                            <div class="grid-text">
-                                <button class="btn nashivka">N</button>
-                                <span class="">+14</span>
-                                <button class="btn minus">-</button>
-                                <button class="btn plus">+</button>
-                            </div>
-                            <div class="tooltip">Аксессуар на грудь</div>
-                        </div>
-                        <div class="grid-item" id="shoulder" ru-name="Аксессуар на плечо">
-                            <div class="grid-text">
-                                <button class="btn nashivka">N</button>
-                                <span class="">+14</span>
-                                <button class="btn minus">-</button>
-                                <button class="btn plus">+</button>
-                            </div>
-                            <div class="tooltip">Аксессуар на плечо</div>
-                        </div>
-                        <div class="grid-item" id="spine" ru-name="Аксессуар на спину">
-                            <div class="grid-text">
-                                <button class="btn nashivka">N</button>
-                                <span class="">+14</span>
-                                <button class="btn minus">-</button>
-                                <button class="btn plus">+</button>
-                            </div>
-                            <div class="tooltip">Аксессуар на спину</div>
-                        </div>
-                    </div>
+        <!-- Модальное окно для сэтов -->
+        <div class="dev-notification" id="sets-notification" style="display: none;">
+            <h2>Система сэтов в разработке</h2>
+            <p>
+                Совсем скоро вы сможете собирать здесь сеты из аксессуаров, примерять их на любом скине
+                и моментально получать информацию о суммарных характеристиках: уроне, защите и других параметрах.
+            </p>
+            <div class="dev-notification-buttons">
+                <button class="dev-notification-btn dev-notification-btn-primary" id="sets-notification-more">
+                    Узнать больше
+                </button>
+                <button class="dev-notification-btn dev-notification-btn-secondary" id="sets-notification-back">
+                    Назад на маркет
+                </button>
+            </div>
+        </div>
 
-                    <div class="bottom-row">
-                        <div class="grid-item" id="armour" ru-name="Бронежилет">
-                            <div class="grid-text">
-                                <button class="btn nashivkabronik">N</button>
-                                <span class="">+13</span>
-                                <button class="btn minus">-</button>
-                                <button class="btn plus">+</button>
-                            </div>
-                            <div class="tooltip">Бронежилет</div>
-                        </div>
-                        <div class="grid-item" id="case" ru-name="Чемодан">
-                            <span class="grid-text"></span>
-                            <div class="tooltip">Чемодан</div>
-                        </div>
-                    </div>
-
-                    <span class="copyright">© Vegas+, 2025</span>
-                </div>
-
-                <div class="right-section">
-                    <div class="mini-container" slot-name="head">
-                        <h3>Аксессуары на голову</h3>
-                    </div>
-                    <div class="mini-container" slot-name="face">
-                        <h3>Аксессуары на лицо</h3>
-                    </div>
-                    <div class="mini-container" slot-name="hand">
-                        <h3>Аксессуары в руку</h3>
-                    </div>
-                    <div class="mini-container" slot-name="breast">
-                        <h3>Аксессуары на грудь</h3>
-                    </div>
-                    <div class="mini-container" slot-name="shoulder">
-                        <h3>Аксессуары на плечо</h3>
-                    </div>
-                    <div class="mini-container" slot-name="spine">
-                        <h3>Аксессуары на спину</h3>
-                    </div>
-                    <div class="mini-container" slot-name="armour">
-                        <h3>Бронежилеты</h3>
-                    </div>
-                    <div class="mini-container" slot-name="case">
-                        <h3>Чемоданы</h3>
-                    </div>
+        <!-- Модальное окно товара -->
+        <div class="modal" id="item-modal">
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <div class="modal-body" id="modal-body">
+                    <!-- Контент модального окна будет загружен через JavaScript -->
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="trash">
-        <i class="fas fa-trash"></i>
-        <div class="tooltip" id="trashtooltip">Перетащите сюда предмет, чтобы его выкинуть!</div>
-    </div>
-
-    <div class="dev-banner">
-        Система находится на доработке, некоторые функции могут работать нестабильно
-    </div>
-
-    <div class="modal" id="item-modal">
-        <div class="modal-content">
-            <span class="close-btn">&times;</span>
-            <div class="modal-body" id="modal-body">
-                <!-- Контент модального окна будет загружен через JavaScript -->
-            </div>
-        </div>
-    </div>
-
+    <!-- Скрипты -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Элементы для переключения страниц
             const mainPage = document.getElementById('main-page');
             const setsPage = document.getElementById('sets-page');
             const setsLink = document.getElementById('sets-link');
+            const setsNotification = document.getElementById('sets-notification');
+            const setsBackBtn = document.getElementById('sets-notification-back');
             
             // Обработчик для кнопки Сэты
             setsLink.addEventListener('click', function(e) {
                 e.preventDefault();
                 mainPage.style.display = 'none';
                 setsPage.style.display = 'block';
+                setsNotification.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            });
+            
+            // Обработчик для кнопки Назад
+            setsBackBtn.addEventListener('click', function() {
+                mainPage.style.display = 'block';
+                setsPage.style.display = 'none';
+                setsNotification.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            });
+            
+            // Обработчик для кнопки Узнать больше
+            document.getElementById('sets-notification-more').addEventListener('click', function() {
+                alert('Следите за обновлениями в нашем Discord! Функция будет доступна в ближайшее время.');
             });
 
             // Обработчик для кнопки Личный кабинет
             document.getElementById('account-btn').addEventListener('click', function() {
-                const notification = document.createElement('div');
-                notification.className = 'notification';
-                notification.textContent = 'Личный кабинет находится в разработке';
-                document.body.appendChild(notification);
-                
+                const notification = document.getElementById('notification');
                 notification.style.display = 'block';
                 
                 // Скрываем уведомление через 3 секунды
                 setTimeout(() => {
                     notification.style.display = 'none';
-                    setTimeout(() => document.body.removeChild(notification), 300);
                 }, 3000);
             });
 
-            // Простая логика для демонстрации работы кнопок в сетах
-            document.querySelectorAll('.btn.plus').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const span = this.previousElementSibling.previousElementSibling;
-                    let value = parseInt(span.textContent.replace('+', '')) || 0;
-                    span.textContent = '+' + (value + 1);
-                });
-            });
-
-            document.querySelectorAll('.btn.minus').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const span = this.previousElementSibling;
-                    let value = parseInt(span.textContent.replace('+', '')) || 0;
-                    if (value > 0) {
-                        span.textContent = '+' + (value - 1);
-                    }
-                });
-            });
-
-            // Имитация смены персонажа
-            document.getElementById('character').addEventListener('click', function() {
-                const charImg = document.getElementById('character-image');
-                const random = Math.floor(Math.random() * 1000);
-                charImg.src = `https://via.placeholder.com/400x300/111111/cccccc?text=Character+${random}`;
-            });
-
-            // Загрузка данных для маркета
+            // Загрузка данных
             fetch('prices.json')
                 .then(response => response.json())
                 .then(data => {
                     const itemsData = Object.entries(data.list).map(([name, item]) => {
+                        // Генерация случайного изображения из интернета
                         const randomImageId = Math.floor(Math.random() * 1000);
                         const imageUrl = `https://picsum.photos/400/300?random=${randomImageId}`;
                         
@@ -973,7 +954,8 @@
                         };
                     });
 
-                    initMarketApp(itemsData);
+                    // Инициализация приложения
+                    initApp(itemsData);
                 })
                 .catch(error => {
                     console.error('Error loading data:', error);
@@ -981,6 +963,7 @@
                         '<div class="error">Ошибка загрузки данных. Пожалуйста, проверьте файл prices.json</div>';
                 });
 
+            // Функция для определения категории по названию
             function determineCategory(name) {
                 if (name.includes('Скин:') || name.includes('Skin:')) {
                     return 'skin';
@@ -1000,7 +983,9 @@
                 return 'other';
             }
 
-            function initMarketApp(items) {
+            // Инициализация приложения
+            function initApp(items) {
+                // Элементы DOM
                 const itemsContainer = document.getElementById('items-container');
                 const searchInput = document.getElementById('search-input');
                 const searchBtn = document.getElementById('search-btn');
@@ -1012,20 +997,27 @@
                 const closeBtn = document.querySelector('.close-btn');
                 const modalBody = document.getElementById('modal-body');
 
+                // Состояние приложения
                 let currentPage = 1;
                 const itemsPerPage = 12;
                 let filteredItems = [...items];
 
+                // Фильтрация и сортировка товаров
                 function filterAndSortItems() {
                     const searchTerm = searchInput.value.toLowerCase();
                     const category = categoryFilter.value;
                     const priceRange = priceFilter.value;
                     const sortOption = sortBy.value;
 
+                    // Фильтрация
                     filteredItems = items.filter(item => {
+                        // Поиск
                         const matchesSearch = item.name.toLowerCase().includes(searchTerm);
+                        
+                        // Категория
                         const matchesCategory = category === 'all' || item.category === category;
                         
+                        // Цена
                         let matchesPrice = true;
                         if (Array.isArray(item.price)) {
                             const minPrice = Math.min(...item.price);
@@ -1051,6 +1043,7 @@
                         return matchesSearch && matchesCategory && matchesPrice;
                     });
 
+                    // Сортировка
                     switch (sortOption) {
                         case 'name-asc':
                             filteredItems.sort((a, b) => a.name.localeCompare(b.name));
@@ -1079,7 +1072,7 @@
                     renderPagination();
                 }
 
-                // Отображение товаров
+                               // Отображение товаров
                 function renderItems() {
                     itemsContainer.innerHTML = '';
                     
@@ -1095,40 +1088,16 @@
                     itemsToShow.forEach(item => {
                         const itemCard = document.createElement('div');
                         itemCard.className = 'item-card';
-                        
-                        const itemImageDiv = document.createElement('div');
-                        itemImageDiv.className = 'item-image';
-                        itemImageDiv.style.backgroundImage = `url('${item.image}')`;
-                        
-                        // Добавляем иконку, если изображение не загрузится
-                        const icon = document.createElement('i');
-                        icon.className = 'fas fa-box-open';
-                        icon.style.display = 'none'; // Сначала скрываем
-                        itemImageDiv.appendChild(icon);
-                        
-                        // Проверяем, загружается ли изображение
-                        const img = new Image();
-                        img.src = item.image;
-                        img.onload = function() {
-                            // Изображение загружено - показываем его
-                            itemImageDiv.style.backgroundImage = `url('${item.image}')`;
-                        };
-                        img.onerror = function() {
-                            // Изображение не загружено - показываем иконку
-                            itemImageDiv.style.backgroundImage = 'none';
-                            icon.style.display = 'block';
-                        };
-                        
-                        const itemInfoDiv = document.createElement('div');
-                        itemInfoDiv.className = 'item-info';
-                        itemInfoDiv.innerHTML = `
-                            <div class="item-name" title="${item.name}">${item.name}</div>
-                            <div class="item-price">${formatPrice(item.price)} $</div>
-                            <div class="item-updated">Обновлено: ${formatDate(item.updated)}</div>
+                        itemCard.innerHTML = `
+                            <div class="item-image">
+                                <i class="fas fa-box-open"></i>
+                            </div>
+                            <div class="item-info">
+                                <div class="item-name" title="${item.name}">${item.name}</div>
+                                <div class="item-price">${formatPrice(item.price)} $</div>
+                                <div class="item-updated">Обновлено: ${formatDate(item.updated)}</div>
+                            </div>
                         `;
-                        
-                        itemCard.appendChild(itemImageDiv);
-                        itemCard.appendChild(itemInfoDiv);
                         
                         itemCard.addEventListener('click', () => openModal(item));
                         itemsContainer.appendChild(itemCard);
@@ -1174,48 +1143,8 @@
                     });
                     pagination.appendChild(prevBtn);
                     
-                    // Номера страниц (максимум 5)
-                    const maxVisiblePages = 5;
-                    let startPage, endPage;
-                    
-                    if (totalPages <= maxVisiblePages) {
-                        startPage = 1;
-                        endPage = totalPages;
-                    } else {
-                        const half = Math.floor(maxVisiblePages / 2);
-                        if (currentPage <= half + 1) {
-                            startPage = 1;
-                            endPage = maxVisiblePages;
-                        } else if (currentPage >= totalPages - half) {
-                            startPage = totalPages - maxVisiblePages + 1;
-                            endPage = totalPages;
-                        } else {
-                            startPage = currentPage - half;
-                            endPage = currentPage + half;
-                        }
-                    }
-                    
-                    // Показать первую страницу, если не видна
-                    if (startPage > 1) {
-                        const firstPageBtn = document.createElement('button');
-                        firstPageBtn.textContent = '1';
-                        firstPageBtn.addEventListener('click', () => {
-                            currentPage = 1;
-                            renderItems();
-                            renderPagination();
-                            window.scrollTo({ top: 0, behavior: 'smooth' });
-                        });
-                        pagination.appendChild(firstPageBtn);
-                        
-                        if (startPage > 2) {
-                            const ellipsis = document.createElement('span');
-                            ellipsis.textContent = '...';
-                            pagination.appendChild(ellipsis);
-                        }
-                    }
-                    
-                    // Основные кнопки страниц
-                    for (let i = startPage; i <= endPage; i++) {
+                    // Номера страниц
+                    for (let i = 1; i <= totalPages; i++) {
                         const pageBtn = document.createElement('button');
                         pageBtn.textContent = i;
                         pageBtn.className = i === currentPage ? 'active' : '';
@@ -1226,25 +1155,6 @@
                             window.scrollTo({ top: 0, behavior: 'smooth' });
                         });
                         pagination.appendChild(pageBtn);
-                    }
-                    
-                    // Показать последнюю страницу, если не видна
-                    if (endPage < totalPages) {
-                        if (endPage < totalPages - 1) {
-                            const ellipsis = document.createElement('span');
-                            ellipsis.textContent = '...';
-                            pagination.appendChild(ellipsis);
-                        }
-                        
-                        const lastPageBtn = document.createElement('button');
-                        lastPageBtn.textContent = totalPages;
-                        lastPageBtn.addEventListener('click', () => {
-                            currentPage = totalPages;
-                            renderItems();
-                            renderPagination();
-                            window.scrollTo({ top: 0, behavior: 'smooth' });
-                        });
-                        pagination.appendChild(lastPageBtn);
                     }
                     
                     // Кнопка "Вперед"
@@ -1264,37 +1174,11 @@
 
                 // Открытие модального окна
                 function openModal(item) {
-                    const modalImageDiv = document.createElement('div');
-                    modalImageDiv.className = 'modal-image';
-                    modalImageDiv.style.backgroundImage = `url('${item.image}')`;
-                    
-                    // Добавляем иконку, если изображение не загрузится
-                    const icon = document.createElement('i');
-                    icon.className = 'fas fa-box-open';
-                    icon.style.display = 'none'; // Сначала скрываем
-                    const text = document.createElement('p');
-                    text.textContent = 'Изображение предмета';
-                    text.style.display = 'none';
-                    modalImageDiv.appendChild(icon);
-                    modalImageDiv.appendChild(text);
-                    
-                    // Проверяем, загружается ли изображение
-                    const img = new Image();
-                    img.src = item.image;
-                    img.onload = function() {
-                        // Изображение загружено - показываем его
-                        modalImageDiv.style.backgroundImage = `url('${item.image}')`;
-                    };
-                    img.onerror = function() {
-                        // Изображение не загружено - показываем иконку и текст
-                        modalImageDiv.style.backgroundImage = 'none';
-                        icon.style.display = 'block';
-                        text.style.display = 'block';
-                    };
-                    
-                    modalBody.innerHTML = '';
-                    modalBody.appendChild(modalImageDiv);
-                    modalBody.innerHTML += `
+                    modalBody.innerHTML = `
+                        <div class="modal-image">
+                            <i class="fas fa-box-open"></i>
+                            <p>Изображение предмета</p>
+                        </div>
                         <h2 class="modal-title">${item.name}</h2>
                         <div class="modal-price">${formatPrice(item.price)} $</div>
                         
