@@ -32,6 +32,7 @@
             background-image: 
                 radial-gradient(circle at 20% 30%, rgba(255, 46, 46, 0.05) 0%, transparent 20%),
                 radial-gradient(circle at 80% 70%, rgba(255, 204, 0, 0.05) 0%, transparent 20%);
+            min-height: 100vh;
         }
         
         .container {
@@ -122,20 +123,6 @@
             text-shadow: 0 0 10px rgba(255, 46, 46, 0.3);
         }
         
-        .admin-panel {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 20px;
-        }
-        
-        .form-section {
-            background-color: var(--card-bg);
-            padding: 20px;
-            border-radius: 10px;
-            border: 1px solid var(--border);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-        
         .ads-section {
             background-color: var(--card-bg);
             padding: 20px;
@@ -159,104 +146,6 @@
             color: var(--accent-gold);
         }
         
-        .form-group {
-            margin-bottom: 15px;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: var(--text-gray);
-        }
-        
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
-            width: 100%;
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid var(--border);
-            background-color: rgba(0, 0, 0, 0.3);
-            color: var(--text-white);
-            transition: all 0.2s;
-        }
-        
-        .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
-            border-color: var(--accent-red);
-            outline: none;
-            box-shadow: 0 0 0 2px rgba(255, 46, 46, 0.2);
-        }
-        
-        .form-group textarea {
-            min-height: 100px;
-            resize: vertical;
-        }
-        
-        .image-preview {
-            width: 100%;
-            height: 200px;
-            background-color: rgba(0, 0, 0, 0.3);
-            margin-top: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-gray);
-            border-radius: 5px;
-            overflow: hidden;
-            border: 1px dashed var(--border);
-            transition: all 0.2s;
-        }
-        
-        .image-preview:hover {
-            border-color: var(--accent-gold);
-        }
-        
-        .image-preview img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-        }
-        
-        .btn {
-            padding: 10px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .btn-primary {
-            background: linear-gradient(to right, var(--accent-red), #ff5e5e);
-            color: white;
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 10px rgba(255, 46, 46, 0.3);
-        }
-        
-        .btn-danger {
-            background-color: var(--danger);
-            color: white;
-        }
-        
-        .btn-danger:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 10px rgba(220, 53, 69, 0.3);
-        }
-        
-        .btn-warning {
-            background-color: var(--warning);
-            color: #000;
-        }
-        
         .ads-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -269,6 +158,7 @@
             overflow: hidden;
             border: 1px solid var(--border);
             transition: all 0.3s;
+            position: relative;
         }
         
         .ad-card:hover {
@@ -353,67 +243,60 @@
             font-weight: bold;
         }
         
-        .ad-actions {
-            display: flex;
-            gap: 5px;
-        }
-        
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background-color: var(--success);
+        .admin-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--accent-red);
             color: white;
-            padding: 15px 20px;
-            border-radius: 5px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            z-index: 1100;
-            display: none;
-            animation: slideIn 0.3s ease-out;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: bold;
+            z-index: 3;
         }
         
-        @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-        
-        .empty-state {
-            text-align: center;
-            padding: 40px 20px;
-            color: var(--text-gray);
-        }
-        
-        .empty-state i {
-            font-size: 3rem;
-            margin-bottom: 15px;
+        .price-tag {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background-color: rgba(0,0,0,0.7);
             color: var(--accent-gold);
-            opacity: 0.5;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-weight: bold;
+            z-index: 3;
         }
         
-        .moderation-note {
-            background-color: rgba(255, 193, 7, 0.2);
-            border-left: 3px solid var(--warning);
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 0 5px 5px 0;
+        .vip-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: var(--accent-gold);
+            color: #000;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: bold;
+            z-index: 3;
+        }
+        
+        .limited-badge {
+            position: absolute;
+            top: 40px;
+            left: 10px;
+            background-color: var(--accent-red);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: bold;
+            z-index: 3;
         }
         
         @media (max-width: 768px) {
             .container {
                 padding: 1rem;
-            }
-            
-            .admin-panel {
-                grid-template-columns: 1fr;
             }
             
             header {
@@ -456,89 +339,122 @@
             </div>
         </header>
 
-        <!-- Основной контент админ-панели -->
-        <div class="admin-panel">
-            <!-- Форма добавления объявления -->
-            <div class="form-section">
-                <h2 class="section-title">
-                    <i class="fas fa-plus-circle"></i>
-                    <span>Добавить объявление</span>
-                </h2>
-                
-                <div class="moderation-note">
-                    <i class="fas fa-info-circle"></i>
-                    Все объявления отправляются на модерацию. После проверки они появятся в общем списке.
-                </div>
-                
-                <form id="ad-form">
-                    <div class="form-group">
-                        <label for="ad-title">Название</label>
-                        <input type="text" id="ad-title" required placeholder="Например: Редкий скин AK-47">
+        <!-- Список объявлений -->
+        <div class="ads-section">
+            <div class="section-title">
+                <i class="fas fa-gem"></i>
+                <span>Эксклюзивные предложения</span>
+            </div>
+            
+            <div class="ads-grid" id="ads-container">
+                <!-- Пример объявления 1 -->
+                <div class="ad-card">
+                    <div class="ad-image">
+                        <span class="admin-badge">ADMIN</span>
+                        <span class="vip-badge">VIP</span>
+                        <span class="price-tag">$250</span>
+                        <img src="https://i.imgur.com/JRqkXWf.jpg" alt="Редкий скин AK-47">
                     </div>
-                    
-                    <div class="form-group">
-                        <label for="ad-category">Категория</label>
-                        <select id="ad-category" required>
-                            <option value="">Выберите категорию</option>
-                            <option value="skin">Скины</option>
-                            <option value="accessory">Аксессуары</option>
-                            <option value="vehicle">Транспорт</option>
-                            <option value="weapon">Оружие</option>
-                            <option value="other">Другое</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="ad-description">Описание</label>
-                        <textarea id="ad-description" required placeholder="Подробное описание товара..."></textarea>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="ad-contacts">Контакты (Discord/Telegram)</label>
-                        <input type="text" id="ad-contacts" required placeholder="Например: @username или Discord#1234">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="ad-image">Изображение (URL)</label>
-                        <input type="text" id="ad-image" placeholder="https://example.com/image.jpg">
-                        <div class="image-preview" id="image-preview">
-                            <i class="fas fa-image"></i>
-                            <span>Предпросмотр изображения</span>
+                    <div class="ad-content">
+                        <h3 class="ad-title">AK-47 | Азимов (Factory New)</h3>
+                        <p class="ad-description">Эксклюзивный скин в идеальном состоянии. Редкость: Covert. Полная история владения.</p>
+                        <p class="ad-contacts">Контакты: @vegas_armory</p>
+                        <div class="ad-footer">
+                            <span class="ad-category">Скины</span>
                         </div>
                     </div>
-                    
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-paper-plane"></i>
-                        Отправить на модерацию
-                    </button>
-                </form>
-            </div>
-
-            <!-- Список объявлений -->
-            <div class="ads-section">
-                <div class="section-title">
-                    <i class="fas fa-list"></i>
-                    <span>Все объявления</span>
                 </div>
                 
-                <div class="ads-grid" id="ads-container">
-                    <!-- Объявления будут загружены через JavaScript -->
-                    <div class="empty-state">
-                        <i class="fas fa-box-open"></i>
-                        <p>Пока нет объявлений</p>
+                <!-- Пример объявления 2 -->
+                <div class="ad-card">
+                    <div class="ad-image">
+                        <span class="admin-badge">ADMIN</span>
+                        <span class="limited-badge">LIMITED</span>
+                        <span class="price-tag">$500</span>
+                        <img src="https://i.imgur.com/5XZwWQv.jpg" alt="Золотой Deagle">
+                    </div>
+                    <div class="ad-content">
+                        <h3 class="ad-title">Desert Eagle | Золотой</h3>
+                        <p class="ad-description">Золотой Deagle с индивидуальной гравировкой. Лимитированная серия (10 шт.). В комплекте сертификат.</p>
+                        <p class="ad-contacts">Контакты: VegasGold#5678</p>
+                        <div class="ad-footer">
+                            <span class="ad-category">Оружие</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Пример объявления 3 -->
+                <div class="ad-card">
+                    <div class="ad-image">
+                        <span class="admin-badge">ADMIN</span>
+                        <span class="vip-badge">VIP</span>
+                        <span class="price-tag">$1200</span>
+                        <img src="https://i.imgur.com/8Km9T0h.jpg" alt="Спортивный автомобиль">
+                    </div>
+                    <div class="ad-content">
+                        <h3 class="ad-title">Lamborghini Aventador</h3>
+                        <p class="ad-description">Полный тюнинг пакет от Vegas Motors. Уникальный дизайн, апгрейд двигателя до 900 л.с. Гарантия 2 года.</p>
+                        <p class="ad-contacts">Контакты: @vegas_motors</p>
+                        <div class="ad-footer">
+                            <span class="ad-category">Транспорт</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Пример объявления 4 -->
+                <div class="ad-card">
+                    <div class="ad-image">
+                        <span class="admin-badge">ADMIN</span>
+                        <span class="price-tag">$350</span>
+                        <img src="https://i.imgur.com/mX4b7qK.jpg" alt="Роскошные часы">
+                    </div>
+                    <div class="ad-content">
+                        <h3 class="ad-title">Rolex Submariner</h3>
+                        <p class="ad-description">Роскошные часы в идеальном состоянии. Полный комплект: коробка, документы, сертификат. 2022 год.</p>
+                        <p class="ad-contacts">Контакты: VegasLuxury#9012</p>
+                        <div class="ad-footer">
+                            <span class="ad-category">Аксессуары</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Пример объявления 5 -->
+                <div class="ad-card">
+                    <div class="ad-image">
+                        <span class="admin-badge">ADMIN</span>
+                        <span class="limited-badge">LIMITED</span>
+                        <span class="price-tag">$800</span>
+                        <img src="https://i.imgur.com/vVZk3Qp.jpg" alt="Золотая цепь">
+                    </div>
+                    <div class="ad-content">
+                        <h3 class="ad-title">Золотая цепь 585 пробы</h3>
+                        <p class="ad-description">Эксклюзивная цепь ручной работы. Вес: 85 грамм. Длина: 60 см. Итальянское качество.</p>
+                        <p class="ad-contacts">Контакты: @vegas_jewelry</p>
+                        <div class="ad-footer">
+                            <span class="ad-category">Аксессуары</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Пример объявления 6 -->
+                <div class="ad-card">
+                    <div class="ad-image">
+                        <span class="admin-badge">ADMIN</span>
+                        <span class="vip-badge">VIP</span>
+                        <span class="price-tag">$2000</span>
+                        <img src="https://i.imgur.com/qY3kL2h.jpg" alt="Вилла">
+                    </div>
+                    <div class="ad-content">
+                        <h3 class="ad-title">Вилла на побережье</h3>
+                        <p class="ad-description">Эксклюзивная вилла с приватным пляжем. 5 спален, бассейн, сауна. Полностью меблирована.</p>
+                        <p class="ad-contacts">Контакты: @vegas_estate</p>
+                        <div class="ad-footer">
+                            <span class="ad-category">Недвижимость</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- Уведомление -->
-        <div class="notification" id="notification">
-            <i class="fas fa-check-circle"></i>
-            <span id="notification-text">Объявление успешно добавлено!</span>
-        </div>
     </div>
-
-    <!-- Подключение скриптов -->
-    <script src="test.js"></script>
 </body>
 </html>
