@@ -1048,11 +1048,66 @@
                     renderPagination();
                 }
 
-                                // Кнопка "Назад"
+                // Отображение товаров
+                function renderItems() {
+                    itemsContainer.innerHTML = '';
+                    
+                    const startIndex = (currentPage - 1) * itemsPerPage;
+                    const endIndex = startIndex + itemsPerPage;
+                    const itemsToShow = filteredItems.slice(startIndex, endIndex);
+                    
+                    if (itemsToShow.length === 0) {
+                        itemsContainer.innerHTML = '<div class="no-results">Ничего не найдено</div>';
+                        return;
+                    }
+                    
+                    itemsToShow.forEach(item => {
+                        const itemCard = document.createElement('div');
+                        itemCard.className = 'item-card';
+                        itemCard.innerHTML = `
+                            <div class="item-image" style="background-image: url('${item.image}')">
+                                <i class="fas fa-box-open default-icon"></i>
+                            </div>
+                            <div class="item-info">
+                                <div class="item-name" title="${item.name}">${item.name}</div>
+                                <div class="item-price">${formatPrice(item.price)}</div>
+                                <div class="item-updated"><i class="far fa-clock"></i> Обновлено: ${formatDate(item.updated)}</div>
+                            </div>
+                        `;                        itemCard.addEventListener('click', () => openModal(item));
+                        itemsContainer.appendChild(itemCard);
+                    });
+                }
+
+                // Форматирование цены
+                function formatPrice(price) {
+                    if (Array.isArray(price)) {
+                        return `${formatNumber(price[0])} - ${formatNumber(price[1])}`;
+                    }
+                    return formatNumber(price);
+                }
+
+                function formatNumber(num) {
+                    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                }
+
+                // Форматирование даты
+                function formatDate(timestamp) {
+                    const date = new Date(timestamp * 1000);
+                    return date.toLocaleDateString('ru-RU');
+                }
+
+                // Отображение пагинации
+                function renderPagination() {
+                    pagination.innerHTML = '';
+                    
+                    const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
+                    if (totalPages <= 1) return;
+                    
+                    // Кнопка "Назад"
                     const prevBtn = document.createElement('button');
                     prevBtn.innerHTML = '<i class="fas fa-chevron-left"></i>';
                     prevBtn.disabled = currentPage === 1;
-                    prevBtn.addEventListener('click', () => {   // Отображение товаров
+                    prevBtn.addEventListener('click', () => {
                         if (currentPage > 1) {
                             currentPage--;
                             renderItems();
@@ -1078,8 +1133,8 @@
                         // Многоточие, если текущая страница далеко от начала
                         if (currentPage > 3) {
                             const ellipsis = document.createElement('span');
+                            ellipsis.className = 'ellipsis';
                             ellipsis.textContent = '...';
-                            ellipsis.style.padding = '8px 15px';
                             pagination.appendChild(ellipsis);
                         }
                     }
@@ -1089,7 +1144,7 @@
                     const endPage = Math.min(totalPages - 1, currentPage + 1);
                     
                     for (let i = startPage; i <= endPage; i++) {
-                        if (i === 1 || i === totalPages) continue; // Уже обработали или обработаем позже
+                        if (i === 1 || i === totalPages) continue;
                         
                         const pageBtn = document.createElement('button');
                         pageBtn.textContent = i;
@@ -1106,8 +1161,8 @@
                     // Многоточие, если текущая страница далеко от конца
                     if (currentPage < totalPages - 2) {
                         const ellipsis = document.createElement('span');
+                        ellipsis.className = 'ellipsis';
                         ellipsis.textContent = '...';
-                        ellipsis.style.padding = '8px 15px';
                         pagination.appendChild(ellipsis);
                     }
                     
@@ -1143,12 +1198,11 @@
                 // Открытие модального окна
                 function openModal(item) {
                     modalBody.innerHTML = `
-                        <div class="modal-image">
-                            <i class="fas fa-box-open"></i>
-                            <p>Изображение предмета</p>
+                        <div class="modal-image" style="background-image: url('${item.image}')">
+                            <i class="fas fa-box-open default-icon"></i>
                         </div>
                         <h2 class="modal-title">${item.name}</h2>
-                        <div class="modal-price">${formatPrice(item.price)} $</div>
+                        <div class="modal-price">${formatPrice(item.price)}</div>
                         
                         <div class="modal-stats">
                             <div class="stat-item">
@@ -1164,7 +1218,41 @@
                                 <div class="stat-value">${item.id}</div>
                             </div>
                         </div>
-                    `;
+                        
+                        <div class="modal-actions">
+                            <button class="buy-btn">
+                                <i class="fas fa-shopping-cart"></i> Купить
+                            </button>
+                            <button class="wishlist-btn">
+                                <i class="far fa-heart"></i>
+                            </button>
+                        </div>
+                    `
+                    
+                    // Обработчики для кнопок в модальном окне
+                    document.querySelector('.buy-btn').addEventListener('click', () => {
+                        const notification = document.getElementById('notification');
+                        notification.style.display = 'flex';
+                        notification.innerHTML = `
+                            <i class="fas fa-exclamation-circle"></i> Покупка временно недоступна
+                        `;
+                        
+                        setTimeout(() => {
+                            notification.style.display = 'none';
+                        }, 3000);
+                    });
+                    
+                    document.querySelector('.wishlist-btn').addEventListener('click', () => {
+                        const notification = document.getElementById('notification');
+                        notification.style.display = 'flex';
+                        notification.innerHTML = `
+                            <i class="fas fa-heart"></i> Добавлено в избранное
+                        `;
+                        
+                        setTimeout(() => {
+                            notification.style.display = 'none';
+                        }, 3000);
+                    });
                     
                     modal.style.display = 'block';
                     document.body.style.overflow = 'hidden';
