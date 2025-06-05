@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Ключ для localStorage (одобренные объявления)
     const APPROVED_ADS_KEY = 'vegas_plus_approved_ads';
     // Email для модерации (замените на свой)
-    const MODERATION_EMAIL = "your-email@example.com";
+    const MODERATION_EMAIL = "plahuga@mail.ru";
     
     // Загрузка одобренных объявлений из localStorage
     function loadApprovedAds() {
