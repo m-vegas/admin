@@ -50,7 +50,7 @@
             gap: 20px;
         }
         
-        .discord-link, .sets-link {
+        .discord-link, .sets-link, .admin-link {
             display: flex;
             align-items: center;
             gap: 0.5rem;
@@ -60,7 +60,7 @@
             transition: color 0.2s;
         }
         
-        .discord-link:hover, .sets-link:hover {
+        .discord-link:hover, .sets-link:hover, .admin-link:hover {
             color: var(--accent-red);
         }
         
@@ -70,6 +70,10 @@
         
         .sets-icon {
             color: var(--accent-gold);
+        }
+        
+        .admin-icon {
+            color: #2ecc71;
         }
         
         .account-btn {
@@ -408,8 +412,23 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
+    <!-- Chatra {literal} -->
+    <script>
+        (function(d, w, c) {
+            w.ChatraID = 'hePBzAxuhW4Nvoz9D';
+            var s = d.createElement('script');
+            w[c] = w[c] || function() {
+                (w[c].q = w[c].q || []).push(arguments);
+            };
+            s.async = true;
+            s.src = 'https://call.chatra.io/chatra.js';
+            if (d.head) d.head.appendChild(s);
+        })(document, window, 'Chatra');
+    </script>
+    <!-- /Chatra {/literal} -->
+
     <div class="container">
-        <!-- Верхняя панель с Discord, Сэтами и Личным кабинетом -->
+        <!-- Верхняя панель с Discord, Сэтами, Админ лавкой и Личным кабинетом -->
         <div class="top-bar">
             <div class="top-links">
                 <a href="https://discord.gg/YCg9JXPmCN" class="discord-link" target="_blank">
@@ -419,6 +438,10 @@
                 <a href="index2.html" class="sets-link">
                     <i class="fas fa-layer-group sets-icon"></i>
                     <span>Сэты</span>
+                </a>
+                <a href="index3.html" class="admin-link">
+                    <i class="fas fa-shield-alt admin-icon"></i>
+                    <span>Админ лавка</span>
                 </a>
             </div>
             <button class="account-btn" id="account-btn">
