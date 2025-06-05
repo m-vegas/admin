@@ -123,6 +123,78 @@
             text-shadow: 0 0 10px rgba(255, 46, 46, 0.3);
         }
         
+        /* Новый стиль для информационного блока */
+        .info-panel {
+            background: linear-gradient(135deg, rgba(88, 101, 242, 0.1), rgba(255, 204, 0, 0.1));
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .info-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(255, 46, 46, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 80% 70%, rgba(255, 204, 0, 0.05) 0%, transparent 20%);
+            z-index: 0;
+        }
+        
+        .info-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 15px;
+        }
+        
+        .info-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(to right, var(--accent-blue), var(--accent-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+        
+        .info-text {
+            color: var(--text-gray);
+            font-size: 1rem;
+            line-height: 1.5;
+            max-width: 800px;
+        }
+        
+        .info-discord-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background-color: var(--accent-blue);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(88, 101, 242, 0.3);
+        }
+        
+        .info-discord-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(88, 101, 242, 0.4);
+            background-color: #4752c4;
+        }
+        
         .ads-section {
             background-color: var(--card-bg);
             padding: 20px;
@@ -312,6 +384,14 @@
             .ads-grid {
                 grid-template-columns: 1fr;
             }
+            
+            .info-title {
+                font-size: 1.2rem;
+            }
+            
+            .info-text {
+                font-size: 0.9rem;
+            }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -339,6 +419,22 @@
             </div>
         </header>
 
+        <!-- Новый информационный блок -->
+        <div class="info-panel">
+            <div class="info-content">
+                <h2 class="info-title">Как опубликовать объявление?</h2>
+                <p class="info-text">
+                    Все объявления отправляются в наш Discord и публикуются администрацией на сайте. 
+                    Для размещения вашего предложения свяжитесь с нами через Discord, 
+                    и после проверки мы добавим его в этот раздел.
+                </p>
+                <a href="https://discord.gg/QatunmPe" class="info-discord-btn" target="_blank">
+                    <i class="fab fa-discord"></i>
+                    Перейти в Discord
+                </a>
+            </div>
+        </div>
+
         <!-- Список объявлений -->
         <div class="ads-section">
             <div class="section-title">
@@ -365,7 +461,7 @@
                     </div>
                 </div>
                 
- <!-- Пример объявления 1 -->
+                <!-- Пример объявления 1 -->
                 <div class="ad-card">
                     <div class="ad-image">
                         <span class="admin-badge">ADMIN</span>
