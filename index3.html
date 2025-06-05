@@ -17,6 +17,8 @@
             --success: #28a745;
             --danger: #dc3545;
             --warning: #ffc107;
+            --gradient-red-gold: linear-gradient(135deg, var(--accent-red), var(--accent-gold));
+            --gradient-blue-gold: linear-gradient(135deg, var(--accent-blue), var(--accent-gold));
         }
         
         * {
@@ -117,15 +119,14 @@
         }
         
         .logo-text {
-            background: linear-gradient(to right, var(--accent-red), var(--accent-gold));
+            background: var(--gradient-red-gold);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-shadow: 0 0 10px rgba(255, 46, 46, 0.3);
         }
         
-        /* Новый стиль для информационного блока */
         .info-panel {
-            background: linear-gradient(135deg, rgba(88, 101, 242, 0.1), rgba(255, 204, 0, 0.1));
+            background: rgba(17, 17, 17, 0.8);
             border: 1px solid var(--border);
             border-radius: 10px;
             padding: 20px;
@@ -133,19 +134,21 @@
             position: relative;
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
+            border-image: var(--gradient-red-gold) 1;
         }
         
         .info-panel::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 20% 30%, rgba(255, 46, 46, 0.05) 0%, transparent 20%),
-                radial-gradient(circle at 80% 70%, rgba(255, 204, 0, 0.05) 0%, transparent 20%);
-            z-index: 0;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: var(--gradient-red-gold);
+            z-index: -1;
+            border-radius: 10px;
+            opacity: 0.3;
         }
         
         .info-content {
@@ -161,7 +164,7 @@
         .info-title {
             font-size: 1.5rem;
             font-weight: bold;
-            background: linear-gradient(to right, var(--accent-blue), var(--accent-gold));
+            background: var(--gradient-blue-gold);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 10px;
@@ -178,7 +181,7 @@
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            background-color: var(--accent-blue);
+            background: var(--gradient-blue-gold);
             color: white;
             padding: 12px 25px;
             border-radius: 50px;
@@ -187,12 +190,14 @@
             margin-top: 10px;
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(88, 101, 242, 0.3);
+            border: none;
+            cursor: pointer;
         }
         
         .info-discord-btn:hover {
             transform: translateY(-3px);
             box-shadow: 0 7px 20px rgba(88, 101, 242, 0.4);
-            background-color: #4752c4;
+            background: linear-gradient(135deg, #4752c4, #e6b800);
         }
         
         .ads-section {
@@ -366,6 +371,26 @@
             z-index: 3;
         }
         
+        .contact-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: var(--accent-blue);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.2s;
+            margin-top: 5px;
+        }
+        
+        .contact-btn:hover {
+            background-color: #4752c4;
+            transform: translateY(-2px);
+        }
+        
         @media (max-width: 768px) {
             .container {
                 padding: 1rem;
@@ -453,15 +478,19 @@
                     </div>
                     <div class="ad-content">
                         <h3 class="ad-title">Продажа 'Сетика'</h3>
-                        <p class="ad-description">Эксклюзивный сетик , связывайтесь за подробностями.</p>
+                        <p class="ad-description">Эксклюзивный сетик, связывайтесь за подробностями.</p>
                         <p class="ad-contacts">Контакты ds: znakhariobyr</p>
+                        <a href="https://discord.com/users/znakhariobyr" class="contact-btn" target="_blank">
+                            <i class="fab fa-discord"></i>
+                            Связаться в Discord
+                        </a>
                         <div class="ad-footer">
                             <span class="ad-category">Аксессуары</span>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Пример объявления 1 -->
+                <!-- Пример объявления 2 -->
                 <div class="ad-card">
                     <div class="ad-image">
                         <span class="admin-badge">ADMIN</span>
@@ -471,15 +500,19 @@
                     </div>
                     <div class="ad-content">
                         <h3 class="ad-title">Продажа 'Сетика'</h3>
-                        <p class="ad-description">Эксклюзивный сетик , связывайтесь за подробностями.</p>
+                        <p class="ad-description">Эксклюзивный сетик, связывайтесь за подробностями.</p>
                         <p class="ad-contacts">Контакты ds: znakhariobyr</p>
+                        <a href="https://discord.com/users/znakhariobyr" class="contact-btn" target="_blank">
+                            <i class="fab fa-discord"></i>
+                            Связаться в Discord
+                        </a>
                         <div class="ad-footer">
                             <span class="ad-category">Аксессуары</span>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Пример объявления 1 -->
+                <!-- Пример объявления 3 -->
                 <div class="ad-card">
                     <div class="ad-image">
                         <span class="admin-badge">ADMIN</span>
@@ -489,15 +522,19 @@
                     </div>
                     <div class="ad-content">
                         <h3 class="ad-title">Продажа 'Сетика'</h3>
-                        <p class="ad-description">Эксклюзивный сетик , связывайтесь за подробностями.</p>
+                        <p class="ad-description">Эксклюзивный сетик, связывайтесь за подробностями.</p>
                         <p class="ad-contacts">Контакты ds: znakhariobyr</p>
+                        <a href="https://discord.com/users/znakhariobyr" class="contact-btn" target="_blank">
+                            <i class="fab fa-discord"></i>
+                            Связаться в Discord
+                        </a>
                         <div class="ad-footer">
                             <span class="ad-category">Аксессуары</span>
                         </div>
                     </div>
                 </div>
 
-               <!-- Пример объявления 1 -->
+                <!-- Пример объявления 4 -->
                 <div class="ad-card">
                     <div class="ad-image">
                         <span class="admin-badge">ADMIN</span>
@@ -507,15 +544,19 @@
                     </div>
                     <div class="ad-content">
                         <h3 class="ad-title">Продажа 'Сетика'</h3>
-                        <p class="ad-description">Эксклюзивный сетик , связывайтесь за подробностями.</p>
+                        <p class="ad-description">Эксклюзивный сетик, связывайтесь за подробностями.</p>
                         <p class="ad-contacts">Контакты ds: znakhariobyr</p>
+                        <a href="https://discord.com/users/znakhariobyr" class="contact-btn" target="_blank">
+                            <i class="fab fa-discord"></i>
+                            Связаться в Discord
+                        </a>
                         <div class="ad-footer">
                             <span class="ad-category">Аксессуары</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Пример объявления 1 -->
+                <!-- Пример объявления 5 -->
                 <div class="ad-card">
                     <div class="ad-image">
                         <span class="admin-badge">ADMIN</span>
@@ -525,15 +566,19 @@
                     </div>
                     <div class="ad-content">
                         <h3 class="ad-title">Продажа 'Сетика'</h3>
-                        <p class="ad-description">Эксклюзивный сетик , связывайтесь за подробностями.</p>
+                        <p class="ad-description">Эксклюзивный сетик, связывайтесь за подробностями.</p>
                         <p class="ad-contacts">Контакты ds: znakhariobyr</p>
+                        <a href="https://discord.com/users/znakhariobyr" class="contact-btn" target="_blank">
+                            <i class="fab fa-discord"></i>
+                            Связаться в Discord
+                        </a>
                         <div class="ad-footer">
                             <span class="ad-category">Аксессуары</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Пример объявления 1 -->
+                <!-- Пример объявления 6 -->
                 <div class="ad-card">
                     <div class="ad-image">
                         <span class="admin-badge">ADMIN</span>
@@ -543,8 +588,12 @@
                     </div>
                     <div class="ad-content">
                         <h3 class="ad-title">Продажа 'Сетика'</h3>
-                        <p class="ad-description">Эксклюзивный сетик , связывайтесь за подробностями.</p>
+                        <p class="ad-description">Эксклюзивный сетик, связывайтесь за подробностями.</p>
                         <p class="ad-contacts">Контакты ds: znakhariobyr</p>
+                        <a href="https://discord.com/users/znakhariobyr" class="contact-btn" target="_blank">
+                            <i class="fab fa-discord"></i>
+                            Связаться в Discord
+                        </a>
                         <div class="ad-footer">
                             <span class="ad-category">Аксессуары</span>
                         </div>
