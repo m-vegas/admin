@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vegas+ | ARZ - Админ панель</title>
+    <style>
+        :root {
+            --main-bg: #0a0a0a;
+            --card-bg: #111111;
+            --accent-red: #ff2e2e;
+            --accent-gold: #ffcc00;
+            --text-white: #ffffff;
+            --text-gray: #aaaaaa;
+            --border: rgba(255,255,255,0.1);
+            --success: #28a745;
+            --danger: #dc3545;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        
+        body {
+            background-color: var(--main-bg);
+            color: var(--text-white);
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(255, 46, 46, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 80% 70%, rgba(255, 204, 0, 0.05) 0%, transparent 20%);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            margin-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .top-links {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .discord-link, .shop-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-white);
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.2s;
+        }
+        
+        .discord-link:hover, .shop-link:hover {
+            color: var(--accent-red);
+        }
+        
+        .discord-icon {
+            color: #5865F2;
+        }
+        
+        .shop-icon {
+            color: var(--accent-gold);
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo-icon {
+            color: var(--accent-red);
+        }
+        
+        .logo-text {
+            background: linear-gradient(to right, var(--accent-red), var(--accent-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .admin-panel {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 20px;
+        }
+        
+        .form-section {
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+        }
+        
+        .ads-section {
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--text-white);
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: var(--text-gray);
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid var(--border);
+            background-color: var(--card-bg);
+            color: var(--text-white);
+        }
+        
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .image-preview {
+            width: 100%;
+            height: 200px;
+            background-color: rgba(0, 0, 0, 0.3);
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-gray);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .image-preview img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        .btn {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(to right, var(--accent-red), #ff5e5e);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            opacity: 0.9;
+        }
+        
+        .btn-danger {
+            background-color: var(--danger);
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            opacity: 0.9;
+        }
+        
+        .ads-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .ad-card {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+        
+        .ad-image {
+            height: 180px;
+            background-color: rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .ad-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .ad-content {
+            padding: 15px;
+        }
+        
+        .ad-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--text-white);
+        }
+        
+        .ad-description {
+            font-size: 14px;
+            color: var(--text-gray);
+            margin-bottom: 15px;
+            word-break: break-word;
+        }
+        
+        .ad-contacts {
+            font-size: 14px;
+            color: var(--accent-gold);
+            margin-bottom: 15px;
+            word-break: break-word;
+        }
+        
+        .ad-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 10px;
+            border-top: 1px solid var(--border);
+        }
+        
+        .ad-category {
+            font-size: 12px;
+            padding: 3px 8px;
+            border-radius: 3px;
+            background-color: rgba(255, 46, 46, 0.2);
+            color: var(--accent-red);
+        }
+        
+        .ad-actions {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: var(--success);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 1100;
+            display: none;
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-gray);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .admin-panel {
+                grid-template-columns: 1fr;
+            }
+            
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .ads-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Верхняя панель с Discord и ссылкой на магазин -->
+        <div class="top-bar">
+            <div class="top-links">
+                <a href="https://discord.gg/YCg9JXPmCN" class="discord-link" target="_blank">
+                    <i class="fab fa-discord discord-icon"></i>
+                    <span>Наш Дискорд</span>
+                </a>
+                <a href="index.html" class="shop-link">
+                    <i class="fas fa-store shop-icon"></i>
+                    <span>Магазин</span>
+                </a>
+            </div>
+        </div>
+
+        <header>
+            <div class="logo">
+                <i class="fas fa-user-shield logo-icon"></i>
+                <span class="logo-text">VEGAS+ | АДМИН ПАНЕЛЬ</span>
+            </div>
+        </header>
+
+        <!-- Основной контент админ-панели -->
+        <div class="admin-panel">
+            <!-- Форма добавления объявления -->
+            <div class="form-section">
+                <h2 class="section-title">Добавить объявление</h2>
+                <form id="ad-form">
+                    <div class="form-group">
+                        <label for="ad-title">Название</label>
+                        <input type="text" id="ad-title" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="ad-category">Категория</label>
+                        <select id="ad-category" required>
+                            <option value="">Выберите категорию</option>
+                            <option value="skin">Скины</option>
+                            <option value="accessory">Аксессуары</option>
+                            <option value="vehicle">Транспорт</option>
+                            <option value="weapon">Оружие</option>
+                            <option value="other">Другое</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="ad-description">Описание</label>
+                        <textarea id="ad-description" required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="ad-contacts">Контакты (Discord/Telegram)</label>
+                        <input type="text" id="ad-contacts" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="ad-image">Изображение (URL)</label>
+                        <input type="text" id="ad-image" placeholder="https://example.com/image.jpg">
+                        <div class="image-preview" id="image-preview">
+                            <i class="fas fa-image"></i>
+                            <span>Предпросмотр изображения</span>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Опубликовать</button>
+                </form>
+            </div>
+
+            <!-- Список объявлений -->
+            <div class="ads-section">
+                <div class="section-title">
+                    <span>Мои объявления</span>
+                </div>
+                
+                <div class="ads-grid" id="ads-container">
+                    <!-- Объявления будут загружены через JavaScript -->
+                    <div class="empty-state">
+                        <i class="fas fa-box-open" style="font-size: 3rem; margin-bottom: 15px;"></i>
+                        <p>У вас пока нет объявлений</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Уведомление -->
+        <div class="notification" id="notification">
+            Объявление успешно добавлено!
+        </div>
+    </div>
+
+    <!-- Скрипты -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Элементы DOM
+            const adForm = document.getElementById('ad-form');
+            const adsContainer = document.getElementById('ads-container');
+            const imagePreview = document.getElementById('image-preview');
+            const imageInput = document.getElementById('ad-image');
+            const notification = document.getElementById('notification');
+            
+            // Ключ для localStorage
+            const STORAGE_KEY = 'vegas_plus_ads';
+            
+            // Загрузка объявлений из localStorage
+            function loadAds() {
+                const ads = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+                renderAds(ads);
+                return ads;
+            }
+            
+            // Сохранение объявлений в localStorage
+            function saveAds(ads) {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(ads));
+            }
+            
+            // Отображение объявлений
+            function renderAds(ads) {
+                if (ads.length === 0) {
+                    adsContainer.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-box-open" style="font-size: 3rem; margin-bottom: 15px;"></i>
+                            <p>У вас пока нет объявлений</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                adsContainer.innerHTML = '';
+                
+                ads.forEach((ad, index) => {
+                    const adCard = document.createElement('div');
+                    adCard.className = 'ad-card';
+                    adCard.innerHTML = `
+                        <div class="ad-image">
+                            ${ad.image ? 
+                                `<img src="${ad.image}" alt="${ad.title}">` : 
+                                `<i class="fas fa-image"></i>`}
+                        </div>
+                        <div class="ad-content">
+                            <h3 class="ad-title">${ad.title}</h3>
+                            <p class="ad-description">${ad.description}</p>
+                            <p class="ad-contacts">${ad.contacts}</p>
+                            <div class="ad-footer">
+                                <span class="ad-category">${getCategoryName(ad.category)}</span>
+                                <div class="ad-actions">
+                                    <button class="btn btn-danger" data-index="${index}">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    adsContainer.appendChild(adCard);
+                });
+                
+                // Добавляем обработчики для кнопок удаления
+                document.querySelectorAll('.btn-danger').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const index = parseInt(this.getAttribute('data-index'));
+                        deleteAd(index);
+                    });
+                });
+            }
+            
+            // Получение названия категории
+            function getCategoryName(category) {
+                switch (category) {
+                    case 'skin': return 'Скин';
+                    case 'accessory': return 'Аксессуар';
+                    case 'vehicle': return 'Транспорт';
+                    case 'weapon': return 'Оружие';
+                    default: return 'Другое';
+                }
+            }
+            
+            // Удаление объявления
+            function deleteAd(index) {
+                const ads = loadAds();
+                ads.splice(index, 1);
+                saveAds(ads);
+                renderAds(ads);
+                
+                // Показываем уведомление
+                showNotification('Объявление удалено');
+            }
+            
+            // Показ уведомления
+            function showNotification(message) {
+                notification.textContent = message;
+                notification.style.display = 'block';
+                
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                }, 3000);
+            }
+            
+            // Предпросмотр изображения
+            imageInput.addEventListener('input', function() {
+                const url = this.value.trim();
+                
+                if (url) {
+                    imagePreview.innerHTML = `<img src="${url}" alt="Предпросмотр">`;
+                } else {
+                    imagePreview.innerHTML = `
+                        <i class="fas fa-image"></i>
+                        <span>Предпросмотр изображения</span>
+                    `;
+                }
+            });
+            
+            // Обработка формы
+            adForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const title = document.getElementById('ad-title').value;
+                const category = document.getElementById('ad-category').value;
+                const description = document.getElementById('ad-description').value;
+                const contacts = document.getElementById('ad-contacts').value;
+                const image = document.getElementById('ad-image').value;
+                
+                const newAd = {
+                    title,
+                    category,
+                    description,
+                    contacts,
+                    image,
+                    date: new Date().toISOString()
+                };
+                
+                // Добавляем новое объявление
+                const ads = loadAds();
+                ads.unshift(newAd); // Добавляем в начало массива
+                saveAds(ads);
+                renderAds(ads);
+                
+                // Очищаем форму
+                adForm.reset();
+                imagePreview.innerHTML = `
+                    <i class="fas fa-image"></i>
+                    <span>Предпросмотр изображения</span>
+                `;
+                
+                // Показываем уведомление
+                showNotification('Объявление успешно добавлено!');
+            });
+            
+            // Первоначальная загрузка объявлений
+            loadAds();
+        });
+    </script>
+</body>
+</html>
