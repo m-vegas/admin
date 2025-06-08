@@ -5,6 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vegas+ | ARZ - Магазин предметов</title>
     <style>
+        /* Анимация фона */
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
         /* Стили для загрузочного экрана */
         #loader {
             position: fixed;
@@ -12,7 +19,9 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: #0a0a0a;
+            background: linear-gradient(-45deg, #0a0a0a, #1a1a1a, #0a0a0a, #1a1a1a);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -34,11 +43,13 @@
             align-items: center;
             justify-content: center;
             gap: 15px;
+            animation: fadeInUp 0.8s ease-out;
         }
         
         .loader-icon {
             color: #ff2e2e;
             filter: drop-shadow(0 0 10px rgba(255, 46, 46, 0.5));
+            animation: pulse 2s infinite;
         }
         
         .loader-text {
@@ -46,6 +57,8 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             font-weight: bold;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            letter-spacing: 1px;
         }
         
         .loader-message {
@@ -53,6 +66,9 @@
             color: #ffffff;
             margin-bottom: 30px;
             line-height: 1.5;
+            animation: fadeIn 1s ease-out;
+            font-weight: 300;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
         }
         
         .loader-spinner {
@@ -61,7 +77,7 @@
             border: 5px solid rgba(255, 255, 255, 0.1);
             border-radius: 50%;
             border-top-color: #ff2e2e;
-            animation: spin 1s ease-in-out infinite;
+            animation: spin 1s ease-in-out infinite, fadeIn 0.5s ease-out;
             margin-bottom: 30px;
         }
         
@@ -72,10 +88,34 @@
             align-items: center;
             gap: 10px;
             margin-top: 20px;
+            animation: fadeInUp 0.5s ease-out;
+            font-weight: 500;
         }
         
         @keyframes spin {
             to { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
         }
 
         :root {
@@ -109,6 +149,36 @@
                 radial-gradient(circle at 20% 30%, rgba(255, 46, 46, 0.05) 0%, transparent 25%),
                 radial-gradient(circle at 80% 70%, rgba(255, 204, 0, 0.05) 0%, transparent 25%);
             line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Анимированные частицы для фона */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            animation: float linear infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) translateX(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(100px);
+                opacity: 0;
+            }
         }
         
         .container {
@@ -784,6 +854,9 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
+    <!-- Анимированные частицы фона -->
+    <div class="particles" id="particles"></div>
+
     <!-- Загрузочный экран -->
     <div id="loader">
         <div class="loader-content">
@@ -792,10 +865,10 @@
                 <span class="loader-text">VEGAS+ | ARZ</span>
             </div>
             <div class="loader-spinner"></div>
-            <div class="loader-message" id="loader-message">Обрабатываем ваш запрос, пожалуйста подождите...</div>
+            <div class="loader-message" id="loader-message">Загружаем каталог товаров...</div>
             <div class="loader-success" id="loader-success">
                 <i class="fas fa-check-circle"></i>
-                <span>Все отлично, сейчас мы направим вас на сайт!</span>
+                <span>Готово! Наслаждайтесь покупками</span>
             </div>
         </div>
     </div>
@@ -912,31 +985,66 @@
 
     <!-- Скрипты -->
     <script>
+        // Создаем анимированные частицы для фона
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Случайные параметры
+                const size = Math.random() * 5 + 2;
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100 + 100; // Начинаем ниже видимой области
+                const duration = Math.random() * 20 + 10;
+                const delay = Math.random() * 10;
+                
+                // Применяем стили
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${posX}%`;
+                particle.style.top = `${posY}%`;
+                particle.style.animationDuration = `${duration}s`;
+                particle.style.animationDelay = `${delay}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
         // Показываем загрузочный экран при загрузке страницы
         document.addEventListener('DOMContentLoaded', function() {
+            // Создаем частицы фона
+            createParticles();
+            
             // Имитируем проверку на бота и загрузку данных
             setTimeout(function() {
-                document.getElementById('loader-message').textContent = 'Проверка завершена...';
+                document.getElementById('loader-message').textContent = 'Проверяем данные...';
                 
                 setTimeout(function() {
-                    document.getElementById('loader-success').style.display = 'flex';
-                    document.getElementById('loader-message').style.display = 'none';
-                    document.querySelector('.loader-spinner').style.display = 'none';
+                    document.getElementById('loader-message').textContent = 'Финальная настройка...';
                     
-                    // Плавно скрываем загрузочный экран через 1.5 секунды
                     setTimeout(function() {
-                        document.getElementById('loader').style.opacity = '0';
+                        document.getElementById('loader-success').style.display = 'flex';
+                        document.getElementById('loader-message').style.display = 'none';
+                        document.querySelector('.loader-spinner').style.display = 'none';
                         
-                        // Полностью убираем загрузочный экран после анимации
+                        // Плавно скрываем загрузочный экран через 1.5 секунды
                         setTimeout(function() {
-                            document.getElementById('loader').style.display = 'none';
+                            document.getElementById('loader').style.opacity = '0';
                             
-                            // Запускаем основной код приложения
-                            initMainApp();
-                        }, 500);
-                    }, 1500);
-                }, 2000);
-            }, 1500);
+                            // Полностью убираем загрузочный экран после анимации
+                            setTimeout(function() {
+                                document.getElementById('loader').style.display = 'none';
+                                
+                                // Запускаем основной код приложения
+                                initMainApp();
+                            }, 500);
+                        }, 1500);
+                    }, 1000);
+                }, 1000);
+            }, 1000);
         });
 
         function initMainApp() {
@@ -959,368 +1067,175 @@
                 .then(data => {
                     const itemsData = Object.entries(data.list).map(([name, item]) => {
                         // Используем указанное изображение для всех товаров
-                        const imageUrl = 'https://sun9-74.userapi.com/impg/T2QGPg_kceADTIzkKXbpw-CR7EY_s0KC8JwKfQ/0NiamF4FlTs.jpg?size=1000x1000&quality=96&sign=26b090cb0f020401a7da16926066f65a&c_uniq_tag=4B6Bb3xmFZ4GA57O7K7sE-G-QUpqZPVztUXekjssp5w&type=album';
-                        
-                        return {
-                            id: name,
+                        const imageUrl = 'https://sun9-74.userapi.com/impg/T2QGPg_kceADTIzkKXbpw-CR7EY_s0KC8JwKfQ/0NiamF4FlTs.jpg?size=1000x1000&quality=96&sign=26b090cb0f020401a7da16926066f65a&c_uniq_tag=4B6Bb3xmFZ4GA57O7K7sE-G-QUpqZPVztUXekjssp5w
+                                                    return {
                             name: name,
-                            price: item.sa.price,
-                            updated: item.sa.updated,
-                            category: determineCategory(name),
-                            image: imageUrl
+                            price: item.price,
+                            category: item.category || 'other',
+                            image: imageUrl,
+                            updated: item.updated || 'Недавно'
                         };
                     });
 
-                    // Инициализация приложения
-                    initApp(itemsData);
-                })
-                .catch(error => {
-                    console.error('Error loading data:', error);
-                    document.getElementById('items-container').innerHTML = 
-                        '<div class="error">Ошибка загрузки данных. Пожалуйста, проверьте файл prices.json</div>';
-                });
+                    // Функция для отображения товаров
+                    function displayItems(items) {
+                        const container = document.getElementById('items-container');
+                        container.innerHTML = '';
 
-            // Функция для определения категории по названию
-            function determineCategory(name) {
-                if (name.includes('Скин:') || name.includes('Skin:')) {
-                    return 'skin';
-                } else if (name.includes('щит') || name.includes('Щит') || 
-                           name.includes('шлем') || name.includes('Шлем') ||
-                           name.includes('маска') || name.includes('Маска')) {
-                    return 'accessory';
-                } else if (name.includes('диск') || name.includes('Диск') ||
-                          name.includes('выхлоп') || name.includes('Выхлоп') ||
-                          name.includes('спойлер') || name.includes('Спойлер')) {
-                    return 'vehicle';
-                } else if (name.includes('пистолет') || name.includes('Пистолет') ||
-                          name.includes('автомат') || name.includes('Автомат') ||
-                          name.includes('оружие') || name.includes('Оружие')) {
-                    return 'weapon';
-                }
-                return 'other';
-            }
-
-            // Инициализация приложения
-            function initApp(items) {
-                // Элементы DOM
-                const itemsContainer = document.getElementById('items-container');
-                const searchInput = document.getElementById('search-input');
-                const searchBtn = document.getElementById('search-btn');
-                const categoryFilter = document.getElementById('category-filter');
-                const priceFilter = document.getElementById('price-filter');
-                const sortBy = document.getElementById('sort-by');
-                const pagination = document.getElementById('pagination');
-                const modal = document.getElementById('item-modal');
-                const closeBtn = document.querySelector('.close-btn');
-                const modalBody = document.getElementById('modal-body');
-
-                // Состояние приложения
-                let currentPage = 1;
-                const itemsPerPage = 12;
-                let filteredItems = [...items];
-
-                // Фильтрация и сортировка товаров
-                function filterAndSortItems() {
-                    const searchTerm = searchInput.value.toLowerCase();
-                    const category = categoryFilter.value;
-                    const priceRange = priceFilter.value;
-                    const sortOption = sortBy.value;
-
-                    // Фильтрация
-                    filteredItems = items.filter(item => {
-                        // Поиск
-                        const matchesSearch = item.name.toLowerCase().includes(searchTerm);
-                        
-                        // Категория
-                        const matchesCategory = category === 'all' || item.category === category;
-                        
-                        // Цена
-                        let matchesPrice = true;
-                        if (Array.isArray(item.price)) {
-                            const minPrice = Math.min(...item.price);
-                            const maxPrice = Math.max(...item.price);
-                            
-                            if (priceRange === 'cheap') {
-                                matchesPrice = maxPrice <= 100000;
-                            } else if (priceRange === 'medium') {
-                                matchesPrice = minPrice > 100000 && maxPrice <= 1000000;
-                            } else if (priceRange === 'expensive') {
-                                matchesPrice = minPrice > 1000000;
-                            }
-                        } else {
-                            if (priceRange === 'cheap') {
-                                matchesPrice = item.price <= 100000;
-                            } else if (priceRange === 'medium') {
-                                matchesPrice = item.price > 100000 && item.price <= 1000000;
-                            } else if (priceRange === 'expensive') {
-                                matchesPrice = item.price > 1000000;
-                            }
+                        if (items.length === 0) {
+                            container.innerHTML = '<div class="no-results">Товары не найдены</div>';
+                            return;
                         }
+
+                        items.forEach(item => {
+                            const itemElement = document.createElement('div');
+                            itemElement.className = 'item-card';
+                            itemElement.innerHTML = `
+                                <div class="item-image" style="background-image: url('${item.image}')">
+                                    <img src="${item.image}" alt="${item.name}" style="display: none;">
+                                </div>
+                                <div class="item-info">
+                                    <div class="item-name">${item.name}</div>
+                                    <div class="item-price">${item.price.toLocaleString()}</div>
+                                    <div class="item-updated">
+                                        <i class="far fa-clock"></i>
+                                        Обновлено: ${item.updated}
+                                    </div>
+                                </div>
+                            `;
+
+                            // Открываем модальное окно при клике на карточку
+                            itemElement.addEventListener('click', () => {
+                                openItemModal(item);
+                            });
+
+                            container.appendChild(itemElement);
+                        });
+                    }
+
+                    // Функция для открытия модального окна товара
+                    function openItemModal(item) {
+                        const modal = document.getElementById('item-modal');
+                        const modalBody = document.getElementById('modal-body');
                         
-                        return matchesSearch && matchesCategory && matchesPrice;                    });
-
-                    // Сортировка
-                    switch (sortOption) {
-                        case 'name-asc':
-                            filteredItems.sort((a, b) => a.name.localeCompare(b.name));
-                            break;
-                        case 'name-desc':
-                            filteredItems.sort((a, b) => b.name.localeCompare(a.name));
-                            break;
-                        case 'price-asc':
-                            filteredItems.sort((a, b) => {
-                                const priceA = Array.isArray(a.price) ? Math.min(...a.price) : a.price;
-                                const priceB = Array.isArray(b.price) ? Math.min(...b.price) : b.price;
-                                return priceA - priceB;
-                            });
-                            break;
-                        case 'price-desc':
-                            filteredItems.sort((a, b) => {
-                                const priceA = Array.isArray(a.price) ? Math.max(...a.price) : a.price;
-                                const priceB = Array.isArray(b.price) ? Math.max(...b.price) : b.price;
-                                return priceB - priceA;
-                            });
-                            break;
-                    }
-
-                    currentPage = 1;
-                    renderItems();
-                    renderPagination();
-                }
-
-                // Отображение товаров
-                function renderItems() {
-                    itemsContainer.innerHTML = '';
-                    
-                    const startIndex = (currentPage - 1) * itemsPerPage;
-                    const endIndex = startIndex + itemsPerPage;
-                    const itemsToShow = filteredItems.slice(startIndex, endIndex);
-                    
-                    if (itemsToShow.length === 0) {
-                        itemsContainer.innerHTML = '<div class="no-results">Ничего не найдено</div>';
-                        return;
-                    }
-                    
-                    itemsToShow.forEach(item => {
-                        const itemCard = document.createElement('div');
-                        itemCard.className = 'item-card';
-                        itemCard.innerHTML = `
-                            <div class="item-image" style="background-image: url('${item.image}')">
+                        modalBody.innerHTML = `
+                            <div class="modal-image" style="background-image: url('${item.image}')">
+                                <img src="${item.image}" alt="${item.name}" style="display: none;">
                             </div>
-                            <div class="item-info">
-                                <div class="item-name" title="${item.name}">${item.name}</div>
-                                <div class="item-price">${formatPrice(item.price)}</div>
-                                <div class="item-updated"><i class="far fa-clock"></i> Обновлено: ${formatDate(item.updated)}</div>
+                            <h1 class="modal-title">${item.name}</h1>
+                            <div class="modal-price">${item.price.toLocaleString()}</div>
+                            
+                            <div class="modal-stats">
+                                <div class="stat-item">
+                                    <div class="stat-label">Категория</div>
+                                    <div class="stat-value">${getCategoryName(item.category)}</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-label">Последнее обновление</div>
+                                    <div class="stat-value">${item.updated}</div>
+                                </div>
                             </div>
                         `;
-                        itemCard.addEventListener('click', () => openModal(item));
-                        itemsContainer.appendChild(itemCard);
-                    });
-                }
 
-                // Форматирование цены
-                function formatPrice(price) {
-                    if (Array.isArray(price)) {
-                        return `${formatNumber(price[0])} - ${formatNumber(price[1])}`;
+                        modal.style.display = 'block';
                     }
-                    return formatNumber(price);
-                }
 
-                function formatNumber(num) {
-                    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                }
+                    // Функция для получения названия категории
+                    function getCategoryName(category) {
+                        const categories = {
+                            'skin': 'Скин',
+                            'accessory': 'Аксессуар',
+                            'vehicle': 'Транспорт',
+                            'weapon': 'Оружие',
+                            'other': 'Другое'
+                        };
+                        return categories[category] || category;
+                    }
 
-                // Форматирование даты
-                function formatDate(timestamp) {
-                    const date = new Date(timestamp * 1000);
-                    return date.toLocaleDateString('ru-RU');
-                }
+                    // Закрытие модального окна
+                    document.querySelector('.close-btn').addEventListener('click', function() {
+                        document.getElementById('item-modal').style.display = 'none';
+                    });
 
-                // Отображение пагинации
-                function renderPagination() {
-                    pagination.innerHTML = '';
-                    
-                    const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
-                    if (totalPages <= 1) return;
-                    
-                    // Кнопка "Назад"
-                    const prevBtn = document.createElement('button');
-                    prevBtn.innerHTML = '<i class="fas fa-chevron-left"></i>';
-                    prevBtn.disabled = currentPage === 1;
-                    prevBtn.addEventListener('click', () => {
-                        if (currentPage > 1) {
-                            currentPage--;
-                            renderItems();
-                            renderPagination();
-                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                    // Закрытие модального окна при клике вне его
+                    window.addEventListener('click', function(event) {
+                        if (event.target === document.getElementById('item-modal')) {
+                            document.getElementById('item-modal').style.display = 'none';
                         }
                     });
-                    pagination.appendChild(prevBtn);
-                    
-                    // Всегда показываем первую страницу
-                    if (currentPage > 1) {
-                        const firstPageBtn = document.createElement('button');
-                        firstPageBtn.textContent = '1';
-                        firstPageBtn.className = 1 === currentPage ? 'active' : '';
-                        firstPageBtn.addEventListener('click', () => {
-                            currentPage = 1;
-                            renderItems();
-                            renderPagination();
-                            window.scrollTo({ top: 0, behavior: 'smooth' });
-                        });
-                        pagination.appendChild(firstPageBtn);
-                    }
-                    
-                    // Показываем многоточие, если текущая страница далеко от первой
-                    if (currentPage > 3) {
-                        const ellipsis = document.createElement('span');
-                        ellipsis.className = 'ellipsis';
-                        ellipsis.textContent = '...';
-                        pagination.appendChild(ellipsis);
-                    }
-                    
-                    // Показываем предыдущую страницу, если она не первая
-                    if (currentPage > 2) {
-                        const prevPageBtn = document.createElement('button');
-                        prevPageBtn.textContent = currentPage - 1;
-                        prevPageBtn.addEventListener('click', () => {
-                            currentPage = currentPage - 1;
-                            renderItems();
-                            renderPagination();
-                            window.scrollTo({ top: 0, behavior: 'smooth' });
-                        });
-                        pagination.appendChild(prevPageBtn);
-                    }
-                    
-                    // Текущая страница
-                    if (currentPage !== 1 && currentPage !== totalPages) {
-                        const currentPageBtn = document.createElement('button');
-                        currentPageBtn.textContent = currentPage;
-                        currentPageBtn.className = 'active';
-                        pagination.appendChild(currentPageBtn);
-                    }
-                    
-                    // Показываем следующую страницу, если она не последняя
-                    if (currentPage < totalPages - 1) {
-                        const nextPageBtn = document.createElement('button');
-                        nextPageBtn.textContent = currentPage + 1;
-                        nextPageBtn.addEventListener('click', () => {
-                            currentPage = currentPage + 1;
-                            renderItems();
-                            renderPagination();
-                            window.scrollTo({ top: 0, behavior: 'smooth' });
-                        });
-                        pagination.appendChild(nextPageBtn);
-                    }
-                    
-                    // Показываем многоточие, если текущая страница далеко от последней
-                    if (currentPage < totalPages - 2) {
-                        const ellipsis = document.createElement('span');
-                        ellipsis.className = 'ellipsis';
-                        ellipsis.textContent = '...';
-                        pagination.appendChild(ellipsis);
-                    }
-                    
-                    // Всегда показываем последнюю страницу
-                    if (currentPage < totalPages) {
-                        const lastPageBtn = document.createElement('button');
-                        lastPageBtn.textContent = totalPages;
-                        lastPageBtn.className = totalPages === currentPage ? 'active' : '';
-                        lastPageBtn.addEventListener('click', () => {
-                            currentPage = totalPages;
-                            renderItems();
-                            renderPagination();
-                            window.scrollTo({ top: 0, behavior: 'smooth' });
-                        });
-                        pagination.appendChild(lastPageBtn);
-                    }
-                    
-                    // Кнопка "Вперед"
-                    const nextBtn = document.createElement('button');
-                    nextBtn.innerHTML = '<i class="fas fa-chevron-right"></i>';
-                    nextBtn.disabled = currentPage === totalPages;
-                    nextBtn.addEventListener('click', () => {
-                        if (currentPage < totalPages) {
-                            currentPage++;
-                            renderItems();
-                            renderPagination();
-                            window.scrollTo({ top: 0, behavior: 'smooth' });
-                        }
-                    });
-                    pagination.appendChild(nextBtn);
-                }
 
-                // Открытие модального окна
-                function openModal(item) {
-                    modalBody.innerHTML = `
-                        <div class="modal-image" style="background-image: url('${item.image}')"></div>
-                        <h2 class="modal-title">${item.name}</h2>
-                        <div class="modal-price">${formatPrice(item.price)}</div>
+                    // Функции фильтрации и сортировки
+                    function filterItems() {
+                        const category = document.getElementById('category-filter').value;
+                        const price = document.getElementById('price-filter').value;
+                        const sort = document.getElementById('sort-by').value;
                         
-                        <div class="modal-stats">
-                            <div class="stat-item">
-                                <div class="stat-label">Категория</div>
-                                <div class="stat-value">${getCategoryName(item.category)}</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-label">Дата обновления</div>
-                                <div class="stat-value">${formatDate(item.updated)}</div>
-                            </div>
+                        let filtered = [...itemsData];
+                        
+                        // Фильтрация по категории
+                        if (category !== 'all') {
+                            filtered = filtered.filter(item => item.category === category);
+                        }
+                        
+                        // Фильтрация по цене
+                        if (price !== 'all') {
+                            if (price === 'cheap') {
+                                filtered = filtered.filter(item => item.price < 100000);
+                            } else if (price === 'medium') {
+                                filtered = filtered.filter(item => item.price >= 100000 && item.price <= 1000000);
+                            } else if (price === 'expensive') {
+                                filtered = filtered.filter(item => item.price > 1000000);
+                            }
+                        }
+                        
+                        // Сортировка
+                        if (sort === 'name-asc') {
+                            filtered.sort((a, b) => a.name.localeCompare(b.name));
+                        } else if (sort === 'name-desc') {
+                            filtered.sort((a, b) => b.name.localeCompare(a.name));
+                        } else if (sort === 'price-asc') {
+                            filtered.sort((a, b) => a.price - b.price);
+                        } else if (sort === 'price-desc') {
+                            filtered.sort((a, b) => b.price - a.price);
+                        }
+                        
+                        displayItems(filtered);
+                    }
+
+                    // Поиск товаров
+                    document.getElementById('search-btn').addEventListener('click', function() {
+                        const searchTerm = document.getElementById('search-input').value.toLowerCase();
+                        const filtered = itemsData.filter(item => 
+                            item.name.toLowerCase().includes(searchTerm)
+                        );
+                        displayItems(filtered);
+                    });
+
+                    // Поиск при нажатии Enter
+                    document.getElementById('search-input').addEventListener('keypress', function(e) {
+                        if (e.key === 'Enter') {
+                            document.getElementById('search-btn').click();
+                        }
+                    });
+
+                    // Обработчики изменения фильтров
+                    document.getElementById('category-filter').addEventListener('change', filterItems);
+                    document.getElementById('price-filter').addEventListener('change', filterItems);
+                    document.getElementById('sort-by').addEventListener('change', filterItems);
+
+                    // Первоначальная загрузка товаров
+                    filterItems();
+                })
+                .catch(error => {
+                    console.error('Ошибка загрузки данных:', error);
+                    document.getElementById('items-container').innerHTML = `
+                        <div class="error-message">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <p>Произошла ошибка при загрузке данных. Пожалуйста, попробуйте позже.</p>
                         </div>
-                    
                     `;
-                    
-                    modal.style.display = 'block';
-                    document.body.style.overflow = 'hidden';
-                    
-                    // Добавляем обработчик для кнопки покупки
-                    const buyBtn = modalBody.querySelector('.account-btn');
-                    buyBtn.addEventListener('click', () => {
-                        const notification = document.getElementById('notification');
-                        notification.style.display = 'flex';
-                        notification.style.alignItems = 'center';
-                        notification.style.gap = '10px';
-                        
-                        setTimeout(() => {
-                            notification.style.display = 'none';
-                        }, 3000);
-                    });
-                }
-
-                // Получение названия категории
-                function getCategoryName(category) {
-                    switch(category) {
-                        case 'skin': return 'Скин';
-                        case 'accessory': return 'Аксессуар';
-                        case 'vehicle': return 'Транспорт';
-                        case 'weapon': return 'Оружие';
-                        default: return 'Другое';
-                    }
-                }
-
-                // Закрытие модального окна
-                function closeModal() {
-                    modal.style.display = 'none';
-                    document.body.style.overflow = 'auto';
-                }
-
-                // Обработчики событий
-                searchInput.addEventListener('input', filterAndSortItems);
-                searchBtn.addEventListener('click', filterAndSortItems);
-                categoryFilter.addEventListener('change', filterAndSortItems);
-                priceFilter.addEventListener('change', filterAndSortItems);
-                sortBy.addEventListener('change', filterAndSortItems);
-                closeBtn.addEventListener('click', closeModal);
-                window.addEventListener('click', (event) => {
-                    if (event.target === modal) {
-                        closeModal();
-                    }
                 });
-
-                // Инициализация
-                filterAndSortItems();
-            }
-        });
+        }
     </script>
 </body>
 </html>
