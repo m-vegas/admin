@@ -1,1 +1,1438 @@
-    <title>Vegas+ | ТЕХ- РАБОТЫ </title>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vegas+ | ARZ - Магазин предметов</title>
+    <style>
+        /* Новая анимация фона для загрузочного экрана */
+        @keyframes cosmicBG {
+            0% { background-position: 0% 0%; }
+            50% { background-position: 100% 100%; }
+            100% { background-position: 0% 0%; }
+        }
+
+        /* Новый стиль для загрузочного экрана */
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(-45deg, #0a0a0a, #1a1a1a, #0a0a0a, #1a1a1a);
+            background-size: 400% 400%;
+            animation: cosmicBG 20s ease infinite;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            overflow: hidden;
+        }
+
+        /* Анимированные звезды на фоне */
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle var(--duration) infinite ease-in-out;
+            opacity: 0;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: var(--opacity); transform: scale(1); }
+        }
+
+        /* Контент загрузки */
+        .loader-content {
+            text-align: center;
+            max-width: 600px;
+            padding: 0 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Логотип с анимацией */
+        .loader-logo {
+            font-size: 3.5rem;
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(2deg); }
+        }
+
+        .loader-icon {
+            color: #ff2e2e;
+            filter: drop-shadow(0 0 15px rgba(255, 46, 46, 0.7));
+            animation: pulse 2s infinite, rotate 10s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .loader-text {
+            background: linear-gradient(to right, #ff2e2e, #ffcc00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: bold;
+            text-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
+            letter-spacing: 2px;
+            position: relative;
+        }
+
+        .loader-text::after {
+            content: 'МАГАЗИН ПРЕДМЕТОВ';
+            position: absolute;
+            bottom: -1.8rem;
+            left: 0;
+            font-size: 0.9rem;
+            font-weight: normal;
+            color: rgba(255,255,255,0.7);
+            width: 100%;
+            letter-spacing: 1px;
+        }
+
+        /* Сообщение загрузки */
+        .loader-message {
+            font-size: 1.5rem;
+            color: #ffffff;
+            margin-bottom: 40px;
+            line-height: 1.6;
+            font-weight: 300;
+            text-shadow: 0 1px 5px rgba(0,0,0,0.5);
+            position: relative;
+            min-height: 60px;
+        }
+
+        /* Прогресс бар */
+        .progress-container {
+            width: 100%;
+            height: 10px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            margin-bottom: 30px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(to right, #ff2e2e, #ffcc00);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255,255,255,0.3), 
+                transparent);
+            animation: progressShine 2s infinite;
+        }
+
+        @keyframes progressShine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Анимированный спиннер */
+        .loader-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            border-top-color: #ff2e2e;
+            border-bottom-color: #ffcc00;
+            animation: spin 1.5s linear infinite, pulseColor 3s infinite;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .loader-spinner::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border: 4px solid rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            animation: spinReverse 2s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes spinReverse {
+            to { transform: rotate(-360deg); }
+        }
+
+        @keyframes pulseColor {
+            0%, 100% { 
+                border-top-color: #ff2e2e;
+                border-bottom-color: #ffcc00;
+            }
+            50% { 
+                border-top-color: #ffcc00;
+                border-bottom-color: #ff2e2e;
+            }
+        }
+
+        /* Сообщение об успешной загрузке */
+        .loader-success {
+            font-size: 1.8rem;
+            color: #2ecc71;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            animation: fadeInUp 0.8s ease-out;
+            font-weight: 500;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .loader-success i {
+            animation: bounce 0.8s infinite alternate;
+        }
+
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-10px); }
+        }
+
+        /* Дополнительные анимации */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Анимация частиц */
+        .particles-loader {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .particle-loader {
+            position: absolute;
+            background: linear-gradient(to right, #ff2e2e, #ffcc00);
+            border-radius: 50%;
+            animation: floatUp linear infinite;
+            opacity: 0.7;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.7;
+            }
+            90% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-100px) translateX(var(--random-x));
+                opacity: 0;
+            }
+        }
+
+        /* Основные стили магазина */
+        :root {
+            --main-bg: #0a0a0a;
+            --card-bg: #111111;
+            --card-hover-bg: #1a1a1a;
+            --accent-red: #ff2e2e;
+            --accent-red-dark: #cc2525;
+            --accent-gold: #ffcc00;
+            --accent-gold-dark: #e6b800;
+            --text-white: #ffffff;
+            --text-gray: #aaaaaa;
+            --text-dark: #666666;
+            --border: rgba(255,255,255,0.1);
+            --border-hover: rgba(255, 46, 46, 0.3);
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Roboto', sans-serif;
+        }
+        
+        body {
+            background-color: var(--main-bg);
+            color: var(--text-white);
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(255, 46, 46, 0.05) 0%, transparent 25%),
+                radial-gradient(circle at 80% 70%, rgba(255, 204, 0, 0.05) 0%, transparent 25%);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Анимированные частицы для фона */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            animation: float linear infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) translateX(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(100px);
+                opacity: 0;
+            }
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        /* Верхняя панель */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .top-links {
+            display: flex;
+            gap: 25px;
+        }
+        
+        .top-link {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            color: var(--text-white);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            background: rgba(17, 17, 17, 0.7);
+            backdrop-filter: blur(5px);
+        }
+        
+        .top-link:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+        
+        .discord-link:hover {
+            background: rgba(88, 101, 242, 0.1);
+            color: #5865F2;
+        }
+        
+        .sets-link:hover {
+            background: rgba(255, 204, 0, 0.1);
+            color: var(--accent-gold);
+        }
+        
+        .admin-link:hover {
+            background: rgba(46, 204, 113, 0.1);
+            color: #2ecc71;
+        }
+        
+        .account-btn {
+            background: linear-gradient(135deg, rgba(255, 46, 46, 0.2), rgba(255, 204, 0, 0.2));
+            border: 1px solid var(--border);
+            color: var(--text-white);
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            padding: 0.7rem 1.5rem;
+            border-radius: 8px;
+            transition: var(--transition);
+            backdrop-filter: blur(5px);
+        }
+        
+        .account-btn:hover {
+            background: linear-gradient(135deg, rgba(255, 46, 46, 0.3), rgba(255, 204, 0, 0.3));
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+            color: var(--accent-gold);
+            border-color: var(--accent-gold);
+        }
+        
+        /* Шапка */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem 0;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border), transparent);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 2rem;
+            font-weight: bold;
+            position: relative;
+        }
+        
+        .logo-icon {
+            color: var(--accent-red);
+            font-size: 2.5rem;
+            filter: drop-shadow(0 0 10px rgba(255, 46, 46, 0.5));
+        }
+        
+        .logo-text {
+            background: linear-gradient(to right, var(--accent-red), var(--accent-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+        
+        .logo-text::after {
+            content: 'МАГАЗИН ПРЕДМЕТОВ';
+            position: absolute;
+            bottom: -1.5rem;
+            left: 0;
+            font-size: 0.8rem;
+            font-weight: normal;
+            color: var(--text-gray);
+            width: 100%;
+            background: none;
+            -webkit-background-clip: initial;
+            -webkit-text-fill-color: initial;
+        }
+        
+        .search-bar {
+            display: flex;
+            flex-grow: 1;
+            max-width: 600px;
+            margin: 0 2rem;
+            position: relative;
+        }
+        
+        .search-bar input {
+            flex-grow: 1;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            background: rgba(17, 17, 17, 0.7);
+            color: var(--text-white);
+            border: 1px solid var(--border);
+            transition: var(--transition);
+            backdrop-filter: blur(5px);
+            box-shadow: var(--shadow);
+        }
+        
+        .search-bar input:focus {
+            outline: none;
+            border-color: var(--accent-red);
+            box-shadow: 0 0 0 3px rgba(255, 46, 46, 0.2);
+        }
+        
+        .search-bar button {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            bottom: 5px;
+            width: 50px;
+            background: linear-gradient(to right, var(--accent-red), #ff5e5e);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .search-bar button:hover {
+            background: linear-gradient(to right, var(--accent-red-dark), #ff4e4e);
+            transform: scale(0.95);
+        }
+        
+        /* Фильтры */
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            margin: 40px 0;
+            padding: 25px;
+            background-color: rgba(17, 17, 17, 0.7);
+            border-radius: 15px;
+            border: 1px solid var(--border);
+            backdrop-filter: blur(5px);
+            box-shadow: var(--shadow);
+        }
+        
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .filter-group label {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-gray);
+            letter-spacing: 0.5px;
+        }
+        
+        .filter-group select {
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background-color: rgba(10, 10, 10, 0.7);
+            color: var(--text-white);
+            font-size: 15px;
+            transition: var(--transition);
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23aaaaaa' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 15px;
+        }
+        
+        .filter-group select:focus {
+            outline: none;
+            border-color: var(--accent-red);
+            box-shadow: 0 0 0 3px rgba(255, 46, 46, 0.2);
+        }
+        
+        /* Сетка товаров */
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .item-card {
+            background-color: rgba(17, 17, 17, 0.7);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: var(--transition);
+            backdrop-filter: blur(5px);
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+        
+        .item-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(to right, var(--accent-red), var(--accent-gold));
+            opacity: 0;
+            transition: var(--transition);
+        }
+        
+        .item-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-red);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+        
+        .item-card:hover::before {
+            opacity: 1;
+        }
+        
+        .item-image {
+            height: 220px;
+            background-color: rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-gray);
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .item-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, transparent 60%, rgba(0, 0, 0, 0.8));
+        }
+        
+        .item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .item-info {
+            padding: 20px;
+            position: relative;
+        }
+        
+        .item-name {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: var(--text-white);
+        }
+        
+        .item-price {
+            font-size: 22px;
+            font-weight: bold;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .item-price::before {
+            content: '$';
+            font-size: 0.8em;
+            color: var(--text-gray);
+        }
+        
+        .item-updated {
+            font-size: 13px;
+            color: var(--text-gray);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .item-updated i {
+            font-size: 0.9em;
+        }
+        
+        /* Пагинация */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 40px;
+        }
+        
+        .pagination button {
+            padding: 10px 18px;
+            background: rgba(17, 17, 17, 0.7);
+            color: var(--text-white);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            min-width: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+        
+        .pagination button:hover:not(.active):not(:disabled) {
+            border-color: var(--accent-red);
+            color: var(--accent-gold);
+        }
+        
+        .pagination button.active {
+            background: linear-gradient(to right, var(--accent-red), #ff5e5e);
+            border-color: var(--accent-red);
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(255, 46, 46, 0.3);
+        }
+        
+        .pagination button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .pagination .ellipsis {
+            padding: 10px 5px;
+            color: var(--text-gray);
+        }
+        
+        /* Модальное окно */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            overflow-y: auto;
+            backdrop-filter: blur(5px);
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        .modal-content {
+            background-color: var(--card-bg);
+            margin: 50px auto;
+            max-width: 900px;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid var(--border);
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+            animation: slideUp 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        
+        @keyframes slideUp {
+            from { 
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to { 
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 28px;
+            cursor: pointer;
+            z-index: 10;
+            color: var(--text-white);
+            background: rgba(0, 0, 0, 0.5);
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: var(--transition);
+            border: 1px solid var(--border);
+        }
+        
+        .close-btn:hover {
+            background: var(--accent-red);
+            transform: rotate(90deg);
+        }
+        
+        .modal-body {
+            padding: 40px;
+        }
+        
+        .modal-image {
+            width: 100%;
+            height: 350px;
+            background-color: rgba(0, 0, 0, 0.3);
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-gray);
+            font-size: 1.2rem;
+            border-radius: 10px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        
+        .modal-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.7));
+        }
+        
+        .modal-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .modal-title {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: var(--text-white);
+            font-weight: 600;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .modal-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(to right, var(--accent-red), var(--accent-gold));
+            border-radius: 3px;
+        }
+        
+        .modal-price {
+            font-size: 32px;
+            color: var(--accent-gold);
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .modal-price::before {
+            content: '$';
+            font-size: 0.8em;
+            color: var(--text-gray);
+        }
+        
+        .modal-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-item {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            transition: var(--transition);
+        }
+        
+        .stat-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-red);
+            box-shadow: var(--shadow);
+        }
+        
+        .stat-label {
+            font-size: 13px;
+            color: var(--text-gray);
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+        
+        .stat-value {
+            font-weight: bold;
+            color: var(--text-white);
+            font-size: 16px;
+        }
+        
+        /* Уведомление */
+        .notification {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: linear-gradient(to right, var(--accent-red), #ff5e5e);
+            color: white;
+            padding: 18px 25px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(255, 46, 46, 0.3);
+            z-index: 1100;
+            display: none;
+            animation: slideIn 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 350px;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 1200px) {
+            .container {
+                padding: 1.5rem;
+            }
+            
+            .items-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+        }
+        
+        @media (max-width: 992px) {
+            header {
+                flex-direction: column;
+                gap: 25px;
+                padding-bottom: 25px;
+            }
+            
+            .search-bar {
+                max-width: 100%;
+                margin: 0;
+            }
+            
+            .modal-content {
+                margin: 30px auto;
+                width: 95%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .top-links {
+                gap: 15px;
+            }
+            
+            .top-link span {
+                display: none;
+            }
+            
+            .items-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 15px;
+            }
+            
+            .modal-body {
+                padding: 25px;
+            }
+            
+            .modal-image {
+                height: 250px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .filters {
+                padding: 20px;
+            }
+            
+            .filter-group {
+                min-width: 100%;
+            }
+            
+            .item-image {
+                height: 180px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <!-- Анимированные частицы фона -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Улучшенный загрузочный экран -->
+    <div id="loader">
+        <!-- Анимированные звезды на фоне -->
+        <div class="stars" id="stars"></div>
+        
+        <!-- Анимированные частицы -->
+        <div class="particles-loader" id="particles-loader"></div>
+        
+        <div class="loader-content">
+            <div class="loader-logo">
+                <i class="fas fa-gem loader-icon"></i>
+                <span class="loader-text">VEGAS+ | ARZ</span>
+            </div>
+            
+            <div class="loader-spinner"></div>
+            
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            
+            <div class="loader-message" id="loader-message">Инициализация системы...</div>
+            
+            <div class="loader-success" id="loader-success">
+                <i class="fas fa-check-circle"></i>
+                <span>Готово! Наслаждайтесь покупками</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chatra {literal} -->
+    <script>
+        (function(d, w, c) {
+            w.ChatraID = 'hePBzAxuhW4Nvoz9D';
+            var s = d.createElement('script');
+            w[c] = w[c] || function() {
+                (w[c].q = w[c].q || []).push(arguments);
+            };
+            s.async = true;
+            s.src = 'https://call.chatra.io/chatra.js';
+            if (d.head) d.head.appendChild(s);
+        })(document, window, 'Chatra');
+    </script>
+    <!-- /Chatra {/literal} -->
+
+    <div class="container">
+        <!-- Верхняя панель -->
+        <div class="top-bar">
+            <div class="top-links">
+                <a href="https://discord.gg/YCg9JXPmCN" class="top-link discord-link" target="_blank">
+                    <i class="fab fa-discord"></i>
+                    <span>Наш Дискорд</span>
+                </a>
+                <a href="index2.html" class="top-link sets-link">
+                    <i class="fas fa-layer-group"></i>
+                    <span>Сэты</span>
+                </a>
+                <a href="index3.html" class="top-link admin-link">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Лавка игроков</span>
+                </a>
+            </div>
+            <button class="account-btn" id="account-btn">
+                <i class="fas fa-user"></i>
+                <span>Личный кабинет</span>
+            </button>
+        </div>
+
+        <!-- Основная страница магазина -->
+        <div id="main-page">
+            <header>
+                <div class="logo">
+                    <i class="fas fa-shopping-bag logo-icon"></i>
+                    <span class="logo-text">VEGAS+ | ARZ</span>
+                </div>
+                <div class="search-bar">
+                    <input type="text" id="search-input" placeholder="Поиск предметов...">
+                    <button id="search-btn"><i class="fas fa-search"></i></button>
+                </div>
+            </header>
+
+            <!-- Фильтры магазина -->
+            <div class="filters">
+                <div class="filter-group">
+                    <label for="category-filter">Категория:</label>
+                    <select id="category-filter">
+                        <option value="all">Все</option>
+                        <option value="skin">Скины</option>
+                        <option value="accessory">Аксессуары</option>
+                        <option value="vehicle">Транспорт</option>
+                        <option value="weapon">Оружие</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="price-filter">Цена:</label>
+                    <select id="price-filter">
+                        <option value="all">Любая</option>
+                        <option value="cheap">До 100,000$</option>
+                        <option value="medium">100,000$ - 1,000,000$</option>
+                        <option value="expensive">1,000,000$+</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                        <label for="sort-by">Сортировка:</label>
+                         <select id="sort-by">
+                        <option value="popular">По популярности</option>
+                        <option value="price-asc">Цена по возрастанию</option>
+                        <option value="price-desc">Цена по убыванию</option>
+                        <option value="newest">Сначала новые</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Сетка товаров -->
+            <div class="items-grid" id="items-grid">
+                <!-- Пример товара -->
+                <div class="item-card" data-category="skin" data-price="75000" data-popularity="85" data-date="2024-05-15">
+                    <div class="item-image" style="background-image: url('https://via.placeholder.com/300x220/111111/555555?text=Скин')">
+                        <img src="https://via.placeholder.com/300x220/111111/555555?text=Скин" alt="Скин игрока" style="display: none;">
+                    </div>
+                    <div class="item-info">
+                        <div class="item-name">Эпический скин "Дракон"</div>
+                        <div class="item-price">75,000</div>
+                        <div class="item-updated"><i class="far fa-clock"></i> Обновлено 15.05.2024</div>
+                    </div>
+                </div>
+
+                <!-- Еще примеры товаров -->
+                <div class="item-card" data-category="vehicle" data-price="1200000" data-popularity="92" data-date="2024-05-10">
+                    <div class="item-image" style="background-image: url('https://via.placeholder.com/300x220/111111/555555?text=Машина')">
+                        <img src="https://via.placeholder.com/300x220/111111/555555?text=Машина" alt="Транспорт" style="display: none;">
+                    </div>
+                    <div class="item-info">
+                        <div class="item-name">Спортивный автомобиль "Infernus"</div>
+                        <div class="item-price">1,200,000</div>
+                        <div class="item-updated"><i class="far fa-clock"></i> Обновлено 10.05.2024</div>
+                    </div>
+                </div>
+
+                <div class="item-card" data-category="weapon" data-price="350000" data-popularity="78" data-date="2024-05-18">
+                    <div class="item-image" style="background-image: url('https://via.placeholder.com/300x220/111111/555555?text=Оружие')">
+                        <img src="https://via.placeholder.com/300x220/111111/555555?text=Оружие" alt="Оружие" style="display: none;">
+                    </div>
+                    <div class="item-info">
+                        <div class="item-name">Золотой Desert Eagle</div>
+                        <div class="item-price">350,000</div>
+                        <div class="item-updated"><i class="far fa-clock"></i> Обновлено 18.05.2024</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Пагинация -->
+            <div class="pagination">
+                <button disabled><i class="fas fa-angle-left"></i></button>
+                <button class="active">1</button>
+                <button>2</button>
+                <button>3</button>
+                <span class="ellipsis">...</span>
+                <button>5</button>
+                <button><i class="fas fa-angle-right"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно товара -->
+    <div class="modal" id="item-modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <div class="modal-body">
+                <div class="modal-image" id="modal-image">
+                    <img src="" alt="" id="modal-img">
+                </div>
+                <h2 class="modal-title" id="modal-title">Название товара</h2>
+                <div class="modal-price" id="modal-price">0</div>
+                
+                <div class="modal-stats">
+                    <div class="stat-item">
+                        <div class="stat-label">Категория</div>
+                        <div class="stat-value" id="modal-category">Скин</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Популярность</div>
+                        <div class="stat-value" id="modal-popularity">85%</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Дата добавления</div>
+                        <div class="stat-value" id="modal-date">15.05.2024</div>
+                    </div>
+                </div>
+                
+                <button class="account-btn" style="width: 100%; padding: 18px; font-size: 18px;" id="buy-btn">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Купить сейчас</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Уведомление -->
+    <div class="notification" id="notification">
+        <i class="fas fa-check-circle"></i>
+        <span id="notification-text">Товар успешно добавлен в корзину!</span>
+    </div>
+
+    <script>
+        // Анимация загрузки
+        $(document).ready(function() {
+            // Создание звезд для фона
+            createStars(50, 'stars');
+            createParticles(30, 'particles');
+            createParticles(15, 'particles-loader', true);
+            
+            // Имитация загрузки
+            simulateLoading();
+            
+            // Обработчики событий
+            setupEventHandlers();
+        });
+
+        function createStars(count, containerId) {
+            const container = document.getElementById(containerId);
+            for (let i = 0; i < count; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.width = `${Math.random() * 3 + 1}px`;
+                star.style.height = star.style.width;
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.setProperty('--opacity', Math.random() * 0.8 + 0.2);
+                star.style.setProperty('--duration', `${Math.random() * 5 + 3}s`);
+                star.style.animationDelay = `${Math.random() * 5}s`;
+                container.appendChild(star);
+            }
+        }
+
+        function createParticles(count, containerId, isLoader = false) {
+            const container = document.getElementById(containerId);
+            for (let i = 0; i < count; i++) {
+                const particle = document.createElement('div');
+                particle.className = isLoader ? 'particle-loader' : 'particle';
+                const size = Math.random() * 5 + 2;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.bottom = `-${size}px`;
+                particle.style.setProperty('--random-x', `${Math.random() * 200 - 100}px`);
+                particle.style.animationDuration = `${Math.random() * 15 + 10}s`;
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                container.appendChild(particle);
+            }
+        }
+
+        function simulateLoading() {
+            const messages = [
+                "Загрузка ресурсов...",
+                "Инициализация базы данных...",
+                "Подключение к серверу...",
+                "Загрузка каталога товаров...",
+                "Почти готово..."
+            ];
+            
+            let progress = 0;
+            const progressBar = $('#progress-bar');
+            const loaderMessage = $('#loader-message');
+            const interval = setInterval(() => {
+                progress += Math.random() * 10 + 5;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                    
+                    // Показываем сообщение об успешной загрузке
+                    $('#loader-success').fadeIn();
+                    
+                    // Скрываем loader через 1 секунду
+                    setTimeout(() => {
+                        $('#loader').fadeOut(800, () => {
+                            $('#loader').remove();
+                        });
+                    }, 1000);
+                }
+                
+                progressBar.css('width', `${progress}%`);
+                
+                // Обновляем сообщение каждые 20% прогресса
+                if (progress % 20 < 5) {
+                    const messageIndex = Math.min(Math.floor(progress / 20), messages.length - 1);
+                    loaderMessage.text(messages[messageIndex]);
+                }
+            }, 500);
+        }
+
+        function setupEventHandlers() {
+            // Открытие модального окна при клике на товар
+            $('.item-card').click(function() {
+                const card = $(this);
+                $('#modal-title').text(card.find('.item-name').text());
+                $('#modal-price').text(card.find('.item-price').text().replace('$', ''));
+                $('#modal-category').text(card.data('category') === 'skin' ? 'Скин' : 
+                                          card.data('category') === 'vehicle' ? 'Транспорт' :
+                                          card.data('category') === 'weapon' ? 'Оружие' : 'Аксессуар');
+                $('#modal-popularity').text(card.data('popularity') + '%');
+                $('#modal-date').text(card.find('.item-updated').text().replace('Обновлено ', ''));
+                $('#modal-img').attr('src', card.find('img').attr('src'));
+                
+                $('#item-modal').fadeIn();
+                $('body').css('overflow', 'hidden');
+            });
+
+            // Закрытие модального окна
+            $('.close-btn, #item-modal').click(function(e) {
+                if (e.target === this || $(e.target).hasClass('close-btn')) {
+                    $('#item-modal').fadeOut();
+                    $('body').css('overflow', 'auto');
+                }
+            });
+
+            // Кнопка покупки
+            $('#buy-btn').click(function() {
+                $('#item-modal').fadeOut();
+                showNotification('Товар успешно добавлен в корзину!');
+                $('body').css('overflow', 'auto');
+            });
+
+            // Фильтрация товаров
+            $('#category-filter, #price-filter, #sort-by').change(filterItems);
+
+            // Поиск товаров
+            $('#search-btn').click(searchItems);
+            $('#search-input').keypress(function(e) {
+                if (e.which === 13) searchItems();
+            });
+
+            // Личный кабинет
+            $('#account-btn').click(function() {
+                showNotification('Функция личного кабинета в разработке');
+            });
+        }
+
+        function filterItems() {
+            const category = $('#category-filter').val();
+            const price = $('#price-filter').val();
+            const sortBy = $('#sort-by').val();
+            
+            $('.item-card').each(function() {
+                const card = $(this);
+                const cardCategory = card.data('category');
+                const cardPrice = parseInt(card.data('price'));
+                let show = true;
+                
+                // Фильтр по категории
+                if (category !== 'all' && cardCategory !== category) {
+                    show = false;
+                }
+                
+                // Фильтр по цене
+                if (price === 'cheap' && cardPrice > 100000) {
+                    show = false;
+                } else if (price === 'medium' && (cardPrice <= 100000 || cardPrice > 1000000)) {
+                    show = false;
+                } else if (price === 'expensive' && cardPrice <= 1000000) {
+                    show = false;
+                }
+                
+                card.toggle(show);
+            });
+            
+            // Сортировка
+            sortItems(sortBy);
+        }
+
+        function sortItems(sortBy) {
+            const container = $('#items-grid');
+            const items = $('.item-card').get();
+            
+            items.sort(function(a, b) {
+                const aData = $(a).data();
+                const bData = $(b).data();
+                
+                switch(sortBy) {
+                    case 'price-asc':
+                        return aData.price - bData.price;
+                    case 'price-desc':
+                        return bData.price - aData.price;
+                    case 'popular':
+                        return bData.popularity - aData.popularity;
+                    case 'newest':
+                        return new Date(bData.date) - new Date(aData.date);
+                    default:
+                        return 0;
+                }
+            });
+            
+            $.each(items, function(i, item) {
+                container.append(item);
+            });
+        }
+
+        function searchItems() {
+            const query = $('#search-input').val().toLowerCase();
+            
+            if (query.length < 2) return;
+            
+            $('.item-card').each(function() {
+                const card = $(this);
+                const name = card.find('.item-name').text().toLowerCase();
+                card.toggle(name.includes(query));
+            });
+        }
+
+        function showNotification(message) {
+            $('#notification-text').text(message);
+            $('#notification').fadeIn();
+            
+            setTimeout(() => {
+                $('#notification').fadeOut();
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
