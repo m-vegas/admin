@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vegas+ | ARZ - Магазин предметов</title>
     <style>
-        /* Анимация фона */
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        /* Новая анимация фона для загрузочного экрана */
+        @keyframes cosmicBG {
+            0% { background-position: 0% 0%; }
+            50% { background-position: 100% 100%; }
+            100% { background-position: 0% 0%; }
         }
 
-        /* Стили для загрузочного экрана */
+        /* Новый стиль для загрузочного экрана */
         #loader {
             position: fixed;
             top: 0;
@@ -21,81 +21,216 @@
             height: 100%;
             background: linear-gradient(-45deg, #0a0a0a, #1a1a1a, #0a0a0a, #1a1a1a);
             background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
+            animation: cosmicBG 20s ease infinite;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 9999;
-            transition: opacity 0.5s ease-out;
+            overflow: hidden;
         }
-        
+
+        /* Анимированные звезды на фоне */
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle var(--duration) infinite ease-in-out;
+            opacity: 0;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: var(--opacity); transform: scale(1); }
+        }
+
+        /* Контент загрузки */
         .loader-content {
             text-align: center;
-            max-width: 500px;
-            padding: 0 20px;
+            max-width: 600px;
+            padding: 0 30px;
+            position: relative;
+            z-index: 1;
         }
-        
+
+        /* Логотип с анимацией */
         .loader-logo {
-            font-size: 3rem;
-            margin-bottom: 30px;
+            font-size: 3.5rem;
+            margin-bottom: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 15px;
-            animation: fadeInUp 0.8s ease-out;
+            gap: 20px;
+            animation: float 6s ease-in-out infinite;
         }
-        
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(2deg); }
+        }
+
         .loader-icon {
             color: #ff2e2e;
-            filter: drop-shadow(0 0 10px rgba(255, 46, 46, 0.5));
-            animation: pulse 2s infinite;
+            filter: drop-shadow(0 0 15px rgba(255, 46, 46, 0.7));
+            animation: pulse 2s infinite, rotate 10s linear infinite;
         }
-        
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
         .loader-text {
             background: linear-gradient(to right, #ff2e2e, #ffcc00);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             font-weight: bold;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            text-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
+            letter-spacing: 2px;
+            position: relative;
+        }
+
+        .loader-text::after {
+            content: 'МАГАЗИН ПРЕДМЕТОВ';
+            position: absolute;
+            bottom: -1.8rem;
+            left: 0;
+            font-size: 0.9rem;
+            font-weight: normal;
+            color: rgba(255,255,255,0.7);
+            width: 100%;
             letter-spacing: 1px;
         }
-        
+
+        /* Сообщение загрузки */
         .loader-message {
             font-size: 1.5rem;
             color: #ffffff;
-            margin-bottom: 30px;
-            line-height: 1.5;
-            animation: fadeIn 1s ease-out;
+            margin-bottom: 40px;
+            line-height: 1.6;
             font-weight: 300;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+            text-shadow: 0 1px 5px rgba(0,0,0,0.5);
+            position: relative;
+            min-height: 60px;
         }
-        
+
+        /* Прогресс бар */
+        .progress-container {
+            width: 100%;
+            height: 10px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            margin-bottom: 30px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(to right, #ff2e2e, #ffcc00);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255,255,255,0.3), 
+                transparent);
+            animation: progressShine 2s infinite;
+        }
+
+        @keyframes progressShine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Анимированный спиннер */
         .loader-spinner {
-            width: 50px;
-            height: 50px;
-            border: 5px solid rgba(255, 255, 255, 0.1);
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(255, 255, 255, 0.1);
             border-radius: 50%;
             border-top-color: #ff2e2e;
-            animation: spin 1s ease-in-out infinite, fadeIn 0.5s ease-out;
+            border-bottom-color: #ffcc00;
+            animation: spin 1.5s linear infinite, pulseColor 3s infinite;
             margin-bottom: 30px;
+            position: relative;
         }
-        
-        .loader-success {
-            font-size: 1.5rem;
-            color: #2ecc71;
-            display: none;
-            align-items: center;
-            gap: 10px;
-            margin-top: 20px;
-            animation: fadeInUp 0.5s ease-out;
-            font-weight: 500;
+
+        .loader-spinner::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border: 4px solid rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            animation: spinReverse 2s linear infinite;
         }
-        
+
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
 
+        @keyframes spinReverse {
+            to { transform: rotate(-360deg); }
+        }
+
+        @keyframes pulseColor {
+            0%, 100% { 
+                border-top-color: #ff2e2e;
+                border-bottom-color: #ffcc00;
+            }
+            50% { 
+                border-top-color: #ffcc00;
+                border-bottom-color: #ff2e2e;
+            }
+        }
+
+        /* Сообщение об успешной загрузке */
+        .loader-success {
+            font-size: 1.8rem;
+            color: #2ecc71;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            animation: fadeInUp 0.8s ease-out;
+            font-weight: 500;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .loader-success i {
+            animation: bounce 0.8s infinite alternate;
+        }
+
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-10px); }
+        }
+
+        /* Дополнительные анимации */
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
@@ -104,7 +239,7 @@
         @keyframes fadeInUp {
             from { 
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(30px);
             }
             to { 
                 opacity: 1;
@@ -112,12 +247,42 @@
             }
         }
 
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
+        /* Анимация частиц */
+        .particles-loader {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
         }
 
+        .particle-loader {
+            position: absolute;
+            background: linear-gradient(to right, #ff2e2e, #ffcc00);
+            border-radius: 50%;
+            animation: floatUp linear infinite;
+            opacity: 0.7;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.7;
+            }
+            90% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-100px) translateX(var(--random-x));
+                opacity: 0;
+            }
+        }
+
+        /* Основные стили магазина */
         :root {
             --main-bg: #0a0a0a;
             --card-bg: #111111;
@@ -592,11 +757,6 @@
             animation: fadeIn 0.3s ease-out;
         }
         
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
         .modal-content {
             background-color: var(--card-bg);
             margin: 50px auto;
@@ -857,15 +1017,28 @@
     <!-- Анимированные частицы фона -->
     <div class="particles" id="particles"></div>
 
-    <!-- Загрузочный экран -->
+    <!-- Улучшенный загрузочный экран -->
     <div id="loader">
+        <!-- Анимированные звезды на фоне -->
+        <div class="stars" id="stars"></div>
+        
+        <!-- Анимированные частицы -->
+        <div class="particles-loader" id="particles-loader"></div>
+        
         <div class="loader-content">
             <div class="loader-logo">
-                <i class="fas fa-shopping-bag loader-icon"></i>
+                <i class="fas fa-gem loader-icon"></i>
                 <span class="loader-text">VEGAS+ | ARZ</span>
             </div>
+            
             <div class="loader-spinner"></div>
-            <div class="loader-message" id="loader-message">ТЕХ. РАБОТЫ</div>
+            
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            
+            <div class="loader-message" id="loader-message">Инициализация системы...</div>
+            
             <div class="loader-success" id="loader-success">
                 <i class="fas fa-check-circle"></i>
                 <span>Готово! Наслаждайтесь покупками</span>
@@ -950,291 +1123,267 @@
                     <select id="sort-by">
                         <option value="name-asc">По имени (А-Я)</option>
                         <option value="name-desc">По имени (Я-А)</option>
-                        <option value="price-asc">По цене (↑)</option>
-                        <option value="price-desc">По цене (↓)</option>
+                        <option value="price-asc">По цене (дешевые)</option>
+                        <option value="price-desc">По цене (дорогие)</option>
+                        <option value="newest">Сначала новые</option>
                     </select>
                 </div>
             </div>
 
             <!-- Сетка товаров -->
-            <div class="items-grid" id="items-container">
-                <div class="loading">Загрузка данных...</div>
+            <div class="items-grid" id="items-grid">
+                <!-- Пример карточки товара -->
+                <div class="item-card">
+                    <div class="item-image" style="background-image: url('https://via.placeholder.com/300x220')">
+                        <img src="https://via.placeholder.com/300x220" alt="Название предмета" style="display: none;">
+                    </div>
+                    <div class="item-info">
+                        <div class="item-name">Пример предмета</div>
+                        <div class="item-price">250,000</div>
+                        <div class="item-updated">
+                            <i class="far fa-clock"></i>
+                            Обновлено: 01.06.2023
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Еще несколько примеров карточек -->
+                <div class="item-card">
+                    <div class="item-image" style="background-image: url('https://via.placeholder.com/300x220/333/fff')">
+                        <img src="https://via.placeholder.com/300x220/333/fff" alt="Другой предмет" style="display: none;">
+                    </div>
+                    <div class="item-info">
+                        <div class="item-name">Другой предмет</div>
+                        <div class="item-price">750,000</div>
+                        <div class="item-updated">
+                            <i class="far fa-clock"></i>
+                            Обновлено: 15.05.2023
+                        </div>
+                    </div>
+                </div>
+
+                <div class="item-card">
+                    <div class="item-image" style="background-image: url('https://via.placeholder.com/300x220/555/fff')">
+                        <img src="https://via.placeholder.com/300x220/555/fff" alt="Редкий предмет" style="display: none;">
+                    </div>
+                    <div class="item-info">
+                        <div class="item-name">Редкий предмет</div>
+                        <div class="item-price">1,500,000</div>
+                        <div class="item-updated">
+                            <i class="far fa-clock"></i>
+                            Обновлено: 30.04.2023
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Пагинация -->
-            <div class="pagination" id="pagination">
-                <!-- Пагинация будет создана через JavaScript -->
+            <div class="pagination">
+                <button disabled><i class="fas fa-chevron-left"></i></button>
+                <button class="active">1</button>
+                <button>2</button>
+                <button>3</button>
+                <span class="ellipsis">...</span>
+                <button>10</button>
+                <button><i class="fas fa-chevron-right"></i></button>
             </div>
         </div>
+    </div>
 
-        <!-- Уведомление -->
-        <div class="notification" id="notification">
-            <i class="fas fa-exclamation-circle"></i> Недоступно, находится в разработке
-        </div>
-
-        <!-- Модальное окно товара -->
-        <div class="modal" id="item-modal">
-            <div class="modal-content">
-                <span class="close-btn">&times;</span>
-                <div class="modal-body" id="modal-body">
-                    <!-- Контент модального окна будет загружен через JavaScript -->
+    <!-- Модальное окно товара -->
+    <div class="modal" id="item-modal">
+        <div class="modal-content">
+            <span class="close-btn" id="close-modal">&times;</span>
+            <div class="modal-body">
+                <div class="modal-image" style="background-image: url('https://via.placeholder.com/900x350')">
+                    <img src="https://via.placeholder.com/900x350" alt="Название предмета" style="display: none;">
+                </div>
+                <h2 class="modal-title">Пример предмета</h2>
+                <div class="modal-price">250,000</div>
+                
+                <div class="modal-stats">
+                    <div class="stat-item">
+                        <div class="stat-label">Категория</div>
+                        <div class="stat-value">Скины</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Редкость</div>
+                        <div class="stat-value">Обычный</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Дата добавления</div>
+                        <div class="stat-value">01.06.2023</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">В наличии</div>
+                        <div class="stat-value">5 шт.</div>
+                    </div>
+                </div>
+                
+                <div class="stat-item">
+                    <div class="stat-label">Описание</div>
+                    <div class="stat-value">Это пример описания предмета. Здесь может быть подробная информация о характеристиках и особенностях данного предмета.</div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Скрипты -->
+    <!-- Уведомление -->
+    <div class="notification" id="notification">
+        <i class="fas fa-info-circle"></i>
+        <span id="notification-text">Это пример уведомления</span>
+    </div>
+
     <script>
-        // Создаем анимированные частицы для фона
-        function createParticles() {
-            const particlesContainer = document.getElementById('particles');
-            const particleCount = 30;
+        // Имитация загрузки
+        $(document).ready(function() {
+            // Создание звезд для загрузочного экрана
+            createStars('#stars', 100);
+            // Создание частиц для загрузочного экрана
+            createParticles('#particles-loader', 30);
             
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('particle');
+            // Имитация прогресса загрузки
+            let progress = 0;
+            const progressBar = $('#progress-bar');
+            const loaderMessages = [
+                "Загрузка ресурсов...",
+                "Инициализация базы данных...",
+                "Подготовка интерфейса...",
+                "Почти готово...",
+                "Завершение..."
+            ];
+            
+            const interval = setInterval(() => {
+                progress += Math.random() * 15;
+                if (progress > 100) progress = 100;
+                progressBar.css('width', progress + '%');
                 
-                // Случайные параметры
-                const size = Math.random() * 5 + 2;
-                const posX = Math.random() * 100;
-                const posY = Math.random() * 100 + 100; // Начинаем ниже видимой области
-                const duration = Math.random() * 20 + 10;
-                const delay = Math.random() * 10;
+                // Обновление сообщения
+                if (progress < 20) {
+                    $('#loader-message').text(loaderMessages[0]);
+                } else if (progress < 40) {
+                    $('#loader-message').text(loaderMessages[1]);
+                } else if (progress < 60) {
+                    $('#loader-message').text(loaderMessages[2]);
+                } else if (progress < 80) {
+                    $('#loader-message').text(loaderMessages[3]);
+                } else {
+                    $('#loader-message').text(loaderMessages[4]);
+                }
                 
-                // Применяем стили
-                particle.style.width = `${size}px`;
-                particle.style.height = `${size}px`;
-                particle.style.left = `${posX}%`;
-                particle.style.top = `${posY}%`;
-                particle.style.animationDuration = `${duration}s`;
-                particle.style.animationDelay = `${delay}s`;
+                if (progress === 100) {
+                    clearInterval(interval);
+                    $('#loader-message').hide();
+                    $('.progress-container').hide();
+                    $('.loader-spinner').hide();
+                    $('#loader-success').fadeIn();
+                    
+                    setTimeout(() => {
+                        $('#loader').fadeOut(800, () => {
+                            // Создание частиц для основного фона после загрузки
+                            createParticles('#particles', 50);
+                        });
+                    }, 1500);
+                }
+            }, 300);
+            
+            // Обработчики событий для карточек товаров
+            $('.item-card').click(function() {
+                $('#item-modal').fadeIn();
+                $('body').css('overflow', 'hidden');
+            });
+            
+            $('#close-modal').click(function() {
+                $('#item-modal').fadeOut();
+                $('body').css('overflow', 'auto');
+            });
+            
+            // Закрытие модального окна при клике вне его
+            $(window).click(function(event) {
+                if ($(event.target).is('#item-modal')) {
+                    $('#item-modal').fadeOut();
+                    $('body').css('overflow', 'auto');
+                }
+            });
+            
+            // Обработчик поиска
+            $('#search-btn').click(function() {
+                showNotification('Поиск выполнен: ' + $('#search-input').val());
+            });
+            
+            $('#search-input').keypress(function(e) {
+                if (e.which === 13) {
+                    showNotification('Поиск выполнен: ' + $('#search-input').val());
+                }
+            });
+            
+            // Обработчики фильтров
+            $('#category-filter, #price-filter, #sort-by').change(function() {
+                showNotification('Фильтры применены');
+            });
+            
+            // Обработчик кнопки аккаунта
+            $('#account-btn').click(function() {
+                showNotification('Вход в личный кабинет');
+            });
+        });
+        
+        // Функция создания звезд
+        function createStars(container, count) {
+            const starsContainer = $(container);
+            for (let i = 0; i < count; i++) {
+                const star = $('<div class="star"></div>');
+                const size = Math.random() * 3;
+                const opacity = Math.random() * 0.8 + 0.2;
+                const duration = Math.random() * 5 + 3;
                 
-                particlesContainer.appendChild(particle);
+                star.css({
+                    'width': `${size}px`,
+                    'height': `${size}px`,
+                    'left': `${Math.random() * 100}%`,
+                    'top': `${Math.random() * 100}%`,
+                    '--opacity': opacity,
+                    '--duration': `${duration}s`,
+                    'animation-delay': `${Math.random() * 5}s`
+                });
+                
+                starsContainer.append(star);
             }
         }
-
-        // Показываем загрузочный экран при загрузке страницы
-        document.addEventListener('DOMContentLoaded', function() {
-            // Создаем частицы фона
-            createParticles();
+        
+        // Функция создания частиц
+        function createParticles(container, count) {
+            const particlesContainer = $(container);
+            particlesContainer.empty();
             
-            // Имитируем проверку на бота и загрузку данных
-            setTimeout(function() {
-                document.getElementById('loader-message').textContent = 'Проверяем данные...';
+            for (let i = 0; i < count; i++) {
+                const particle = $('<div class="particle-loader"></div>');
+                const size = Math.random() * 8 + 2;
+                const duration = Math.random() * 15 + 10;
+                const delay = Math.random() * 15;
+                const x = Math.random() * 100;
                 
-                setTimeout(function() {
-                    document.getElementById('loader-message').textContent = 'Финальная настройка...';
-                    
-                    setTimeout(function() {
-                        document.getElementById('loader-success').style.display = 'flex';
-                        document.getElementById('loader-message').style.display = 'none';
-                        document.querySelector('.loader-spinner').style.display = 'none';
-                        
-                        // Плавно скрываем загрузочный экран через 1.5 секунды
-                        setTimeout(function() {
-                            document.getElementById('loader').style.opacity = '0';
-                            
-                            // Полностью убираем загрузочный экран после анимации
-                            setTimeout(function() {
-                                document.getElementById('loader').style.display = 'none';
-                                
-                                // Запускаем основной код приложения
-                                initMainApp();
-                            }, 500);
-                        }, 1500);
-                    }, 1000);
-                }, 1000);
-            }, 1000);
-        });
-
-        function initMainApp() {
-            // Обработчик для кнопки Личный кабинет
-            document.getElementById('account-btn').addEventListener('click', function() {
-                const notification = document.getElementById('notification');
-                notification.style.display = 'flex';
-                notification.style.alignItems = 'center';
-                notification.style.gap = '10px';
-                
-                // Скрываем уведомление через 3 секунды
-                setTimeout(() => {
-                    notification.style.display = 'none';
-                }, 3000);
-            });
-
-            // Загрузка данных
-            fetch('prices.json')
-                .then(response => response.json())
-                .then(data => {
-                    const itemsData = Object.entries(data.list).map(([name, item]) => {
-                        // Используем указанное изображение для всех товаров
-                        const imageUrl = 'https://sun9-74.userapi.com/impg/T2QGPg_kceADTIzkKXbpw-CR7EY_s0KC8JwKfQ/0NiamF4FlTs.jpg?size=1000x1000&quality=96&sign=26b090cb0f020401a7da16926066f65a&c_uniq_tag=4B6Bb3xmFZ4GA57O7K7sE-G-QUpqZPVztUXekjssp5w
-                                                    return {
-                            name: name,
-                            price: item.price,
-                            category: item.category || 'other',
-                            image: imageUrl,
-                            updated: item.updated || 'Недавно'
-                        };
-                    });
-
-                    // Функция для отображения товаров
-                    function displayItems(items) {
-                        const container = document.getElementById('items-container');
-                        container.innerHTML = '';
-
-                        if (items.length === 0) {
-                            container.innerHTML = '<div class="no-results">Товары не найдены</div>';
-                            return;
-                        }
-
-                        items.forEach(item => {
-                            const itemElement = document.createElement('div');
-                            itemElement.className = 'item-card';
-                            itemElement.innerHTML = `
-                                <div class="item-image" style="background-image: url('${item.image}')">
-                                    <img src="${item.image}" alt="${item.name}" style="display: none;">
-                                </div>
-                                <div class="item-info">
-                                    <div class="item-name">${item.name}</div>
-                                    <div class="item-price">${item.price.toLocaleString()}</div>
-                                    <div class="item-updated">
-                                        <i class="far fa-clock"></i>
-                                        Обновлено: ${item.updated}
-                                    </div>
-                                </div>
-                            `;
-
-                            // Открываем модальное окно при клике на карточку
-                            itemElement.addEventListener('click', () => {
-                                openItemModal(item);
-                            });
-
-                            container.appendChild(itemElement);
-                        });
-                    }
-
-                    // Функция для открытия модального окна товара
-                    function openItemModal(item) {
-                        const modal = document.getElementById('item-modal');
-                        const modalBody = document.getElementById('modal-body');
-                        
-                        modalBody.innerHTML = `
-                            <div class="modal-image" style="background-image: url('${item.image}')">
-                                <img src="${item.image}" alt="${item.name}" style="display: none;">
-                            </div>
-                            <h1 class="modal-title">${item.name}</h1>
-                            <div class="modal-price">${item.price.toLocaleString()}</div>
-                            
-                            <div class="modal-stats">
-                                <div class="stat-item">
-                                    <div class="stat-label">Категория</div>
-                                    <div class="stat-value">${getCategoryName(item.category)}</div>
-                                </div>
-                                <div class="stat-item">
-                                    <div class="stat-label">Последнее обновление</div>
-                                    <div class="stat-value">${item.updated}</div>
-                                </div>
-                            </div>
-                        `;
-
-                        modal.style.display = 'block';
-                    }
-
-                    // Функция для получения названия категории
-                    function getCategoryName(category) {
-                        const categories = {
-                            'skin': 'Скин',
-                            'accessory': 'Аксессуар',
-                            'vehicle': 'Транспорт',
-                            'weapon': 'Оружие',
-                            'other': 'Другое'
-                        };
-                        return categories[category] || category;
-                    }
-
-                    // Закрытие модального окна
-                    document.querySelector('.close-btn').addEventListener('click', function() {
-                        document.getElementById('item-modal').style.display = 'none';
-                    });
-
-                    // Закрытие модального окна при клике вне его
-                    window.addEventListener('click', function(event) {
-                        if (event.target === document.getElementById('item-modal')) {
-                            document.getElementById('item-modal').style.display = 'none';
-                        }
-                    });
-
-                    // Функции фильтрации и сортировки
-                    function filterItems() {
-                        const category = document.getElementById('category-filter').value;
-                        const price = document.getElementById('price-filter').value;
-                        const sort = document.getElementById('sort-by').value;
-                        
-                        let filtered = [...itemsData];
-                        
-                        // Фильтрация по категории
-                        if (category !== 'all') {
-                            filtered = filtered.filter(item => item.category === category);
-                        }
-                        
-                        // Фильтрация по цене
-                        if (price !== 'all') {
-                            if (price === 'cheap') {
-                                filtered = filtered.filter(item => item.price < 100000);
-                            } else if (price === 'medium') {
-                                filtered = filtered.filter(item => item.price >= 100000 && item.price <= 1000000);
-                            } else if (price === 'expensive') {
-                                filtered = filtered.filter(item => item.price > 1000000);
-                            }
-                        }
-                        
-                        // Сортировка
-                        if (sort === 'name-asc') {
-                            filtered.sort((a, b) => a.name.localeCompare(b.name));
-                        } else if (sort === 'name-desc') {
-                            filtered.sort((a, b) => b.name.localeCompare(a.name));
-                        } else if (sort === 'price-asc') {
-                            filtered.sort((a, b) => a.price - b.price);
-                        } else if (sort === 'price-desc') {
-                            filtered.sort((a, b) => b.price - a.price);
-                        }
-                        
-                        displayItems(filtered);
-                    }
-
-                    // Поиск товаров
-                    document.getElementById('search-btn').addEventListener('click', function() {
-                        const searchTerm = document.getElementById('search-input').value.toLowerCase();
-                        const filtered = itemsData.filter(item => 
-                            item.name.toLowerCase().includes(searchTerm)
-                        );
-                        displayItems(filtered);
-                    });
-
-                    // Поиск при нажатии Enter
-                    document.getElementById('search-input').addEventListener('keypress', function(e) {
-                        if (e.key === 'Enter') {
-                            document.getElementById('search-btn').click();
-                        }
-                    });
-
-                    // Обработчики изменения фильтров
-                    document.getElementById('category-filter').addEventListener('change', filterItems);
-                    document.getElementById('price-filter').addEventListener('change', filterItems);
-                    document.getElementById('sort-by').addEventListener('change', filterItems);
-
-                    // Первоначальная загрузка товаров
-                    filterItems();
-                })
-                .catch(error => {
-                    console.error('Ошибка загрузки данных:', error);
-                    document.getElementById('items-container').innerHTML = `
-                        <div class="error-message">
-                            <i class="fas fa-exclamation-triangle"></i>
-                            <p>Произошла ошибка при загрузке данных. Пожалуйста, попробуйте позже.</p>
-                        </div>
-                    `;
+                particle.css({
+                    'width': `${size}px`,
+                    'height': `${size}px`,
+                    'left': `${x}%`,
+                    '--random-x': `${(Math.random() - 0.5) * 200}px`,
+                    'animation': `floatUp ${duration}s linear ${delay}s infinite`
                 });
+                
+                particlesContainer.append(particle);
+            }
+        }
+        
+        // Функция показа уведомления
+        function showNotification(message) {
+            const notification = $('#notification');
+            $('#notification-text').text(message);
+            
+            notification.fadeIn();
+            setTimeout(() => {
+                notification.fadeOut();
+            }, 3000);
         }
     </script>
 </body>
