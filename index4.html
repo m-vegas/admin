@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Загрузка Vegas+ | ARZ</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #0a0a0a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            font-family: 'Segoe UI', 'Roboto', sans-serif;
+        }
+        
+        .loader-container {
+            text-align: center;
+            color: white;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        
+        .logo-icon {
+            color: #ff2e2e;
+            font-size: 2.5rem;
+            margin-right: 15px;
+            filter: drop-shadow(0 0 10px rgba(255, 46, 46, 0.5));
+        }
+        
+        .logo-text {
+            background: linear-gradient(to right, #ff2e2e, #ffcc00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .progress-container {
+            width: 300px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            margin: 20px auto;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(to right, #ff2e2e, #ffcc00);
+            border-radius: 5px;
+            transition: width 0.3s ease;
+        }
+        
+        .loading-text {
+            margin-top: 20px;
+            color: #aaaaaa;
+            font-size: 14px;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+        
+        .pulse {
+            animation: pulse 1.5s infinite;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="loader-container">
+        <div class="logo">
+            <i class="fas fa-shopping-bag logo-icon"></i>
+            <span class="logo-text">VEGAS+ | ARZ</span>
+        </div>
+        <div class="progress-container">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
+        <div class="loading-text pulse" id="loading-text">Загрузка данных...</div>
+    </div>
+
+    <script>
+        // Симуляция загрузки с прогресс-баром
+        const progressBar = document.getElementById('progress-bar');
+        const loadingText = document.getElementById('loading-text');
+        const texts = [
+            "Загрузка данных...",
+            "Оптимизация изображений...",
+            "Подготовка интерфейса...",
+            "Почти готово..."
+        ];
+        
+        let progress = 0;
+        const interval = setInterval(() => {
+            progress += Math.random() * 10;
+            if (progress > 100) progress = 100;
+            progressBar.style.width = `${progress}%`;
+            
+            // Меняем текст каждые 25% прогресса
+            if (progress < 25) {
+                loadingText.textContent = texts[0];
+            } else if (progress < 50) {
+                loadingText.textContent = texts[1];
+            } else if (progress < 75) {
+                loadingText.textContent = texts[2];
+            } else {
+                loadingText.textContent = texts[3];
+            }
+            
+            if (progress >= 100) {
+                clearInterval(interval);
+                // Добавляем небольшую задержку перед переходом
+                setTimeout(() => {
+                    window.location.href = "index.html";
+                }, 500);
+            }
+        }, 300);
+        
+        // На случай если что-то пойдет не так, перенаправляем через 5 секунд
+        setTimeout(() => {
+            if (progress < 100) {
+                window.location.href = "index.html";
+            }
+        }, 5000);
+    </script>
+</body>
+</html>
