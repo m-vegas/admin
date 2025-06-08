@@ -711,6 +711,21 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
+        <!-- Загрузочный экран -->
+    <div id="loader">
+        <div class="loader-content">
+            <div class="loader-logo">
+                <i class="fas fa-shopping-bag loader-icon"></i>
+                <span class="loader-text">VEGAS+ | ARZ</span>
+            </div>
+            <div class="loader-spinner"></div>
+            <div class="loader-message">Обрабатываем ваш запрос, пожалуйста подождите...</div>
+            <div class="loader-success" id="loader-success">
+                <i class="fas fa-check-circle"></i>
+                <span>Все отлично, сейчас мы направим вас на сайт!</span>
+            </div>
+        </div>
+    </div>
     <!-- Chatra {literal} -->
     <script>
         (function(d, w, c) {
@@ -824,6 +839,34 @@
     <!-- Скрипты -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Показываем загрузочный экран при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            // Имитируем проверку на бота и загрузку данных
+            setTimeout(function() {
+                document.getElementById('loader-message').textContent = 'Проверка завершена...';
+                
+                setTimeout(function() {
+                    document.getElementById('loader-success').style.display = 'flex';
+                    document.getElementById('loader-message').style.display = 'none';
+                    document.querySelector('.loader-spinner').style.display = 'none';
+                    
+                    // Плавно скрываем загрузочный экран через 1.5 секунды
+                    setTimeout(function() {
+                        document.getElementById('loader').style.opacity = '0';
+                        
+                        // Полностью убираем загрузочный экран после анимации
+                        setTimeout(function() {
+                            document.getElementById('loader').style.display = 'none';
+                            
+                            // Запускаем основной код приложения
+                            initMainApp();
+                        }, 500);
+                    }, 1500);
+                }, 2000);
+            }, 1500);
+        });
+
+        function initMainApp() {
             // Обработчик для кнопки Личный кабинет
             document.getElementById('account-btn').addEventListener('click', function() {
                 const notification = document.getElementById('notification');
