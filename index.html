@@ -5,6 +5,79 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vegas+ | ARZ - Магазин предметов</title>
     <style>
+        /* Стили для загрузочного экрана */
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #0a0a0a;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease-out;
+        }
+        
+        .loader-content {
+            text-align: center;
+            max-width: 500px;
+            padding: 0 20px;
+        }
+        
+        .loader-logo {
+            font-size: 3rem;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .loader-icon {
+            color: #ff2e2e;
+            filter: drop-shadow(0 0 10px rgba(255, 46, 46, 0.5));
+        }
+        
+        .loader-text {
+            background: linear-gradient(to right, #ff2e2e, #ffcc00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: bold;
+        }
+        
+        .loader-message {
+            font-size: 1.5rem;
+            color: #ffffff;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+        
+        .loader-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            border-top-color: #ff2e2e;
+            animation: spin 1s ease-in-out infinite;
+            margin-bottom: 30px;
+        }
+        
+        .loader-success {
+            font-size: 1.5rem;
+            color: #2ecc71;
+            display: none;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
         :root {
             --main-bg: #0a0a0a;
             --card-bg: #111111;
@@ -711,7 +784,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-        <!-- Загрузочный экран -->
+    <!-- Загрузочный экран -->
     <div id="loader">
         <div class="loader-content">
             <div class="loader-logo">
@@ -719,13 +792,14 @@
                 <span class="loader-text">VEGAS+ | ARZ</span>
             </div>
             <div class="loader-spinner"></div>
-            <div class="loader-message">Обрабатываем ваш запрос, пожалуйста подождите...</div>
+            <div class="loader-message" id="loader-message">Обрабатываем ваш запрос, пожалуйста подождите...</div>
             <div class="loader-success" id="loader-success">
                 <i class="fas fa-check-circle"></i>
                 <span>Все отлично, сейчас мы направим вас на сайт!</span>
             </div>
         </div>
     </div>
+
     <!-- Chatra {literal} -->
     <script>
         (function(d, w, c) {
@@ -838,8 +912,7 @@
 
     <!-- Скрипты -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Показываем загрузочный экран при загрузке страницы
+        // Показываем загрузочный экран при загрузке страницы
         document.addEventListener('DOMContentLoaded', function() {
             // Имитируем проверку на бота и загрузку данных
             setTimeout(function() {
@@ -984,271 +1057,256 @@
                             }
                         }
                         
-                        return matchesSearch && matchesCategory && matchesPrice;
-                    });
-
-                    // Сортировка
-                    switch (sortOption) {
-                        case 'name-asc':
-                            filteredItems.sort((a, b) => a.name.localeCompare(b.name));
-                            break;
-                        case 'name-desc':
-                            filteredItems.sort((a, b) => b.name.localeCompare(a.name));
-                            break;
-                        case 'price-asc':
-                            filteredItems.sort((a, b) => {
-                                const priceA = Array.isArray(a.price) ? Math.min(...a.price) : a.price;
-                                const priceB = Array.isArray(b.price) ? Math.min(...b.price) : b.price;
-                                return priceA - priceB;
-                            });
-                            break;
-                        case 'price-desc':
-                            filteredItems.sort((a, b) => {
-                                const priceA = Array.isArray(a.price) ? Math.max(...a.price) : a.price;
-                                const priceB = Array.isArray(b.price) ? Math.max(...b.price) : b.price;
-                                return priceB - priceA;
-                            });
-                            break;
-                    }
-
-                    currentPage = 1;
-                    renderItems();
-                    renderPagination();
+                        return matchesSearch && matchesCategory && matchesPrice});
+                                        // Сортировка
+                switch (sortOption) {
+                    case 'name-asc':
+                        filteredItems.sort((a, b) => a.name.localeCompare(b.name));
+                        break;
+                    case 'name-desc':
+                        filteredItems.sort((a, b) => b.name.localeCompare(a.name));
+                        break;
+                    case 'price-asc':
+                        filteredItems.sort((a, b) => {
+                            const priceA = Array.isArray(a.price) ? Math.min(...a.price) : a.price;
+                            const priceB = Array.isArray(b.price) ? Math.min(...b.price) : b.price;
+                            return priceA - priceB;
+                        });
+                        break;
+                    case 'price-desc':
+                        filteredItems.sort((a, b) => {
+                            const priceA = Array.isArray(a.price) ? Math.max(...a.price) : a.price;
+                            const priceB = Array.isArray(b.price) ? Math.max(...b.price) : b.price;
+                            return priceB - priceA;
+                        });
+                        break;
                 }
 
-                // Отображение товаров
-                function renderItems() {
-                    itemsContainer.innerHTML = '';
-                    
-                    const startIndex = (currentPage - 1) * itemsPerPage;
-                    const endIndex = startIndex + itemsPerPage;
-                    const itemsToShow = filteredItems.slice(startIndex, endIndex);
-                    
-                    if (itemsToShow.length === 0) {
-                        itemsContainer.innerHTML = '<div class="no-results">Ничего не найдено</div>';
-                        return;
-                    }
-                    
-                    itemsToShow.forEach(item => {
-                        const itemCard = document.createElement('div');
-                        itemCard.className = 'item-card';
-                        itemCard.innerHTML = `
-                            <div class="item-image" style="background-image: url('${item.image}')">
+                currentPage = 1;
+                renderItems();
+                renderPagination();
+            }
+
+            // Рендеринг товаров
+            function renderItems() {
+                const startIndex = (currentPage - 1) * itemsPerPage;
+                const endIndex = startIndex + itemsPerPage;
+                const itemsToShow = filteredItems.slice(startIndex, endIndex);
+
+                if (itemsToShow.length === 0) {
+                    itemsContainer.innerHTML = '<div class="error">Товары не найдены. Попробуйте изменить параметры поиска.</div>';
+                    return;
+                }
+
+                itemsContainer.innerHTML = itemsToShow.map(item => `
+                    <div class="item-card" data-id="${item.id}">
+                        <div class="item-image" style="background-image: url('${item.image}')">
+                            <img src="${item.image}" alt="${item.name}" style="display: none;">
+                        </div>
+                        <div class="item-info">
+                            <div class="item-name">${item.name}</div>
+                            <div class="item-price">
+                                ${Array.isArray(item.price) ? 
+                                    `${Math.min(...item.price).toLocaleString()} - ${Math.max(...item.price).toLocaleString()}` : 
+                                    item.price.toLocaleString()}
                             </div>
-                            <div class="item-info">
-                                <div class="item-name" title="${item.name}">${item.name}</div>
-                                <div class="item-price">${formatPrice(item.price)}</div>
-                                <div class="item-updated"><i class="far fa-clock"></i> Обновлено: ${formatDate(item.updated)}</div>
-                            </div>
-                        `;
-                        itemCard.addEventListener('click', () => openModal(item));
-                        itemsContainer.appendChild(itemCard);
-                    });
-                }
-
-                // Форматирование цены
-                function formatPrice(price) {
-                    if (Array.isArray(price)) {
-                        return `${formatNumber(price[0])} - ${formatNumber(price[1])}`;
-                    }
-                    return formatNumber(price);
-                }
-
-                function formatNumber(num) {
-                    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                }
-
-                // Форматирование даты
-                function formatDate(timestamp) {
-                    const date = new Date(timestamp * 1000);
-                    return date.toLocaleDateString('ru-RU');
-                }
-
-                // Отображение пагинации
-                function renderPagination() {
-                    pagination.innerHTML = '';
-                    
-                    const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
-                    if (totalPages <= 1) return;
-                    
-                    // Кнопка "Назад"
-                    const prevBtn = document.createElement('button');
-                    prevBtn.innerHTML = '<i class="fas fa-chevron-left"></i>';
-                    prevBtn.disabled = currentPage === 1;
-                    prevBtn.addEventListener('click', () => {
-                        if (currentPage > 1) {
-                            currentPage--;
-                            renderItems();
-                            renderPagination();
-                            window.scrollTo({ top: 0, behavior: 'smooth' });
-                        }
-                    });
-                    pagination.appendChild(prevBtn);
-                    
-                    // Всегда показываем первую страницу
-                    if (currentPage > 1) {
-                        const firstPageBtn = document.createElement('button');
-                        firstPageBtn.textContent = '1';
-                        firstPageBtn.className = 1 === currentPage ? 'active' : '';
-                        firstPageBtn.addEventListener('click', () => {
-                            currentPage = 1;
-                                                       renderItems();
-                            renderPagination();
-                            window.scrollTo({ top: 0, behavior: 'smooth' });
-                        });
-                        pagination.appendChild(firstPageBtn);
-                    }
-                    
-                    // Показываем многоточие, если текущая страница далеко от первой
-                    if (currentPage > 3) {
-                        const ellipsis = document.createElement('span');
-                        ellipsis.className = 'ellipsis';
-                        ellipsis.textContent = '...';
-                        pagination.appendChild(ellipsis);
-                    }
-                    
-                    // Показываем предыдущую страницу, если она не первая
-                    if (currentPage > 2) {
-                        const prevPageBtn = document.createElement('button');
-                        prevPageBtn.textContent = currentPage - 1;
-                        prevPageBtn.addEventListener('click', () => {
-                            currentPage = currentPage - 1;
-                            renderItems();
-                            renderPagination();
-                            window.scrollTo({ top: 0, behavior: 'smooth' });
-                        });
-                        pagination.appendChild(prevPageBtn);
-                    }
-                    
-                    // Текущая страница
-                    if (currentPage !== 1 && currentPage !== totalPages) {
-                        const currentPageBtn = document.createElement('button');
-                        currentPageBtn.textContent = currentPage;
-                        currentPageBtn.className = 'active';
-                        pagination.appendChild(currentPageBtn);
-                    }
-                    
-                    // Показываем следующую страницу, если она не последняя
-                    if (currentPage < totalPages - 1) {
-                        const nextPageBtn = document.createElement('button');
-                        nextPageBtn.textContent = currentPage + 1;
-                        nextPageBtn.addEventListener('click', () => {
-                            currentPage = currentPage + 1;
-                            renderItems();
-                            renderPagination();
-                            window.scrollTo({ top: 0, behavior: 'smooth' });
-                        });
-                        pagination.appendChild(nextPageBtn);
-                    }
-                    
-                    // Показываем многоточие, если текущая страница далеко от последней
-                    if (currentPage < totalPages - 2) {
-                        const ellipsis = document.createElement('span');
-                        ellipsis.className = 'ellipsis';
-                        ellipsis.textContent = '...';
-                        pagination.appendChild(ellipsis);
-                    }
-                    
-                    // Всегда показываем последнюю страницу
-                    if (currentPage < totalPages) {
-                        const lastPageBtn = document.createElement('button');
-                        lastPageBtn.textContent = totalPages;
-                        lastPageBtn.className = totalPages === currentPage ? 'active' : '';
-                        lastPageBtn.addEventListener('click', () => {
-                            currentPage = totalPages;
-                            renderItems();
-                            renderPagination();
-                            window.scrollTo({ top: 0, behavior: 'smooth' });
-                        });
-                        pagination.appendChild(lastPageBtn);
-                    }
-                    
-                    // Кнопка "Вперед"
-                    const nextBtn = document.createElement('button');
-                    nextBtn.innerHTML = '<i class="fas fa-chevron-right"></i>';
-                    nextBtn.disabled = currentPage === totalPages;
-                    nextBtn.addEventListener('click', () => {
-                        if (currentPage < totalPages) {
-                            currentPage++;
-                            renderItems();
-                            renderPagination();
-                            window.scrollTo({ top: 0, behavior: 'smooth' });
-                        }
-                    });
-                    pagination.appendChild(nextBtn);
-                }
-
-                // Открытие модального окна
-                function openModal(item) {
-                    modalBody.innerHTML = `
-                        <div class="modal-image" style="background-image: url('${item.image}')"></div>
-                        <h2 class="modal-title">${item.name}</h2>
-                        <div class="modal-price">${formatPrice(item.price)}</div>
-                        
-                        <div class="modal-stats">
-                            <div class="stat-item">
-                                <div class="stat-label">Категория</div>
-                                <div class="stat-value">${getCategoryName(item.category)}</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-label">Дата обновления</div>
-                                <div class="stat-value">${formatDate(item.updated)}</div>
+                            <div class="item-updated">
+                                <i class="fas fa-clock"></i>
+                                Обновлено: ${new Date(item.updated * 1000).toLocaleDateString()}
                             </div>
                         </div>
-                    
-                    `;
-                    
-                    modal.style.display = 'block';
-                    document.body.style.overflow = 'hidden';
-                    
-                    // Добавляем обработчик для кнопки покупки
-                    const buyBtn = modalBody.querySelector('.account-btn');
-                    buyBtn.addEventListener('click', () => {
-                        const notification = document.getElementById('notification');
-                        notification.style.display = 'flex';
-                        notification.style.alignItems = 'center';
-                        notification.style.gap = '10px';
-                        
-                        setTimeout(() => {
-                            notification.style.display = 'none';
-                        }, 3000);
+                    </div>
+                `).join('');
+
+                // Добавляем обработчики событий для карточек товаров
+                document.querySelectorAll('.item-card').forEach(card => {
+                    card.addEventListener('click', function() {
+                        const itemId = this.getAttribute('data-id');
+                        const item = items.find(i => i.id === itemId);
+                        if (item) {
+                            showItemModal(item);
+                        }
                     });
+                });
+            }
+
+            // Рендеринг пагинации
+            function renderPagination() {
+                const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
+                if (totalPages <= 1) {
+                    pagination.innerHTML = '';
+                    return;
                 }
 
-                // Получение названия категории
-                function getCategoryName(category) {
-                    switch(category) {
-                        case 'skin': return 'Скин';
-                        case 'accessory': return 'Аксессуар';
-                        case 'vehicle': return 'Транспорт';
-                        case 'weapon': return 'Оружие';
-                        default: return 'Другое';
+                let paginationHTML = '';
+                const maxVisiblePages = 5;
+                let startPage, endPage;
+
+                if (totalPages <= maxVisiblePages) {
+                    startPage = 1;
+                    endPage = totalPages;
+                } else {
+                    const maxVisibleBeforeCurrent = Math.floor(maxVisiblePages / 2);
+                    const maxVisibleAfterCurrent = Math.ceil(maxVisiblePages / 2) - 1;
+
+                    if (currentPage <= maxVisibleBeforeCurrent) {
+                        startPage = 1;
+                        endPage = maxVisiblePages;
+                    } else if (currentPage + maxVisibleAfterCurrent >= totalPages) {
+                        startPage = totalPages - maxVisiblePages + 1;
+                        endPage = totalPages;
+                    } else {
+                        startPage = currentPage - maxVisibleBeforeCurrent;
+                        endPage = currentPage + maxVisibleAfterCurrent;
                     }
                 }
 
-                // Закрытие модального окна
-                function closeModal() {
+                // Кнопка "Назад"
+                paginationHTML += `
+                    <button class="page-btn" ${currentPage === 1 ? 'disabled' : ''} data-page="${currentPage - 1}">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                `;
+
+                // Первая страница
+                if (startPage > 1) {
+                    paginationHTML += `
+                        <button class="page-btn" data-page="1">1</button>
+                        ${startPage > 2 ? '<span class="ellipsis">...</span>' : ''}
+                    `;
+                }
+
+                // Основные страницы
+                for (let i = startPage; i <= endPage; i++) {
+                    paginationHTML += `
+                        <button class="page-btn ${i === currentPage ? 'active' : ''}" data-page="${i}">
+                            ${i}
+                        </button>
+                    `;
+                }
+
+                // Последняя страница
+                if (endPage < totalPages) {
+                    paginationHTML += `
+                        ${endPage < totalPages - 1 ? '<span class="ellipsis">...</span>' : ''}
+                        <button class="page-btn" data-page="${totalPages}">${totalPages}</button>
+                    `;
+                }
+
+                // Кнопка "Вперед"
+                paginationHTML += `
+                    <button class="page-btn" ${currentPage === totalPages ? 'disabled' : ''} data-page="${currentPage + 1}">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                `;
+
+                pagination.innerHTML = paginationHTML;
+
+                // Добавляем обработчики событий для кнопок пагинации
+                document.querySelectorAll('.page-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        if (!this.hasAttribute('disabled')) {
+                            currentPage = parseInt(this.getAttribute('data-page'));
+                            renderItems();
+                            renderPagination();
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }
+                    });
+                });
+            }
+
+            // Показать модальное окно товара
+            function showItemModal(item) {
+                modalBody.innerHTML = `
+                    <div class="modal-image" style="background-image: url('${item.image}')">
+                        <img src="${item.image}" alt="${item.name}" style="display: none;">
+                    </div>
+                    <h2 class="modal-title">${item.name}</h2>
+                    <div class="modal-price">
+                        ${Array.isArray(item.price) ? 
+                            `${Math.min(...item.price).toLocaleString()} - ${Math.max(...item.price).toLocaleString()}$` : 
+                            `${item.price.toLocaleString()}$`}
+                    </div>
+                    <div class="modal-stats">
+                        <div class="stat-item">
+                            <div class="stat-label">Категория</div>
+                            <div class="stat-value">${getCategoryName(item.category)}</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Последнее обновление</div>
+                            <div class="stat-value">${new Date(item.updated * 1000).toLocaleString()}</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Доступность</div>
+                            <div class="stat-value">${Array.isArray(item.price) ? 'Разные варианты' : 'В наличии'}</div>
+                        </div>
+                    </div>
+                    <button class="account-btn" style="width: 100%; margin-top: 20px; justify-content: center;" id="buy-btn">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>Купить сейчас</span>
+                    </button>
+                `;
+
+                modal.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+
+                // Обработчик для кнопки покупки
+                document.getElementById('buy-btn').addEventListener('click', function() {
+                    const notification = document.getElementById('notification');
+                    notification.style.display = 'flex';
+                    notification.style.alignItems = 'center';
+                    notification.style.gap = '10px';
+                    notification.innerHTML = `
+                        <i class="fas fa-exclamation-circle"></i> 
+                        Функция покупки находится в разработке
+                    `;
+                    
+                    setTimeout(() => {
+                        notification.style.display = 'none';
+                    }, 3000);
+                });
+            }
+
+            // Получить название категории
+            function getCategoryName(category) {
+                const categories = {
+                    'skin': 'Скин',
+                    'accessory': 'Аксессуар',
+                    'vehicle': 'Транспорт',
+                    'weapon': 'Оружие',
+                    'other': 'Другое'
+                };
+                return categories[category] || 'Другое';
+            }
+
+            // Закрыть модальное окно
+            closeBtn.addEventListener('click', function() {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            });
+
+            // Закрыть модальное окно при клике вне его
+            window.addEventListener('click', function(event) {
+                if (event.target === modal) {
                     modal.style.display = 'none';
                     document.body.style.overflow = 'auto';
                 }
+            });
 
-                // Обработчики событий
-                searchInput.addEventListener('input', filterAndSortItems);
-                searchBtn.addEventListener('click', filterAndSortItems);
-                categoryFilter.addEventListener('change', filterAndSortItems);
-                priceFilter.addEventListener('change', filterAndSortItems);
-                sortBy.addEventListener('change', filterAndSortItems);
-                closeBtn.addEventListener('click', closeModal);
-                window.addEventListener('click', (event) => {
-                    if (event.target === modal) {
-                        closeModal();
-                    }
-                });
+            // Обработчики событий для фильтров и поиска
+            searchBtn.addEventListener('click', filterAndSortItems);
+            searchInput.addEventListener('keyup', function(e) {
+                if (e.key === 'Enter') {
+                    filterAndSortItems();
+                }
+            });
+            categoryFilter.addEventListener('change', filterAndSortItems);
+            priceFilter.addEventListener('change', filterAndSortItems);
+            sortBy.addEventListener('change', filterAndSortItems);
 
-                // Инициализация
-                filterAndSortItems();
-            }
-        });
-    </script>
-</body>
-</html>
+            // Первоначальная загрузка
+            filterAndSortItems();
+        }
+    }
+</script>
+</body> </html>
