@@ -1267,28 +1267,10 @@
                                 <div class="stat-value">${formatDate(item.updated)}</div>
                             </div>
                         </div>
-                        <button class="account-btn" style="margin-top: 30px; width: 100%;">
-                            <i class="fas fa-shopping-cart"></i>
-                            <span>Купить сейчас</span>
-                        </button>
                     `;
                     
                     modal.style.display = 'block';
                     document.body.style.overflow = 'hidden';
-                    
-                    // Добавляем обработчик для кнопки покупки
-                    const buyBtn = modalBody.querySelector('.account-btn');
-                    buyBtn.addEventListener('click', () => {
-                        const notification = document.getElementById('notification');
-                        notification.style.display = 'flex';
-                        notification.style.alignItems = 'center';
-                        notification.style.gap = '10px';
-                        
-                        setTimeout(() => {
-                            notification.style.display = 'none';
-                        }, 3000);
-                    });
-                }
 
                 // Получение названия категории
                 function getCategoryName(category) {
