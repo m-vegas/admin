@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Технические работы | Market</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: #fff;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .maintenance-container {
+            max-width: 600px;
+            padding: 2rem;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #e94560;
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .contact a {
+            color: #4cc9f0;
+            text-decoration: none;
+        }
+
+        /* Анимация шестерёнок */
+        .animation-box {
+            position: relative;
+            margin: 2rem auto;
+            width: 200px;
+            height: 200px;
+        }
+
+        .gear {
+            font-size: 4rem;
+            position: absolute;
+            animation: rotate 5s linear infinite;
+        }
+
+        .gear-1 {
+            left: 0;
+            top: 0;
+            animation-delay: 0s;
+        }
+
+        .gear-2 {
+            right: 0;
+            top: 0;
+            animation-direction: reverse;
+        }
+
+        .gear-3 {
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            animation-duration: 7s;
+        }
+
+        /* Прогресс-бар */
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            margin: 2rem 0;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, #e94560, #4cc9f0);
+            animation: progressLoad 5s ease-in-out infinite;
+        }
+
+        /* Таймер обратного отсчёта */
+        .countdown {
+            font-size: 2rem;
+            margin: 1.5rem 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .countdown span {
+            padding: 0.2rem 0.5rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 5px;
+        }
+
+        /* Ключевые кадры анимаций */
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes progressLoad {
+            0% { width: 0; }
+            50% { width: 80%; }
+            100% { width: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="maintenance-container">
+        <div class="animation-box">
+            <div class="gear gear-1">⚙️</div>
+            <div class="gear gear-2">⚙️</div>
+            <div class="gear gear-3">⚙️</div>
+        </div>
+        <h1>Идут технические работы</h1>
+        <p>Мы улучшаем наш маркетплейс для вас. Скоро вернёмся!</p>
+        <div class="progress-bar">
+            <div class="progress"></div>
+        </div>
+        <div class="countdown">
+            <span id="hours">00</span>:<span id="minutes">00</span>:<span id="seconds">00</span>
+        </div>
+        <p class="contact">По вопросам: <a href="mailto:support@market.com">support@market.com</a></p>
+    </div>
+
+    <script>
+        // Обратный отсчёт до условного времени (например, через 24 часа)
+        function updateCountdown() {
+            const now = new Date();
+            const target = new Date();
+            target.setHours(now.getHours() + 24); // Через 24 часа
+
+            const diff = target - now;
+
+            const hours = Math.floor(diff / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+        }
+
+        // Обновляем каждую секунду
+        setInterval(updateCountdown, 1000);
+        updateCountdown(); // Первый запуск
+    </script>
+</body>
+</html>
