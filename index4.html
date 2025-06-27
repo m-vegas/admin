@@ -128,7 +128,7 @@
     <script>
         // Проверяем параметр в URL или localStorage
         const urlParams = new URLSearchParams(window.location.search);
-        const isEnabled = urlParams.has('enable') || localStorage.getItem('siteEnabled') === 'true';
+        const isEnabled = urlParams.has('enable') || localStorage.getItem('siteEnabled') === 'false';
         
         const loaderContainer = document.getElementById('loader-container');
         const maintenanceContainer = document.getElementById('maintenance-container');
