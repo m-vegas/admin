@@ -524,132 +524,6 @@
             background-color: var(--accent-red);
         }
 
-        /* Стили для модального окна скинов */
-        #modalSkinsOverlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0,0,0,0.7);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .modal-skins {
-            background-color: var(--card-bg);
-            padding: 20px;
-            border-radius: 10px;
-            max-width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 15px;
-        }
-        
-        .modal-skin {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 10px;
-            border: 1px solid var(--border);
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        
-        .modal-skin:hover {
-            border-color: var(--accent-gold);
-            background-color: rgba(255, 204, 0, 0.05);
-        }
-        
-        .modal-skin img {
-            width: 100px;
-            height: 100px;
-            object-fit: cover;
-            border-radius: 5px;
-        }
-        
-        .skin-name {
-            margin-top: 5px;
-            font-size: 0.9rem;
-            text-align: center;
-            font-weight: bold;
-        }
-        
-        .skin-stats {
-            margin-top: 5px;
-            font-size: 0.8rem;
-            color: var(--accent-gold);
-            text-align: center;
-        }
-
-        /* Кнопки управления */
-        .controls {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 20px;
-        }
-        
-        .control-btn {
-            padding: 8px 15px;
-            background-color: var(--card-bg);
-            border: 1px solid var(--border);
-            color: var(--text-white);
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        
-        .control-btn:hover {
-            background-color: var(--accent-red);
-            color: white;
-        }
-
-        /* Мобильные стили */
-        @media (max-width: 768px) {
-            .top-links {
-                gap: 10px;
-            }
-            
-            .logo-text {
-                font-size: 1.2rem;
-            }
-            
-            .sets-main {
-                flex-direction: column;
-            }
-            
-            .left-section, .right-section {
-                width: 100%;
-            }
-            
-            .grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .bottom-row {
-                flex-direction: column;
-            }
-            
-            .bottom-row .grid-item {
-                width: 100%;
-            }
-            
-            .modal-accs, .modal-skins {
-                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-            }
-            
-            .modal-accs img, .modal-skin img {
-                width: 80px;
-                height: 80px;
-            }
-        }
-
         @keyframes pulse {
             0% { opacity: 0.7; }
             50% { opacity: 1; }
@@ -826,19 +700,6 @@
                     </div>
                 </div>
 
-                <!-- Кнопки управления -->
-                <div class="controls">
-                    <button class="control-btn" id="saveBtn">
-                        <i class="fas fa-save"></i> Сохранить сет
-                    </button>
-                    <button class="control-btn" id="loadBtn">
-                        <i class="fas fa-folder-open"></i> Загрузить сет
-                    </button>
-                    <button class="control-btn" id="resetBtn">
-                        <i class="fas fa-trash"></i> Сбросить
-                    </button>
-                </div>
-
                 <span class="copyright">© Vegas+, 2025</span>
             </div>
 
@@ -884,7 +745,6 @@
         <div class="tooltip" id="trashtooltip">Перетащите сюда предмет, чтобы его выкинуть!</div>
     </div>
     
-    <!-- Модальное окно аксессуаров -->
     <div id="modalOverlay" class="modal-overlay">
         <div class="modal-accs"></div>
         <button id="closeModal" class="btn" style="position: absolute; top: 20px; right: 20px; width: 40px; height: 40px;">
@@ -892,7 +752,6 @@
         </button>
     </div>
     
-    <!-- Модальное окно удаления -->
     <div id="modalDelete">
         <div class="modal">
             <h2>Вы уверены что хотите удалить аксессуар?</h2>
@@ -903,554 +762,801 @@
         </div>
     </div>
 
-    <!-- Модальное окно скинов -->
-    <div id="modalSkinsOverlay" class="modal-overlay">
-        <div class="modal-skins"></div>
-        <div class="modal-buttons" style="position: absolute; bottom: 20px;">
-            <button id="closeSkinModal" class="control-btn">
-                <i class="fas fa-check"></i> Выбрать
-            </button>
-            <button id="closeNoneSkinModal" class="control-btn">
-                <i class="fas fa-times"></i> Без скина
-            </button>
-            <button id="closeXModalSkin" class="control-btn">
-                <i class="fas fa-times"></i> Отмена
-            </button>
-        </div>
-    </div>
-
-    <!-- Модальное окно нашивок -->
-    <div id="modalNashivkaOverlay" class="modal-overlay">
-        <div class="modal-accs modal-nashivki"></div>
-        <button id="closeNashivkaModal" class="btn" style="position: absolute; top: 20px; right: 20px; width: 40px; height: 40px;">
-            <i class="fas fa-times"></i>
-        </button>
-    </div>
-
     <script>
-    // Основной массив с аксессуарами (из script.js)
-const accessoriesData = {
-    'head': [
-        {
-            imageSrc: 'imgs/head/deadinside.png',
-            stats: { damage: 1, krit: 10, oglysh: 1 },
-            upg: 'krit',
-            yellow: {},
-            ru_name: 'Маркер dead inside'
-        },
-        // ... остальные аксессуары из script.js
-    ],
-    // ... остальные слоты
-};
-
-// Массив скинов (из script.js)
-const skins = [
-    {
-        imageSrc: 'imgs/skins/ct.png',
-        yellow: { deff: 2, damage: 2, otrazh: 3 },
-        ru_name: 'Спецназовец'
-    },
-    // ... остальные скины
-];
-
-// Массив нашивок (из script.js)
-const nashivki = [
-    {
-        imageSrc: 'imgs/nashivki/deff.png',
-        stats: { deff: 6 },
-        ru_name: 'Нашивка на защиту',
-        slot: 'all', slot_name: 'Все слоты'
-    },
-    // ... остальные нашивки
-];
-
-// Русские названия типов статистик (из script.js)
-const RuTypes = {
-    deff: 'Защита',
-    hpmin: 'HP в мин.',
-    damage: 'Урон',
-    krit: 'Удача',
-    hpmax: 'Макс. HP',
-    armourmax: 'Макс. Брони',
-    oglysh: 'Шанс оглушения',
-    opyan: 'Шанс опьянения',
-    neoglysh: 'Шанс избежать оглушения',
-    otrazh: 'Отражение урона'
-};
-
-// Русские названия слотов (из script.js)
-const RuSlots = {
-    head: 'Голова',
-    face: 'Лицо',
-    hand: 'Рука',
-    breast: 'Грудь',
-    shoulder: 'Плечо',
-    spine: 'Спина',
-    armour: 'Бронежилет',
-    case: 'Чемодан'
-};
-
-// Выбранный скин
-let selectedSkin = null;
-// Текущий открытый слот для модального окна
-let currentSlot = null;
-// Текущий предмет для удаления
-let itemToDelete = null;
-
-// Инициализация при загрузке страницы
-$(document).ready(function() {
-    // Инициализация модальных окон
-    initModals();
-    
-    // Инициализация drag and drop
-    initDragAndDrop();
-    
-    // Инициализация кнопок управления
-    initControls();
-    
-    // Инициализация системы скинов
-    initSkins();
-    
-    // Первоначальное обновление статистик
-    updateStats();
-});
-
-// Функции инициализации
-function initModals() {
-    // Обработчики для кнопок аксессуаров
-    $('.mini-container').click(function() {
-        const slotName = $(this).attr('slot-name');
-        currentSlot = slotName;
-        openAccessoriesModal(slotName);
-    });
-
-    // Кнопка закрытия модального окна
-    $('#closeModal').click(function() {
-        $('#modalOverlay').hide();
-    });
-
-    // Кнопка закрытия модального окна скинов
-    $('#closeSkinModal').click(function() {
-        if (selectedSkin) {
-            $('#character-image').attr('src', selectedSkin.imageSrc);
-            updateStats();
+        // Проверка на мобильное устройство
+        function isMobileDevice() {
+            return /Mobi|Android/i.test(navigator.userAgent);
         }
-        $('#modalSkinsOverlay').hide();
-    });
 
-    $('#closeNoneSkinModal').click(function() {
-        selectedSkin = null;
-        $('#character-image').attr('src', 'https://raw.githubusercontent.com/m-vegas/market/refs/heads/main/imgs/characters/template.png');
-        updateStats();
-        $('#modalSkinsOverlay').hide();
-    });
-
-    $('#closeXModalSkin').click(function() {
-        $('#modalSkinsOverlay').hide();
-    });
-
-    // Обработчики для модального окна удаления
-    $('#yesDelete').click(function() {
-        if (itemToDelete) {
-            $(itemToDelete).find('img.main').remove();
-            $(itemToDelete).find('span').text('+0');
-            updateStats();
-        }
-        $('#modalDelete').hide();
-    });
-
-    $('#noDelete').click(function() {
-        $('#modalDelete').hide();
-    });
-
-    // Обработчик для кнопки нашивки
-    $('.nashivka').click(function(e) {
-        e.stopPropagation();
-        const slot = $(this).closest('.grid-item').attr('id');
-        openNashivkaModal(slot);
-    });
-}
-
-function initDragAndDrop() {
-    // Настройка drag and drop для предметов
-    $('.grid-item').on('dragover', function(e) {
-        e.preventDefault();
-        $(this).addClass('dragover');
-    });
-
-    $('.grid-item').on('dragleave', function() {
-        $(this).removeClass('dragover');
-    });
-
-    $('.grid-item').on('drop', function(e) {
-        e.preventDefault();
-        $(this).removeClass('dragover');
-        
-        const slot = $(this).attr('id');
-        const data = e.originalEvent.dataTransfer.getData('text/plain');
-        const item = JSON.parse(data);
-        
-        if (item.type === 'accessory') {
-            addAccessoryToSlot(slot, item.data);
-        }
-    });
-
-    // Настройка drag and drop для корзины
-    $('.trash').on('dragover', function(e) {
-        e.preventDefault();
-        $(this).css('transform', 'scale(1.15)');
-    });
-
-    $('.trash').on('dragleave', function() {
-        $(this).css('transform', 'scale(1)');
-    });
-
-    $('.trash').on('drop', function(e) {
-        e.preventDefault();
-        $(this).css('transform', 'scale(1)');
-        
-        const data = e.originalEvent.dataTransfer.getData('text/plain');
-        const item = JSON.parse(data);
-        
-        if (item.type === 'accessory') {
-            itemToDelete = $('#' + item.slot);
-            $('#modalDelete').show();
-        }
-    });
-}
-
-function initControls() {
-    // Кнопка сохранения
-    $('#saveBtn').click(function() {
-        saveSet();
-    });
-    
-    // Кнопка загрузки
-    $('#loadBtn').click(function() {
-        loadSet();
-    });
-    
-    // Кнопка сброса
-    $('#resetBtn').click(function() {
-        resetSet();
-    });
-
-    // Кнопки + и - для заточки
-    $('.plus').click(function(e) {
-        e.stopPropagation();
-        const slot = $(this).closest('.grid-item').attr('id');
-        const span = $(this).siblings('span');
-        let level = parseInt(span.text().replace('+', '')) || 0;
-        if (level < 10) {
-            level++;
-            span.text('+' + level);
-            updateStats();
-        }
-    });
-
-    $('.minus').click(function(e) {
-        e.stopPropagation();
-        const slot = $(this).closest('.grid-item').attr('id');
-        const span = $(this).siblings('span');
-        let level = parseInt(span.text().replace('+', '')) || 0;
-        if (level > 0) {
-            level--;
-            span.text('+' + level);
-            updateStats();
-        }
-    });
-
-    // Клик по персонажу для смены скина
-    $('#character').click(function() {
-        openSkinsModal();
-    });
-}
-
-function initSkins() {
-    // Заполнение модального окна скинами
-    const modal = $('.modal-skins');
-    modal.empty();
-    
-    skins.forEach(skin => {
-        const skinElement = $(`
-            <div class="modal-skin" data-skin='${JSON.stringify(skin)}'>
-                <img src="${skin.imageSrc}" alt="${skin.ru_name}">
-                <div class="skin-name">${skin.ru_name}</div>
-                <div class="skin-stats">${getStatsText(skin.yellow)}</div>
-            </div>
-        `);
-        
-        skinElement.click(function() {
-            selectedSkin = skin;
-            $('.modal-skin').removeClass('selected');
-            $(this).addClass('selected');
-        });
-        
-        modal.append(skinElement);
-    });
-}
-
-// Функции работы с модальными окнами
-function openAccessoriesModal(slotName) {
-    const modal = $('.modal-accs');
-    modal.empty();
-    
-    if (accessoriesData[slotName]) {
-        accessoriesData[slotName].forEach(acc => {
-            const accElement = $(`
-                <div class="accessory-item" data-acc='${JSON.stringify(acc)}'>
-                    <img src="${acc.imageSrc}" alt="${acc.ru_name}">
-                    <div class="accessory-name">${acc.ru_name}</div>
-                    <div class="accessory-stats">${getStatsText(acc.stats)}</div>
-                </div>
-            `);
-            
-            accElement.click(function() {
-                addAccessoryToSlot(currentSlot, acc);
-                $('#modalOverlay').hide();
-            });
-            
-            modal.append(accElement);
-        });
-    }
-    
-    $('#modalOverlay').show();
-}
-
-function openSkinsModal() {
-    $('#modalSkinsOverlay').show();
-}
-
-function openNashivkaModal(slot) {
-    const modal = $('.modal-nashivki');
-    modal.empty();
-    
-    nashivki.forEach(nash => {
-        if (nash.slot === 'all' || nash.slot === slot) {
-            const nashElement = $(`
-                <div class="accessory-item" data-nash='${JSON.stringify(nash)}'>
-                    <img src="${nash.imageSrc}" alt="${nash.ru_name}">
-                    <div class="accessory-name">${nash.ru_name}</div>
-                    <div class="accessory-stats">${getStatsText(nash.stats)}</div>
-                </div>
-            `);
-            
-            nashElement.click(function() {
-                const gridItem = $('#' + slot);
-                const img = gridItem.find('img.main')[0];
-                
-                if (img) {
-                    img.dataset.nashivka = JSON.stringify(nash.stats);
-                    gridItem.find('.nashivka').text('✓');
-                    updateStats();
-                }
-                
-                $('#modalNashivkaOverlay').hide();
-            });
-            
-            modal.append(nashElement);
-        }
-    });
-    
-    $('#modalNashivkaOverlay').show();
-}
-
-// Вспомогательные функции
-function addAccessoryToSlot(slot, accessory) {
-    const gridItem = $('#' + slot);
-    gridItem.find('img.main').remove();
-    
-    const img = $(`<img class="main" src="${accessory.imageSrc}" alt="${accessory.ru_name}">`);
-    img.attr('data-stats', JSON.stringify(accessory.stats || {}));
-    img.attr('data-upg', accessory.upg || '');
-    img.attr('data-yellow', JSON.stringify(accessory.yellow || {}));
-    
-    // Настройка drag and drop для нового предмета
-    img.attr('draggable', 'true');
-    img.on('dragstart', function(e) {
-        e.originalEvent.dataTransfer.setData('text/plain', JSON.stringify({
-            type: 'accessory',
-            slot: slot,
-            data: accessory
-        }));
-    });
-    
-    gridItem.prepend(img);
-    gridItem.find('span').text('+0');
-    updateStats();
-}
-
-function getStatsText(stats) {
-    let text = '';
-    for (const stat in stats) {
-        if (stats[stat]) {
-            text += `${RuTypes[stat]}: ${stats[stat]}<br>`;
-        }
-    }
-    return text || 'Нет бонусов';
-}
-
-function updateStats() {
-    // Сбрасываем все статы
-    const stats = {
-        deff: 0,
-        hpmin: 0,
-        damage: 0,
-        krit: 0,
-        hpmax: 0,
-        armourmax: 0,
-        oglysh: 0,
-        opyan: 0,
-        neoglysh: 0,
-        otrazh: 0
-    };
-    
-    // Добавляем бонусы от скина
-    if (selectedSkin && selectedSkin.yellow) {
-        for (const stat in selectedSkin.yellow) {
-            stats[stat] += selectedSkin.yellow[stat];
-        }
-    }
-    
-    // Добавляем бонусы от аксессуаров
-    $('.grid-item').each(function() {
-        const img = $(this).find('img.main')[0];
-        if (img) {
-            const itemStats = JSON.parse(img.dataset.stats || '{}');
-            const upgradeLevel = parseInt($(this).find('span').text().replace('+', '')) || 0;
-            const upgStat = img.dataset.upg;
-            const nashivkaStats = JSON.parse(img.dataset.nashivka || '{}');
-            
-            // Добавляем базовые статы
-            for (const stat in itemStats) {
-                stats[stat] += itemStats[stat];
+        if (isMobileDevice()) {
+            if (!window.location.pathname.includes('/mobile')) {
+                window.location.href = '/mobile';
             }
-            
-            // Добавляем статы от заточки
-            if (upgStat && upgradeLevel > 0) {
-                stats[upgStat] += upgradeLevel;
-            }
-            
-            // Добавляем статы от нашивки
-            for (const stat in nashivkaStats) {
-                stats[stat] += nashivkaStats[stat];
-            }
-        }
-    });
-    
-    // Обновляем отображение статов
-    for (const stat in stats) {
-        $(`#${stat}`).text(`[${stat === 'deff' || stat === 'otrazh' ? '-' : '+'}${stats[stat]}${RuTypes[stat].includes('%') ? '%' : ''}]`);
-    }
-}
-
-// Функции работы с сетами
-function saveSet() {
-    const setData = {
-        skin: selectedSkin,
-        accessories: {},
-        upgrades: {}
-    };
-
-    // Собираем информацию об аксессуарах
-    $('.grid-item').each(function() {
-        const slot = $(this).attr('id');
-        const img = $(this).find('img.main')[0];
-        
-        if (img) {
-            setData.accessories[slot] = {
-                src: img.src,
-                stats: JSON.parse(img.dataset.stats || '{}'),
-                upg: img.dataset.upg,
-                yellow: JSON.parse(img.dataset.yellow || '{}'),
-                nashivka: JSON.parse(img.dataset.nashivka || '{}')
-            };
-        }
-        
-        // Сохраняем уровень заточки
-        const upgradeLevel = $(this).find('span').text().replace('+', '');
-        setData.upgrades[slot] = parseInt(upgradeLevel) || 0;
-    });
-
-    // Сохраняем в localStorage
-    localStorage.setItem('vegasPlusSet', JSON.stringify(setData));
-    
-    alert('Сет успешно сохранен!');
-}
-
-function loadSet() {
-    const savedSet = localStorage.getItem('vegasPlusSet');
-    if (savedSet) {
-        const setData = JSON.parse(savedSet);
-        
-        // Загружаем скин
-        if (setData.skin) {
-            selectedSkin = setData.skin;
-            $('#character-image').attr('src', setData.skin.imageSrc);
         } else {
-            selectedSkin = null;
-            $('#character-image').attr('src', 'https://raw.githubusercontent.com/m-vegas/market/refs/heads/main/imgs/characters/template.png');
+            if (window.location.pathname.includes('/mobile')) {
+                window.location.href = '/';
+            }
         }
-        
-        // Загружаем аксессуары
-        for (const slot in setData.accessories) {
-            const acc = setData.accessories[slot];
-            const gridItem = $('#' + slot);
+
+        const basePath = window.location.pathname.includes('/mobile/') ? '../' : './';
+
+        // Основной массив с аксессуарами
+        const accessoriesData = {
+            'head': [
+                {
+                    imageSrc: 'imgs/head/deadinside.png',
+                    stats: { damage: 1, krit: 10, oglysh: 1 },
+                    upg: 'krit',
+                    yellow: {},
+                    ru_name: 'Маркер dead inside'
+                },
+                {
+                    imageSrc: 'imgs/head/bad.png',
+                    stats: { krit: 10 },
+                    upg: 'krit',
+                    yellow: {},
+                    ru_name: 'Маркер «BAD»'
+                },
+                {
+                    imageSrc: 'imgs/head/ironman.png',
+                    stats: { krit: 2 },
+                    upg: 'krit',
+                    yellow: {},
+                    ru_name: 'Шлем железного человека'
+                },
+                {
+                    imageSrc: 'imgs/head/pepe.png',
+                    stats: { krit: 1 },
+                    upg: 'krit',
+                    yellow: {},
+                    ru_name: 'Веселый Пепе'
+                },
+                {
+                    imageSrc: 'imgs/head/tikva.png',
+                    stats: { deff: 2, damage: 2, krit: 2 },
+                    upg: 'hpmin',
+                    yellow: {},
+                    ru_name: 'Голова Тыква'
+                },
+                {
+                    imageSrc: 'imgs/head/jetpack.png',
+                    stats: { deff: 2, damage: 2, krit: 2 },
+                    upg: 'hpmin',
+                    yellow: {},
+                    ru_name: 'Джетпак'
+                },
+                {
+                    imageSrc: 'imgs/head/endercube.png',
+                    stats: { damage: 1, krit: 10, oglysh: 1 },
+                    upg: 'krit',
+                    yellow: {},
+                    ru_name: 'Эндер куб'
+                }
+            ],
+            'face': [
+                {
+                    imageSrc: 'imgs/face/netri.png',
+                    stats: { deff: 2, krit: 25 },
+                    upg: 'deff',
+                    yellow: {},
+                    ru_name: 'Анимированные очки Netrunner'
+                },
+                {
+                    imageSrc: 'imgs/face/cyberpunkvr.png',
+                    stats: { deff: 2, krit: 25 },
+                    upg: 'deff',
+                    yellow: {},
+                    ru_name: 'Киберпанковские VR-очки'
+                },
+                {
+                    imageSrc: 'imgs/face/maskinvisible.png',
+                    stats: { deff: 0, oglysh: 3 },
+                    upg: 'deff',
+                    yellow: {},
+                    ru_name: 'Маска-невидимка'
+                },
+                {
+                    imageSrc: 'imgs/face/sphereoverhead.png',
+                    stats: { deff: 2, damage: 2, krit: 2 },
+                    upg: 'deff',
+                    yellow: {},
+                    ru_name: 'Сфера над головой'
+                }
+            ],
+            'hand': [
+                {
+                    imageSrc: 'imgs/hand/duff.png',
+                    stats: { damage: 4 },
+                    upg: 'damage',
+                    yellow: {},
+                    ru_name: 'Молот «Duff»'
+                },
+                {
+                    imageSrc: 'imgs/hand/fraps.png',
+                    stats: { deff: 2, damage: 2, krit: 2 },
+                    upg: 'damage',
+                    yellow: {},
+                    ru_name: 'Табличка «Фрапс пишется»'
+                },
+                {
+                    imageSrc: 'imgs/hand/azinot.png',
+                    stats: { deff: 2, damage: 2, krit: 2 },
+                    upg: 'damage',
+                    yellow: {},
+                    ru_name: 'Клинки Аззинота'
+                },
+                {
+                    imageSrc: 'imgs/hand/magaxe.png',
+                    stats: { damage: 4 },
+                    upg: 'damage',
+                    yellow: {},
+                    ru_name: 'Магический топор'
+                }
+            ],
+            'breast': [
+                {
+                    imageSrc: 'imgs/breast/mahi.png',
+                    stats: { deff: 2, damage: 1, krit: 10, armourmax: 25 },
+                    upg: 'damage',
+                    yellow: {},
+                    ru_name: 'Цепь «Махинатор»'
+                },
+                {
+                    imageSrc: 'imgs/breast/energomahi.png',
+                    stats: { deff: 4, damage: 2, krit: 12, armourmax: 25 },
+                    upg: 'damage',
+                    yellow: { damage: 2, hpmax: 5 },
+                    ru_name: 'Энергетический махинатор'
+                },
+                {
+                    imageSrc: 'imgs/breast/magsphere.png',
+                    stats: { deff: 2, krit: 1 },
+                    upg: 'krit',
+                    yellow: {},
+                    ru_name: 'Магические сфера'
+                },
+                {
+                    imageSrc: 'imgs/breast/swag.png',
+                    stats: { deff: 2, damage: 1, krit: 10, armourmax: 25 },
+                    upg: 'damage',
+                    yellow: {},
+                    ru_name: 'Цепь SWAG'
+                },
+                {
+                    imageSrc: 'imgs/breast/swaga.png',
+                    stats: { deff: 2, damage: 1, krit: 10, armourmax: 25 },
+                    upg: 'damage',
+                    yellow: {},
+                    ru_name: 'Цепь СВАГА'
+                }
+            ],
+            'shoulder': [
+                {
+                    imageSrc: 'imgs/shoulder/magshar2.png',
+                    stats: { deff: 2, damage: 1, krit: 10, armourmax: 25 },
+                    upg: 'deff',
+                    yellow: {},
+                    ru_name: 'Магический воздушный шар #2'
+                },
+                {
+                    imageSrc: 'imgs/shoulder/energoshar.png',
+                    stats: { deff: 4, damage: 4, krit: 24, hpmax: 5, armourmax: 27, neoglysh: 10 },
+                    upg: 'deff',
+                    yellow: {},
+                    ru_name: 'Энергетический воздушный шар'
+                },
+                {
+                    imageSrc: 'imgs/shoulder/pexpress.png',
+                    stats: { deff: 0, krit: 10, armourmax: 20, oglysh: 4 },
+                    upg: 'deff',
+                    yellow: {},
+                    ru_name: 'Planet Express'
+                },
+                {
+                    imageSrc: 'imgs/shoulder/delorean.png',
+                    stats: { deff: 0, krit: 10, armourmax: 20, oglysh: 4 },
+                    upg: 'deff',
+                    yellow: {},
+                    ru_name: 'Игрушечный Delorean'
+                },
+                {
+                    imageSrc: 'imgs/shoulder/piratecompass.png',
+                    stats: { deff: 4, damage: 4, krit: 24, hpmax: 5, armourmax: 27, neoglysh: 20 },
+                    upg: 'deff',
+                    yellow: {},
+                    ru_name: 'Пиратский компас'
+                },
+                {
+                    imageSrc: 'imgs/shoulder/flyingdutchman.png',
+                    stats: { deff: 4, damage: 4, krit: 24, hpmax: 5, armourmax: 27, neoglysh: 20 },
+                    upg: 'deff',
+                    yellow: {},
+                    ru_name: 'Летучий голландец'
+                },
+                {
+                    imageSrc: 'imgs/shoulder/arkanaio.png',
+                    stats: { deff: 2, damage: 1, krit: 1, hpmax: 10 },
+                    upg: 'deff',
+                    yellow: {},
+                    ru_name: 'Аркана ИО'
+                }
+            ],
+            'spine': [
+                {
+                    imageSrc: 'imgs/spine/tor.png',
+                    stats: { damage: 4 },
+                    upg: 'damage',
+                    yellow: {},
+                    ru_name: 'Молот Тора'
+                },
+                {
+                    imageSrc: 'imgs/spine/rbt.png',
+                    stats: { deff: 4 },
+                    upg: 'deff',
+                    yellow: {},
+                    ru_name: 'Русский боевой топор'
+                },
+                {
+                    imageSrc: 'imgs/spine/jasehummer.png',
+                    stats: { damage: 4 },
+                    upg: 'damage',
+                    yellow: {},
+                    ru_name: 'Молот Джейса'
+                },
+                {
+                    imageSrc: 'imgs/spine/ka.png',
+                    stats: { deff: 4 },
+                    upg: 'deff',
+                    yellow: {},
+                    ru_name: 'Щит Капитана Америки'
+                },
+                {
+                    imageSrc: 'imgs/spine/magmaxe.png',
+                    stats: { deff: 4 },
+                    upg: 'deff',
+                    yellow: {},
+                    ru_name: 'Магмовый топор'
+                },
+                {
+                    imageSrc: 'imgs/spine/icesword.png',
+                    stats: { deff: 4 },
+                    upg: 'deff',
+                    yellow: {},
+                    ru_name: 'Ледяной меч'
+                },
+                {
+                    imageSrc: 'imgs/spine/energoshield.png',
+                    stats: { deff: 4, hpmax: 10, opyan: 2 },
+                    upg: 'deff',
+                    yellow: {},
+                    ru_name: 'Энергетический щит'
+                }
+            ],
+            'armour': [
+                {
+                    imageSrc: 'imgs/armour/armour1.png',
+                    stats: { deff: 10, hpmax: 20, armourmax: 50 },
+                    upg: 'deff',
+                    yellow: {},
+                    ru_name: 'Бронежилет 1'
+                },
+                {
+                    imageSrc: 'imgs/armour/armour2.png',
+                    stats: { deff: 15, hpmax: 30, armourmax: 75 },
+                    upg: 'deff',
+                    yellow: {},
+                    ru_name: 'Бронежилет 2'
+                },
+                {
+                    imageSrc: 'imgs/armour/armour3.png',
+                    stats: { deff: 20, hpmax: 40, armourmax: 100 },
+                    upg: 'deff',
+                    yellow: {},
+                    ru_name: 'Бронежилет 3'
+                }
+            ],
+            'case': [
+                {
+                    imageSrc: 'imgs/case/case1.png',
+                    stats: { hpmax: 10, armourmax: 25 },
+                    upg: 'hpmax',
+                    yellow: {},
+                    ru_name: 'Чемодан 1'
+                },
+                {
+                    imageSrc: 'imgs/case/case2.png',
+                    stats: { hpmax: 20, armourmax: 50 },
+                    upg: 'hpmax',
+                    yellow: {},
+                    ru_name: 'Чемодан 2'
+                },
+                {
+                    imageSrc: 'imgs/case/case3.png',
+                    stats: { hpmax: 30, armourmax: 75 },
+                    upg: 'hpmax',
+                    yellow: {},
+                    ru_name: 'Чемодан 3'
+                }
+            ]
+        };
+
+        // Текущие выбранные аксессуары
+        let currentAccessories = {
+            head: null,
+            face: null,
+            hand: null,
+            breast: null,
+            shoulder: null,
+            spine: null,
+            armour: null,
+            case: null
+        };
+
+        // Уровни улучшений для аксессуаров
+        let accessoryLevels = {
+            head: 0,
+            face: 0,
+            hand: 0,
+            breast: 0,
+            shoulder: 0,
+            spine: 0,
+            armour: 0,
+            case: 0
+        };
+
+        // Нашивки для аксессуаров
+        let accessoryPatches = {
+            head: null,
+            face: null,
+            hand: null,
+            breast: null,
+            shoulder: null,
+            spine: null,
+            armour: null,
+            case: null
+        };
+
+        // Доступные нашивки
+        const patches = [
+            { type: 'damage', value: 1, name: 'Нашивка урона +1' },
+            { type: 'damage', value: 2, name: 'Нашивка урона +2' },
+            { type: 'deff', value: 1, name: 'Нашивка защиты +1%' },
+            { type: 'deff', value: 2, name: 'Нашивка защиты +2%' },
+            { type: 'krit', value: 5, name: 'Нашивка удачи +5%' },
+            { type: 'krit', value: 10, name: 'Нашивка удачи +10%' },
+            { type: 'hpmax', value: 5, name: 'Нашивка HP +5' },
+            { type: 'hpmax', value: 10, name: 'Нашивка HP +10' },
+            { type: 'hpmin', value: 1, name: 'Нашивка регенерации +1' },
+            { type: 'hpmin', value: 2, name: 'Нашивка регенерации +2' },
+            { type: 'armourmax', value: 5, name: 'Нашивка брони +5' },
+            { type: 'armourmax', value: 10, name: 'Нашивка брони +10' },
+            { type: 'oglysh', value: 1, name: 'Нашивка оглушения +1%' },
+            { type: 'oglysh', value: 2, name: 'Нашивка оглушения +2%' },
+            { type: 'neoglysh', value: 5, name: 'Нашивка избегания оглушения +5%' },
+            { type: 'neoglysh', value: 10, name: 'Нашивка избегания оглушения +10%' },
+            { type: 'opyan', value: 1, name: 'Нашивка опьянения +1%' },
+            { type: 'opyan', value: 2, name: 'Нашивка опьянения +2%' },
+            { type: 'otrazh', value: 1, name: 'Нашивка отражения +1%' },
+            { type: 'otrazh', value: 2, name: 'Нашивка отражения +2%' }
+        ];
+
+        // Доступные нашивки для броников
+        const armourPatches = [
+            { type: 'deff', value: 5, name: 'Нашивка защиты +5%' },
+            { type: 'deff', value: 10, name: 'Нашивка защиты +10%' },
+            { type: 'hpmax', value: 10, name: 'Нашивка HP +10' },
+            { type: 'hpmax', value: 20, name: 'Нашивка HP +20' },
+            { type: 'armourmax', value: 10, name: 'Нашивка брони +10' },
+            { type: 'armourmax', value: 20, name: 'Нашивка брони +20' },
+            { type: 'neoglysh', value: 10, name: 'Нашивка избегания оглушения +10%' },
+            { type: 'neoglysh', value: 20, name: 'Нашивка избегания оглушения +20%' }
+        ];
+
+        // Персонажи
+        const characters = [
+            { 
+                imageSrc: 'imgs/characters/template.png',
+                name: 'Стандартный персонаж'
+            },
+            { 
+                imageSrc: 'imgs/characters/character1.png',
+                name: 'Персонаж 1'
+            },
+            { 
+                imageSrc: 'imgs/characters/character2.png',
+                name: 'Персонаж 2'
+            },
+            { 
+                imageSrc: 'imgs/characters/character3.png',
+                name: 'Персонаж 3'
+            }
+        ];
+
+        // Инициализация страницы
+        $(document).ready(function() {
+            // Загрузка сохраненных данных
+            loadSavedData();
             
-            gridItem.find('img.main').remove();
+            // Обновление статистики
+            updateStats();
             
-            if (acc.src) {
-                const img = $(`<img class="main" src="${acc.src}">`);
-                img.attr('data-stats', JSON.stringify(acc.stats || {}));
-                img.attr('data-upg', acc.upg || '');
-                img.attr('data-yellow', JSON.stringify(acc.yellow || {}));
-                img.attr('data-nashivka', JSON.stringify(acc.nashivka || {}));
+            // Настройка обработчиков событий
+            setupEventHandlers();
+        });
+
+        // Загрузка сохраненных данных
+        function loadSavedData() {
+            const savedData = localStorage.getItem('vegasPlusSets');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                currentAccessories = data.currentAccessories || currentAccessories;
+                accessoryLevels = data.accessoryLevels || accessoryLevels;
+                accessoryPatches = data.accessoryPatches || accessoryPatches;
                 
-                // Настройка drag and drop
-                img.attr('draggable', 'true');
-                img.on('dragstart', function(e) {
-                    e.originalEvent.dataTransfer.setData('text/plain', JSON.stringify({
-                        type: 'accessory',
-                        slot: slot,
-                        data: acc
-                    }));
+                // Обновляем отображение аксессуаров
+                for (const slot in currentAccessories) {
+                    if (currentAccessories[slot]) {
+                        const accessory = getAccessoryById(slot, currentAccessories[slot]);
+                        if (accessory) {
+                            displayAccessory(slot, accessory);
+                        }
+                    }
+                }
+            }
+        }
+
+        // Сохранение данных
+        function saveData() {
+            const data = {
+                currentAccessories,
+                accessoryLevels,
+                accessoryPatches
+            };
+            localStorage.setItem('vegasPlusSets', JSON.stringify(data));
+        }
+
+        // Настройка обработчиков событий
+        function setupEventHandlers() {
+            // Обработчики для кнопок выбора аксессуаров
+            $('.mini-container').click(function() {
+                const slot = $(this).attr('slot-name');
+                openAccessoryModal(slot);
+            });
+
+            // Обработчики для кнопок +/-
+            $('.plus').click(function(e) {
+                e.stopPropagation();
+                const slot = $(this).closest('.grid-item').attr('id');
+                increaseAccessoryLevel(slot);
+            });
+
+            $('.minus').click(function(e) {
+                e.stopPropagation();
+                const slot = $(this).closest('.grid-item').attr('id');
+                decreaseAccessoryLevel(slot);
+            });
+
+            // Обработчики для кнопок нашивок
+            $('.nashivka, .nashivkabronik').click(function(e) {
+                e.stopPropagation();
+                const slot = $(this).closest('.grid-item').attr('id');
+                showPatchMenu(slot, $(this));
+            });
+
+            // Обработчик для закрытия модального окна
+            $('#closeModal').click(closeAccessoryModal);
+            
+            // Обработчик для корзины
+            $('.trash').on('dragover', function(e) {
+                e.preventDefault();
+                $(this).css('transform', 'scale(1.1)');
+            });
+            
+            $('.trash').on('dragleave', function() {
+                $(this).css('transform', 'scale(1)');
+            });
+            
+            $('.trash').on('drop', function(e) {
+                e.preventDefault();
+                $(this).css('transform', 'scale(1)');
+                
+                const slot = e.originalEvent.dataTransfer.getData('text/plain');
+                if (slot) {
+                    showDeleteConfirmation(slot);
+                }
+            });
+            
+            // Обработчики для модального окна удаления
+            $('#yesDelete').click(confirmDelete);
+            $('#noDelete').click(closeDeleteModal);
+            
+            // Обработчик для смены персонажа
+            $('#character').click(openCharacterModal);
+            
+            // Делаем элементы перетаскиваемыми
+            $('.grid-item').each(function() {
+                const slot = $(this).attr('id');
+                if (currentAccessories[slot]) {
+                    $(this).attr('draggable', 'true');
+                    
+                    $(this).on('dragstart', function(e) {
+                        e.originalEvent.dataTransfer.setData('text/plain', slot);
+                    });
+                }
+            });
+        }
+
+        // Открытие модального окна с аксессуарами
+        function openAccessoryModal(slot) {
+            const modal = $('#modalOverlay');
+            const modalContent = $('.modal-accs');
+            
+            modalContent.empty();
+            
+            // Добавляем аксессуары для выбранного слота
+            accessoriesData[slot].forEach(accessory => {
+                const item = $(`
+                    <div class="accessory-item">
+                        <img src="${basePath}${accessory.imageSrc}" alt="${accessory.ru_name}">
+                        <div class="accessory-name">${accessory.ru_name}</div>
+                    </div>
+                `);
+                
+                item.click(() => {
+                    selectAccessory(slot, accessory);
+                    closeAccessoryModal();
                 });
                 
-                gridItem.prepend(img);
+                modalContent.append(item);
+            });
+            
+            modal.show();
+        }
+
+        // Закрытие модального окна с аксессуарами
+        function closeAccessoryModal() {
+            $('#modalOverlay').hide();
+        }
+
+        // Выбор аксессуара
+        function selectAccessory(slot, accessory) {
+            currentAccessories[slot] = accessory;
+            accessoryLevels[slot] = 0;
+            accessoryPatches[slot] = null;
+            
+            displayAccessory(slot, accessory);
+            updateStats();
+            saveData();
+            
+            // Делаем элемент перетаскиваемым
+            $(`#${slot}`).attr('draggable', 'true').off('dragstart').on('dragstart', function(e) {
+                e.originalEvent.dataTransfer.setData('text/plain', slot);
+            });
+        }
+
+        // Отображение аксессуара
+        function displayAccessory(slot, accessory) {
+            const gridItem = $(`#${slot}`);
+            
+            // Очищаем содержимое
+            gridItem.find('img.main').remove();
+            
+            // Добавляем изображение аксессуара
+            const img = $(`<img class="main" src="${basePath}${accessory.imageSrc}" alt="${accessory.ru_name}">`);
+            gridItem.prepend(img);
+            
+            // Обновляем уровень
+            gridItem.find('span').text(`+${accessoryLevels[slot]}`);
+        }
+
+        // Увеличение уровня аксессуара
+        function increaseAccessoryLevel(slot) {
+            if (currentAccessories[slot] && accessoryLevels[slot] < 10) {
+                accessoryLevels[slot]++;
+                $(`#${slot} span`).text(`+${accessoryLevels[slot]}`);
+                updateStats();
+                saveData();
+            }
+        }
+
+        // Уменьшение уровня аксессуара
+        function decreaseAccessoryLevel(slot) {
+            if (currentAccessories[slot] && accessoryLevels[slot] > 0) {
+                accessoryLevels[slot]--;
+                $(`#${slot} span`).text(`+${accessoryLevels[slot]}`);
+                updateStats();
+                saveData();
+            }
+        }
+
+        // Показать меню нашивок
+        function showPatchMenu(slot, button) {
+            // Удаляем старое меню, если есть
+            $('.nashivka-menu').remove();
+            
+            // Создаем новое меню
+            const menu = $('<div class="nashivka-menu"></div>');
+            const isArmour = slot === 'armour';
+            const patchesList = isArmour ? armourPatches : patches;
+            
+            if (accessoryPatches[slot]) {
+                // Если нашивка уже есть, добавляем кнопку для удаления
+                menu.append(`<button>Удалить ${accessoryPatches[slot].name}</button>`);
                 
-                // Обновляем кнопку нашивки
-                if (acc.nashivka && Object.keys(acc.nashivka).length > 0) {
-                    gridItem.find('.nashivka').text('✓');
-                } else {
-                    gridItem.find('.nashivka').text('N');
+                menu.find('button').click(() => {
+                    accessoryPatches[slot] = null;
+                    updateStats();
+                    saveData();
+                    menu.remove();
+                });
+            } else {
+                // Добавляем нашивки в меню
+                patchesList.forEach(patch => {
+                    menu.append(`<button>${patch.name}</button>`);
+                });
+                
+                // Обработчики для кнопок нашивок
+                menu.find('button').click(function() {
+                    const patchIndex = $(this).index();
+                    accessoryPatches[slot] = patchesList[patchIndex];
+                    updateStats();
+                    saveData();
+                    menu.remove();
+                });
+            }
+            
+            // Позиционируем меню
+            menu.css({
+                left: button.offset().left - $(`#${slot}`).offset().left,
+                bottom: '100%'
+            });
+            
+            // Добавляем меню к элементу
+            $(`#${slot}`).append(menu);
+            
+            // Закрытие меню при клике вне его
+            $(document).on('click.patchMenu', function(e) {
+                if (!$(e.target).closest('.nashivka-menu').length && !$(e.target).is(button)) {
+                    menu.remove();
+                    $(document).off('click.patchMenu');
+                }
+            });
+        }
+
+        // Обновление статистики
+        function updateStats() {
+            // Сбрасываем все статы
+            const stats = {
+                deff: 0,
+                hpmin: 0,
+                damage: 0,
+                krit: 0,
+                hpmax: 0,
+                armourmax: 0,
+                oglysh: 0,
+                opyan: 0,
+                neoglysh: 0,
+                otrazh: 0
+            };
+            
+            // Считаем статы от аксессуаров
+            for (const slot in currentAccessories) {
+                if (currentAccessories[slot]) {
+                    const accessory = currentAccessories[slot];
+                    const level = accessoryLevels[slot] || 0;
+                    const patch = accessoryPatches[slot];
+                    
+                    // Базовые статы аксессуара
+                    for (const stat in accessory.stats) {
+                        if (accessory.stats[stat]) {
+                            stats[stat] += accessory.stats[stat];
+                        }
+                    }
+                    
+                    // Улучшение от уровня
+                    if (accessory.upg && level > 0) {
+                        stats[accessory.upg] += level;
+                    }
+                    
+                    // Желтые статы (если есть)
+                    if (accessory.yellow) {
+                        for (const stat in accessory.yellow) {
+                            if (accessory.yellow[stat]) {
+                                stats[stat] += accessory.yellow[stat];
+                            }
+                        }
+                    }
+                    
+                    // Нашивка
+                    if (patch) {
+                        stats[patch.type] += patch.value;
+                    }
                 }
             }
             
-            // Устанавливаем уровень заточки
-            const upgradeLevel = setData.upgrades[slot] || 0;
-            gridItem.find('span').text('+' + upgradeLevel);
+            // Обновляем отображение статов
+            $('#deff').text(`[-${stats.deff}% урона]`);
+            $('#hpmin').text(`[${stats.hpmin} HP в мин.]`);
+            $('#damage').text(`[+${stats.damage} урона]`);
+            $('#krit').text(`[шанс ${stats.krit}% крит.урона]`);
+            $('#hpmax').text(`[+${stats.hpmax} макс. HP]`);
+            $('#armourmax').text(`[+${stats.armourmax} макс. Брони]`);
+            $('#oglysh').text(`[+${stats.oglysh}%]`);
+            $('#opyan').text(`[+${stats.opyan}%]`);
+            $('#neoglysh').text(`[+${stats.neoglysh}%]`);
+            $('#otrazh').text(`[-${stats.otrazh}%]`);
         }
-        
-        updateStats();
-        alert('Сет успешно загружен!');
-    } else {
-        alert('Сохраненные сеты не найдены!');
-    }
-}
 
-function resetSet() {
-    if (confirm('Вы уверены, что хотите сбросить текущий сет?')) {
-        // Сбрасываем скин
-        selectedSkin = null;
-        $('#character-image').attr('src', 'https://raw.githubusercontent.com/m-vegas/market/refs/heads/main/imgs/characters/template.png');
-        
-        // Сбрасываем аксессуары
-        $('.grid-item').each(function() {
-            $(this).find('img.main').remove();
-            $(this).find('span').text('+0');
-            $(this).find('.nashivka').text('N');
-        });
-        
-        updateStats();
-    }
-}
+        // Показать подтверждение удаления
+        function showDeleteConfirmation(slot) {
+            $('#modalDelete').show();
+            
+            // Сохраняем слот для удаления
+            $('#modalDelete').data('slot', slot);
+        }
+
+        // Подтверждение удаления
+        function confirmDelete() {
+            const slot = $('#modalDelete').data('slot');
+            
+            // Удаляем аксессуар
+            currentAccessories[slot] = null;
+            accessoryLevels[slot] = 0;
+            accessoryPatches[slot] = null;
+            
+            // Очищаем отображение
+            $(`#${slot} img.main`).remove();
+            $(`#${slot} span`).text('+0');
+            $(`#${slot}`).attr('draggable', 'false').off('dragstart');
+            
+            // Обновляем статы
+            updateStats();
+            saveData();
+            
+            // Закрываем модальное окно
+            closeDeleteModal();
+        }
+
+        // Закрытие модального окна удаления
+        function closeDeleteModal() {
+            $('#modalDelete').hide();
+        }
+
+        // Открытие модального окна выбора персонажа
+        function openCharacterModal() {
+            const modal = $('#modalOverlay');
+            const modalContent = $('.modal-accs');
+            
+            modalContent.empty();
+            
+            // Добавляем персонажей
+            characters.forEach(character => {
+                const item = $(`
+                    <div class="accessory-item">
+                        <img src="${basePath}${character.imageSrc}" alt="${character.name}">
+                        <div class="accessory-name">${character.name}</div>
+                    </div>
+                `);
+                
+                item.click(() => {
+                    $('#character-image').attr('src', `${basePath}${character.imageSrc}`);
+                    closeAccessoryModal();
+                });
+                
+                modalContent.append(item);
+            });
+            
+            modal.show();
+        }
+
+        // Получение аксессуара по ID
+        function getAccessoryById(slot, accessoryId) {
+            return accessoriesData[slot].find(acc => acc.imageSrc === accessoryId);
+        }
+    </script>
+
+    <div class="dev-banner">
+        СИСТЕМА В РАЗРАБОТКЕ! НЕКОТОРЫЕ ФУНКЦИИ МОГУТ НЕ РАБОТАТЬ!
+    </div>
+</body>
+</html>
