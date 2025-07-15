@@ -223,41 +223,10 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.2s;
         }
 
         .btn:hover {
             background-color: var(--accent-red);
-        }
-
-        .patch-btn {
-            background: linear-gradient(145deg, rgba(255,204,0,0.2), rgba(255,204,0,0.4));
-            border: 1px solid var(--accent-gold);
-            color: var(--accent-gold);
-            font-weight: bold;
-            padding: 5px 8px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-width: 40px;
-        }
-
-        .patch-btn:hover {
-            background: linear-gradient(145deg, rgba(255,204,0,0.3), rgba(255,204,0,0.5));
-            transform: translateY(-2px);
-        }
-
-        .patch-btn.armour {
-            background: linear-gradient(145deg, rgba(255,46,46,0.2), rgba(255,46,46,0.4));
-            border: 1px solid var(--accent-red);
-            color: var(--accent-red);
-        }
-
-        .patch-btn.armour:hover {
-            background: linear-gradient(145deg, rgba(255,46,46,0.3), rgba(255,46,46,0.5));
         }
 
         .nashivka {
@@ -540,34 +509,19 @@
             display: flex;
             flex-direction: column;
             gap: 5px;
-            min-width: 180px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
 
         .nashivka-menu button {
-            padding: 8px;
+            padding: 5px;
             background-color: rgba(0,0,0,0.3);
             border: 1px solid var(--border);
             color: var(--text-white);
             cursor: pointer;
-            font-size: 0.8rem;
-            text-align: left;
-            transition: all 0.2s;
+            font-size: 0.7rem;
         }
 
         .nashivka-menu button:hover {
             background-color: var(--accent-red);
-            transform: translateX(3px);
-        }
-
-        .nashivka-menu button.remove {
-            background-color: rgba(255,46,46,0.2);
-            color: var(--accent-red);
-        }
-
-        .nashivka-menu button.remove:hover {
-            background-color: var(--accent-red);
-            color: white;
         }
 
         @keyframes pulse {
@@ -674,7 +628,7 @@
                 <div class="grid">
                     <div class="grid-item" id="head" ru-name="Аксессуар на голову">
                         <div class="grid-text">
-                            <button class="patch-btn">Нашивка</button>
+                            <button class="btn nashivka">N</button>
                             <span>+0</span>
                             <button class="btn minus">-</button>
                             <button class="btn plus">+</button>
@@ -683,7 +637,7 @@
                     </div>
                     <div class="grid-item" id="face" ru-name="Аксессуар на лицо">
                         <div class="grid-text">
-                            <button class="patch-btn">Нашивка</button>
+                            <button class="btn nashivka">N</button>
                             <span>+0</span>
                             <button class="btn minus">-</button>
                             <button class="btn plus">+</button>
@@ -692,7 +646,7 @@
                     </div>
                     <div class="grid-item" id="hand" ru-name="Аксессуар в руку">
                         <div class="grid-text">
-                            <button class="patch-btn">Нашивка</button>
+                            <button class="btn nashivka">N</button>
                             <span>+0</span>
                             <button class="btn minus">-</button>
                             <button class="btn plus">+</button>
@@ -701,7 +655,7 @@
                     </div>
                     <div class="grid-item" id="breast" ru-name="Аксессуар на грудь">
                         <div class="grid-text">
-                            <button class="patch-btn">Нашивка</button>
+                            <button class="btn nashivka">N</button>
                             <span>+0</span>
                             <button class="btn minus">-</button>
                             <button class="btn plus">+</button>
@@ -710,7 +664,7 @@
                     </div>
                     <div class="grid-item" id="shoulder" ru-name="Аксессуар на плечо">
                         <div class="grid-text">
-                            <button class="patch-btn">Нашивка</button>
+                            <button class="btn nashivka">N</button>
                             <span>+0</span>
                             <button class="btn minus">-</button>
                             <button class="btn plus">+</button>
@@ -719,7 +673,7 @@
                     </div>
                     <div class="grid-item" id="spine" ru-name="Аксессуар на спину">
                         <div class="grid-text">
-                            <button class="patch-btn">Нашивка</button>
+                            <button class="btn nashivka">N</button>
                             <span>+0</span>
                             <button class="btn minus">-</button>
                             <button class="btn plus">+</button>
@@ -731,7 +685,7 @@
                 <div class="bottom-row">
                     <div class="grid-item" id="armour" ru-name="Бронежилет">
                         <div class="grid-text">
-                            <button class="patch-btn armour">Нашивка</button>
+                            <button class="btn nashivkabronik">N</button>
                             <span>+0</span>
                             <button class="btn minus">-</button>
                             <button class="btn plus">+</button>
@@ -809,23 +763,6 @@
     </div>
 
     <script>
-        // Проверка на мобильное устройство
-        function isMobileDevice() {
-            return /Mobi|Android/i.test(navigator.userAgent);
-        }
-
-        if (isMobileDevice()) {
-            if (!window.location.pathname.includes('/mobile')) {
-                window.location.href = '/mobile';
-            }
-        } else {
-            if (window.location.pathname.includes('/mobile')) {
-                window.location.href = '/';
-            }
-        }
-
-        const basePath = window.location.pathname.includes('/mobile/') ? '../' : './';
-
         // Основной массив с аксессуарами
         const accessoriesData = {
             'head': [
@@ -833,50 +770,19 @@
                     imageSrc: 'imgs/head/deadinside.png',
                     stats: { damage: 1, krit: 10, oglysh: 1 },
                     upg: 'krit',
-                    yellow: {},
-                    ru_name: 'Маркер dead inside'
+                    yellow: {}
                 },
                 {
                     imageSrc: 'imgs/head/bad.png',
                     stats: { krit: 10 },
                     upg: 'krit',
-                    yellow: {},
-                    ru_name: 'Маркер «BAD»'
+                    yellow: {}
                 },
                 {
                     imageSrc: 'imgs/head/ironman.png',
                     stats: { krit: 2 },
                     upg: 'krit',
-                    yellow: {},
-                    ru_name: 'Шлем железного человека'
-                },
-                {
-                    imageSrc: 'imgs/head/pepe.png',
-                    stats: { krit: 1 },
-                    upg: 'krit',
-                    yellow: {},
-                    ru_name: 'Веселый Пепе'
-                },
-                {
-                    imageSrc: 'imgs/head/tikva.png',
-                    stats: { deff: 2, damage: 2, krit: 2 },
-                    upg: 'hpmin',
-                    yellow: {},
-                    ru_name: 'Голова Тыква'
-                },
-                {
-                    imageSrc: 'imgs/head/jetpack.png',
-                    stats: { deff: 2, damage: 2, krit: 2 },
-                    upg: 'hpmin',
-                    yellow: {},
-                    ru_name: 'Джетпак'
-                },
-                {
-                    imageSrc: 'imgs/head/endercube.png',
-                    stats: { damage: 1, krit: 10, oglysh: 1 },
-                    upg: 'krit',
-                    yellow: {},
-                    ru_name: 'Эндер куб'
+                    yellow: {}
                 }
             ],
             'face': [
@@ -884,29 +790,13 @@
                     imageSrc: 'imgs/face/netri.png',
                     stats: { deff: 2, krit: 25 },
                     upg: 'deff',
-                    yellow: {},
-                    ru_name: 'Анимированные очки Netrunner'
-                },
-                {
-                    imageSrc: 'imgs/face/cyberpunkvr.png',
-                    stats: { deff: 2, krit: 25 },
-                    upg: 'deff',
-                    yellow: {},
-                    ru_name: 'Киберпанковские VR-очки'
+                    yellow: {}
                 },
                 {
                     imageSrc: 'imgs/face/maskinvisible.png',
                     stats: { deff: 0, oglysh: 3 },
                     upg: 'deff',
-                    yellow: {},
-                    ru_name: 'Маска-невидимка'
-                },
-                {
-                    imageSrc: 'imgs/face/sphereoverhead.png',
-                    stats: { deff: 2, damage: 2, krit: 2 },
-                    upg: 'deff',
-                    yellow: {},
-                    ru_name: 'Сфера над головой'
+                    yellow: {}
                 }
             ],
             'hand': [
@@ -914,29 +804,13 @@
                     imageSrc: 'imgs/hand/duff.png',
                     stats: { damage: 4 },
                     upg: 'damage',
-                    yellow: {},
-                    ru_name: 'Молот «Duff»'
+                    yellow: {}
                 },
                 {
                     imageSrc: 'imgs/hand/fraps.png',
                     stats: { deff: 2, damage: 2, krit: 2 },
                     upg: 'damage',
-                    yellow: {},
-                    ru_name: 'Табличка «Фрапс пишется»'
-                },
-                {
-                    imageSrc: 'imgs/hand/azinot.png',
-                    stats: { deff: 2, damage: 2, krit: 2 },
-                    upg: 'damage',
-                    yellow: {},
-                    ru_name: 'Клинки Аззинота'
-                },
-                {
-                    imageSrc: 'imgs/hand/magaxe.png',
-                    stats: { damage: 4 },
-                    upg: 'damage',
-                    yellow: {},
-                    ru_name: 'Магический топор'
+                    yellow: {}
                 }
             ],
             'breast': [
@@ -944,36 +818,13 @@
                     imageSrc: 'imgs/breast/mahi.png',
                     stats: { deff: 2, damage: 1, krit: 10, armourmax: 25 },
                     upg: 'damage',
-                    yellow: {},
-                    ru_name: 'Цепь «Махинатор»'
+                    yellow: {}
                 },
                 {
                     imageSrc: 'imgs/breast/energomahi.png',
                     stats: { deff: 4, damage: 2, krit: 12, armourmax: 25 },
                     upg: 'damage',
-                    yellow: { damage: 2, hpmax: 5 },
-                    ru_name: 'Энергетический махинатор'
-                },
-                {
-                    imageSrc: 'imgs/breast/magsphere.png',
-                    stats: { deff: 2, krit: 1 },
-                    upg: 'krit',
-                    yellow: {},
-                    ru_name: 'Магические сфера'
-                },
-                {
-                    imageSrc: 'imgs/breast/swag.png',
-                    stats: { deff: 2, damage: 1, krit: 10, armourmax: 25 },
-                    upg: 'damage',
-                    yellow: {},
-                    ru_name: 'Цепь SWAG'
-                },
-                {
-                    imageSrc: 'imgs/breast/swaga.png',
-                    stats: { deff: 2, damage: 1, krit: 10, armourmax: 25 },
-                    upg: 'damage',
-                    yellow: {},
-                    ru_name: 'Цепь СВАГА'
+                    yellow: { damage: 2, hpmax: 5 }
                 }
             ],
             'shoulder': [
@@ -981,229 +832,94 @@
                     imageSrc: 'imgs/shoulder/magshar2.png',
                     stats: { deff: 2, damage: 1, krit: 10, armourmax: 25 },
                     upg: 'deff',
-                    yellow: {},
-                    ru_name: 'Магический воздушный шар #2'
+                    yellow: {}
                 },
                 {
                     imageSrc: 'imgs/shoulder/energoshar.png',
                     stats: { deff: 4, damage: 4, krit: 24, hpmax: 5, armourmax: 27, neoglysh: 10 },
                     upg: 'deff',
-                    yellow: {},
-                    ru_name: 'Энергетический воздушный шар'
+                    yellow: {}
                 },
                 {
                     imageSrc: 'imgs/shoulder/pexpress.png',
                     stats: { deff: 0, krit: 10, armourmax: 20, oglysh: 4 },
                     upg: 'deff',
-                    yellow: {},
-                    ru_name: 'Planet Express'
-                },
-                {
-                    imageSrc: 'imgs/shoulder/delorean.png',
-                    stats: { deff: 0, krit: 10, armourmax: 20, oglysh: 4 },
-                    upg: 'deff',
-                    yellow: {},
-                    ru_name: 'Игрушечный Delorean'
-                },
-                {
-                    imageSrc: 'imgs/shoulder/piratecompass.png',
-                    stats: { deff: 4, damage: 4, krit: 24, hpmax: 5, armourmax: 27, neoglysh: 20 },
-                    upg: 'deff',
-                    yellow: {},
-                    ru_name: 'Пиратский компас'
-                },
-                {
-                    imageSrc: 'imgs/shoulder/flyingdutchman.png',
-                    stats: { deff: 4, damage: 4, krit: 24, hpmax: 5, armourmax: 27, neoglysh: 20 },
-                    upg: 'deff',
-                    yellow: {},
-                    ru_name: 'Летучий голландец'
-                },
-                {
-                    imageSrc: 'imgs/shoulder/arkanaio.png',
-                                        stats: { deff: 4, damage: 4, krit: 24, hpmax: 5, armourmax: 27, neoglysh: 20 },
-                    upg: 'deff',
-                    yellow: {},
-                    ru_name: 'Аркан Айо'
+                    yellow: {}
                 }
             ],
             'spine': [
                 {
-                    imageSrc: 'imgs/spine/angel.png',
-                    stats: { deff: 2, damage: 2, krit: 2 },
-                    upg: 'hpmin',
-                    yellow: {},
-                    ru_name: 'Крылья ангела'
+                    imageSrc: 'imgs/spine/tor.png',
+                    stats: { damage: 4 },
+                    upg: 'damage',
+                    yellow: {}
                 },
                 {
-                    imageSrc: 'imgs/spine/demon.png',
-                    stats: { deff: 2, damage: 2, krit: 2 },
-                    upg: 'hpmin',
-                    yellow: {},
-                    ru_name: 'Крылья демона'
-                },
-                {
-                    imageSrc: 'imgs/spine/cyber.png',
-                    stats: { deff: 2, damage: 2, krit: 2 },
-                    upg: 'hpmin',
-                    yellow: {},
-                    ru_name: 'Кибер крылья'
-                },
-                {
-                    imageSrc: 'imgs/spine/dragon.png',
-                    stats: { deff: 2, damage: 2, krit: 2 },
-                    upg: 'hpmin',
-                    yellow: {},
-                    ru_name: 'Крылья дракона'
+                    imageSrc: 'imgs/spine/rbt.png',
+                    stats: { deff: 4 },
+                    upg: 'deff',
+                    yellow: {}
                 }
             ],
             'armour': [
                 {
-                    imageSrc: 'imgs/armour/black.png',
-                    stats: { deff: 10, hpmax: 10, armourmax: 50 },
-                    upg: 'deff',
-                    yellow: {},
-                    ru_name: 'Черный бронежилет'
+                    imageSrc: 'imgs/armour/bronik.png',
+                    stats: { deff: 2, krit: 1, armourmax: 0 },
+                    upg: 'armour',
+                    yellow: {}
                 },
                 {
-                    imageSrc: 'imgs/armour/blue.png',
-                    stats: { deff: 15, hpmax: 15, armourmax: 75 },
-                    upg: 'deff',
-                    yellow: {},
-                    ru_name: 'Синий бронежилет'
-                },
-                {
-                    imageSrc: 'imgs/armour/red.png',
-                    stats: { deff: 20, hpmax: 20, armourmax: 100 },
-                    upg: 'deff',
-                    yellow: {},
-                    ru_name: 'Красный бронежилет'
-                },
-                {
-                    imageSrc: 'imgs/armour/gold.png',
-                    stats: { deff: 25, hpmax: 25, armourmax: 125 },
-                    upg: 'deff',
-                    yellow: {},
-                    ru_name: 'Золотой бронежилет'
+                    imageSrc: 'imgs/armour/genbronik.png',
+                    stats: { deff: 2, damage: 2, krit: 1, armourmax: 35 },
+                    upg: 'armour',
+                    yellow: {}
                 }
             ],
             'case': [
                 {
-                    imageSrc: 'imgs/case/black.png',
-                    stats: { hpmax: 5, armourmax: 25 },
-                    upg: 'hpmax',
-                    yellow: {},
-                    ru_name: 'Черный чемодан'
+                    imageSrc: 'imgs/case/enegrochem.png',
+                    stats: { damage: 3, oglysh: 13, neoglysh: 4 },
+                    upg: '',
+                    yellow: {}
                 },
                 {
-                    imageSrc: 'imgs/case/blue.png',
-                    stats: { hpmax: 10, armourmax: 50 },
-                    upg: 'hpmax',
-                    yellow: {},
-                    ru_name: 'Синий чемодан'
-                },
-                {
-                    imageSrc: 'imgs/case/red.png',
-                    stats: { hpmax: 15, armourmax: 75 },
-                    upg: 'hpmax',
-                    yellow: {},
-                    ru_name: 'Красный чемодан'
-                },
-                {
-                    imageSrc: 'imgs/case/gold.png',
-                    stats: { hpmax: 20, armourmax: 100 },
-                    upg: 'hpmax',
-                    yellow: {},
-                    ru_name: 'Золотой чемодан'
+                    imageSrc: 'imgs/case/chem.png',
+                    stats: { oglysh: 6 },
+                    upg: '',
+                    yellow: {}
                 }
             ]
         };
 
-        // Массив с нашивками
-        const patchesData = {
-            'nashivka': [
-                {
-                    id: 'krit',
-                    name: 'Нашивка на крит',
-                    stats: { krit: 5 },
-                    ru_name: 'Нашивка +5% к криту'
-                },
-                {
-                    id: 'damage',
-                    name: 'Нашивка на урон',
-                    stats: { damage: 1 },
-                    ru_name: 'Нашивка +1 к урону'
-                },
-                {
-                    id: 'deff',
-                    name: 'Нашивка на защиту',
-                    stats: { deff: 1 },
-                    ru_name: 'Нашивка +1% к защите'
-                },
-                {
-                    id: 'hpmin',
-                    name: 'Нашивка на реген',
-                    stats: { hpmin: 1 },
-                    ru_name: 'Нашивка +1 HP в минуту'
-                },
-                {
-                    id: 'hpmax',
-                    name: 'Нашивка на хп',
-                    stats: { hpmax: 2 },
-                    ru_name: 'Нашивка +2 к макс. HP'
-                }
-            ],
-            'nashivkabronik': [
-                {
-                    id: 'armourmax',
-                    name: 'Нашивка на броню',
-                    stats: { armourmax: 5 },
-                    ru_name: 'Нашивка +5 к макс. броне'
-                },
-                {
-                    id: 'neoglysh',
-                    name: 'Нашивка от оглушения',
-                    stats: { neoglysh: 5 },
-                    ru_name: 'Нашивка +5% к избеганию оглушения'
-                }
-            ]
+        // Русские названия типов статистик
+        const RuTypes = {
+            deff: 'Защита',
+            hpmin: 'HP в мин.',
+            damage: 'Урон',
+            krit: 'Удача',
+            hpmax: 'Макс. HP',
+            armourmax: 'Макс. Брони',
+            oglysh: 'Шанс оглушения',
+            opyan: 'Шанс опьянения',
+            neoglysh: 'Шанс избежать оглушения',
+            otrazh: 'Отражение урона'
         };
 
-        // Инициализация переменных
-        let currentCharacter = 'template';
-        let currentAccessories = {
-            head: null,
-            face: null,
-            hand: null,
-            breast: null,
-            shoulder: null,
-            spine: null,
-            armour: null,
-            case: null
-        };
-        let currentPatches = {
-            head: null,
-            face: null,
-            hand: null,
-            breast: null,
-            shoulder: null,
-            spine: null,
-            armour: null
-        };
-        let currentUpgrades = {
-            head: 0,
-            face: 0,
-            hand: 0,
-            breast: 0,
-            shoulder: 0,
-            spine: 0,
-            armour: 0,
-            case: 0
+        // Русские названия слотов
+        const RuSlots = {
+            head: 'Голова',
+            face: 'Лицо',
+            hand: 'Рука',
+            breast: 'Грудь',
+            shoulder: 'Плечо',
+            spine: 'Спина',
+            armour: 'Бронежилет',
+            case: 'Чемодан'
         };
 
-        // Функция для расчета суммарных характеристик
-        function calculateStats() {
-            const stats = {
+        // Функция для обновления статистик персонажа
+        function updateStats() {
+            let stats = {
                 deff: 0,
                 hpmin: 0,
                 damage: 0,
@@ -1216,52 +932,61 @@
                 otrazh: 0
             };
 
-            // Добавляем характеристики от аксессуаров
-            for (const slot in currentAccessories) {
-                if (currentAccessories[slot]) {
-                    const accessory = accessoriesData[slot].find(acc => acc.imageSrc === currentAccessories[slot]);
-                    if (accessory) {
-                        for (const stat in accessory.stats) {
-                            stats[stat] += accessory.stats[stat];
+            // Собираем статистики со всех аксессуаров
+            document.querySelectorAll('.grid-item').forEach(item => {
+                const img = item.querySelector('img.main');
+                if (img) {
+                    const itemStats = JSON.parse(img.dataset.stats || '{}');
+                    const yellowStats = JSON.parse(img.dataset.yellow || '{}');
+                    const nashivkaStats = JSON.parse(img.dataset.nashivka || '{}');
+                    const upgType = img.dataset.upg;
+                    const zatochka = parseInt(item.querySelector('span')?.textContent.replace('+', '') || 0);
+
+                    // Добавляем базовые статистики
+                    for (const stat in itemStats) {
+                        stats[stat] += itemStats[stat] || 0;
+                    }
+
+                    // Добавляем желтые статистики
+                    for (const stat in yellowStats) {
+                        stats[stat] += yellowStats[stat] || 0;
+                    }
+
+                    // Добавляем статистики нашивок
+                    for (const stat in nashivkaStats) {
+                        stats[stat] += nashivkaStats[stat] || 0;
+                    }
+
+                    // Учитываем заточку
+                    if (upgType && zatochka > 0) {
+                        const multiplier = upgType === 'armour' ? 5 : 
+                                         upgType === 'deff' ? 2 : 1;
+                        
+                        if (upgType === 'armour') {
+                            stats.armourmax += zatochka * multiplier;
+                        } else if (zatochka >= 4) {
+                            stats[upgType] += (zatochka - 3) * multiplier;
+                            
+                            if (zatochka >= 13) {
+                                stats.armourmax = (stats.armourmax || 0) + 9;
+                                stats.hpmax = (stats.hpmax || 0) + 4;
+                            }
+                            
+                            if (zatochka === 14) {
+                                stats.armourmax = (stats.armourmax || 0) + 5;
+                                stats.hpmin = (stats.hpmin || 0) + 3;
+                                stats.otrazh = (stats.otrazh || 0) + 1;
+                            }
                         }
                     }
                 }
-            }
+            });
 
-            // Добавляем характеристики от нашивок
-            for (const slot in currentPatches) {
-                if (currentPatches[slot]) {
-                    let patch;
-                    if (slot === 'armour') {
-                        patch = patchesData.nashivkabronik.find(p => p.id === currentPatches[slot]);
-                    } else {
-                        patch = patchesData.nashivka.find(p => p.id === currentPatches[slot]);
-                    }
-                    if (patch) {
-                        for (const stat in patch.stats) {
-                            stats[stat] += patch.stats[stat];
-                        }
-                    }
-                }
-            }
+            // Ограничения
+            stats.armourmax = Math.min(stats.armourmax, 160);
+            stats.deff = Math.min(stats.deff, 90);
 
-            // Добавляем характеристики от улучшений
-            for (const slot in currentUpgrades) {
-                if (currentAccessories[slot]) {
-                    const accessory = accessoriesData[slot].find(acc => acc.imageSrc === currentAccessories[slot]);
-                    if (accessory && accessory.upg) {
-                        stats[accessory.upg] += currentUpgrades[slot];
-                    }
-                }
-            }
-
-            return stats;
-        }
-
-        // Функция для обновления отображения характеристик
-        function updateStatsDisplay() {
-            const stats = calculateStats();
-            
+            // Обновляем отображение статистик
             document.getElementById('deff').textContent = `[-${stats.deff}% урона]`;
             document.getElementById('hpmin').textContent = `[${stats.hpmin} HP в мин.]`;
             document.getElementById('damage').textContent = `[+${stats.damage} урона]`;
@@ -1275,326 +1000,238 @@
         }
 
         // Функция для открытия модального окна с аксессуарами
-        function openAccessoriesModal(slot) {
-            const modal = document.getElementById('modalOverlay');
-            const modalContent = modal.querySelector('.modal-accs');
-            
-            modalContent.innerHTML = '';
-            
+        function openAccessoryModal(slotName) {
+            const modalAccs = document.querySelector('.modal-accs');
+            modalAccs.innerHTML = `
+                <div style="grid-column: 1 / -1; text-align: center; margin-bottom: 10px;">
+                    <h3>Выберите ${RuSlots[slotName].toLowerCase()}</h3>
+                </div>`;
+
             // Добавляем аксессуары для выбранного слота
-            accessoriesData[slot].forEach(accessory => {
-                const item = document.createElement('div');
-                item.className = 'accessory-item';
-                item.dataset.src = accessory.imageSrc;
-                item.dataset.slot = slot;
+            accessoriesData[slotName]?.forEach(acc => {
+                const accItem = document.createElement('div');
+                accItem.className = 'accessory-item';
                 
                 const img = document.createElement('img');
-                img.src = basePath + accessory.imageSrc;
-                img.alt = accessory.ru_name;
+                img.src = acc.imageSrc;
+                img.alt = acc.imageSrc.split('/').pop();
+                img.onerror = () => {
+                    img.src = 'https://via.placeholder.com/100/333333/ffffff?text=No+Image';
+                };
                 
-                const name = document.createElement('div');
-                name.className = 'accessory-name';
-                name.textContent = accessory.ru_name;
+                const nameDiv = document.createElement('div');
+                nameDiv.className = 'accessory-name';
+                nameDiv.textContent = img.alt.split('.')[0];
                 
-                item.appendChild(img);
-                item.appendChild(name);
-                modalContent.appendChild(item);
-            });
-            
-            // Показываем модальное окно
-            modal.style.display = 'flex';
-            modal.dataset.currentSlot = slot;
-        }
-
-        // Функция для выбора аксессуара
-        function selectAccessory(slot, src) {
-            currentAccessories[slot] = src;
-            
-            // Обновляем изображение в слоте
-            const gridItem = document.getElementById(slot);
-            gridItem.innerHTML = '';
-            
-            if (src) {
-                const accessory = accessoriesData[slot].find(acc => acc.imageSrc === src);
+                accItem.appendChild(img);
+                accItem.appendChild(nameDiv);
                 
-                // Создаем изображение аксессуара
-                const img = document.createElement('img');
-                img.className = 'main';
-                img.src = basePath + src;
-                img.alt = accessory.ru_name;
-                
-                // Создаем нижнюю панель с кнопками
-                const gridText = document.createElement('div');
-                gridText.className = 'grid-text';
-                
-                const patchBtn = document.createElement('button');
-                patchBtn.className = slot === 'armour' ? 'patch-btn armour' : 'patch-btn';
-                patchBtn.textContent = 'Нашивка';
-                
-                const span = document.createElement('span');
-                span.textContent = `+${currentUpgrades[slot]}`;
-                
-                const minusBtn = document.createElement('button');
-                minusBtn.className = 'btn minus';
-                minusBtn.innerHTML = '-';
-                
-                const plusBtn = document.createElement('button');
-                plusBtn.className = 'btn plus';
-                plusBtn.innerHTML = '+';
-                
-                // Добавляем элементы
-                gridText.appendChild(patchBtn);
-                gridText.appendChild(span);
-                gridText.appendChild(minusBtn);
-                gridText.appendChild(plusBtn);
-                
-                gridItem.appendChild(img);
-                gridItem.appendChild(gridText);
-                
-                // Добавляем тултип
-                const tooltip = document.createElement('div');
-                tooltip.className = 'tooltip';
-                tooltip.textContent = accessory.ru_name;
-                gridItem.appendChild(tooltip);
-                
-                // Добавляем обработчики событий
-                patchBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    openPatchesMenu(slot, patchBtn);
-                });
-                
-                minusBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    if (currentUpgrades[slot] > 0) {
-                        currentUpgrades[slot]--;
-                        span.textContent = `+${currentUpgrades[slot]}`;
-                        updateStatsDisplay();
+                accItem.addEventListener('click', () => {
+                    const gridItem = document.querySelector(`.grid-item#${slotName}`);
+                    if (gridItem) {
+                        // Удаляем старый аксессуар, если есть
+                        const oldImg = gridItem.querySelector('img.main');
+                        if (oldImg) oldImg.remove();
+                        
+                        // Создаем новый элемент аксессуара
+                        const newImg = document.createElement('img');
+                        newImg.src = acc.imageSrc;
+                        newImg.className = 'main';
+                        newImg.draggable = true;
+                        newImg.dataset.stats = JSON.stringify(acc.stats);
+                        newImg.dataset.upg = acc.upg;
+                        newImg.dataset.yellow = JSON.stringify(acc.yellow);
+                        
+                        // Добавляем в слот
+                        gridItem.appendChild(newImg);
+                        
+                        // Обновляем статистики
+                        updateStats();
+                        
+                        // Закрываем модальное окно
+                        document.getElementById('modalOverlay').style.display = 'none';
                     }
                 });
                 
-                plusBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    currentUpgrades[slot]++;
-                    span.textContent = `+${currentUpgrades[slot]}`;
-                    updateStatsDisplay();
-                });
-            } else {
-                // Если аксессуар удален, возвращаем стандартное состояние
-                const gridText = document.createElement('div');
-                gridText.className = 'grid-text';
-                
-                const patchBtn = document.createElement('button');
-                patchBtn.className = slot === 'armour' ? 'patch-btn armour' : 'patch-btn';
-                patchBtn.textContent = 'Нашивка';
-                
-                const span = document.createElement('span');
-                span.textContent = '+0';
-                
-                const minusBtn = document.createElement('button');
-                minusBtn.className = 'btn minus';
-                minusBtn.innerHTML = '-';
-                
-                const plusBtn = document.createElement('button');
-                plusBtn.className = 'btn plus';
-                plusBtn.innerHTML = '+';
-                
-                gridText.appendChild(patchBtn);
-                gridText.appendChild(span);
-                gridText.appendChild(minusBtn);
-                gridText.appendChild(plusBtn);
-                
-                gridItem.appendChild(gridText);
-                
-                // Добавляем тултип
-                const tooltip = document.createElement('div');
-                tooltip.className = 'tooltip';
-                tooltip.textContent = gridItem.getAttribute('ru-name');
-                gridItem.appendChild(tooltip);
-                
-                // Сбрасываем улучшения и нашивки
-                currentUpgrades[slot] = 0;
-                currentPatches[slot] = null;
-                
-                // Добавляем обработчики событий
-                patchBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    openPatchesMenu(slot, patchBtn);
-                });
-                
-                minusBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    if (currentUpgrades[slot] > 0) {
-                        currentUpgrades[slot]--;
-                        span.textContent = `+${currentUpgrades[slot]}`;
-                        updateStatsDisplay();
-                    }
-                });
-                
-                plusBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    currentUpgrades[slot]++;
-                    span.textContent = `+${currentUpgrades[slot]}`;
-                    updateStatsDisplay();
-                });
-            }
-            
-            updateStatsDisplay();
+                modalAccs.appendChild(accItem);
+            });
+
+            document.getElementById('modalOverlay').style.display = 'flex';
         }
 
-        // Функция для открытия меню нашивок
-        function openPatchesMenu(slot, button) {
-            // Создаем меню нашивок
-            const menu = document.createElement('div');
-            menu.className = 'nashivka-menu';
-            
-            // Добавляем нашивки в меню
-            const patches = slot === 'armour' ? patchesData.nashivkabronik : patchesData.nashivka;
-            
-            patches.forEach(patch => {
-                const btn = document.createElement('button');
-                btn.textContent = patch.ru_name;
-                btn.addEventListener('click', () => {
-                    currentPatches[slot] = patch.id;
-                    updateStatsDisplay();
-                    menu.remove();
-                });
-                menu.appendChild(btn);
+        // Инициализация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            // Обработчик для кнопки Личный кабинет
+            document.getElementById('account-btn').addEventListener('click', function() {
+                const notification = document.createElement('div');
+                notification.className = 'notification';
+                notification.textContent = 'Личный кабинет находится в разработке';
+                document.body.appendChild(notification);
+                
+                notification.style.display = 'block';
+                
+                // Скрываем уведомление через 3 секунды
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                    setTimeout(() => document.body.removeChild(notification), 300);
+                }, 3000);
             });
-            
-            // Добавляем кнопку удаления нашивки, если она есть
-            if (currentPatches[slot]) {
-                const removeBtn = document.createElement('button');
-                removeBtn.className = 'remove';
-                removeBtn.textContent = 'Удалить нашивку';
-                removeBtn.addEventListener('click', () => {
-                    currentPatches[slot] = null;
-                    updateStatsDisplay();
-                    menu.remove();
-                });
-                menu.appendChild(removeBtn);
-            }
-            
-            // Позиционируем меню
-            const rect = button.getBoundingClientRect();
-            menu.style.left = `${rect.left}px`;
-            menu.style.bottom = `${window.innerHeight - rect.top}px`;
-            
-            // Добавляем меню на страницу
-            document.body.appendChild(menu);
-            
-            // Закрываем меню при клике вне его
-            const closeMenu = (e) => {
-                if (!menu.contains(e.target) && e.target !== button) {
-                    menu.remove();
-                    document.removeEventListener('click', closeMenu);
-                }
-            };
-            
-            document.addEventListener('click', closeMenu);
-        }
 
-        // Функция для смены персонажа
-        function changeCharacter() {
-            // В реальном приложении здесь была бы логика выбора персонажа
-            // Для демонстрации просто меняем на случайного
-            const characters = [
-                'template.png',
-                'character1.png',
-                'character2.png'
-            ];
-            
-            currentCharacter = characters[Math.floor(Math.random() * characters.length)];
-            document.getElementById('character-image').src = `https://raw.githubusercontent.com/m-vegas/market/refs/heads/main/imgs/characters/${currentCharacter}`;
-        }
+            // Имитация смены персонажа
+            document.getElementById('character').addEventListener('click', function() {
+                const charImg = document.getElementById('character-image');
+                const random = Math.floor(Math.random() * 1000);
+                charImg.src = `https://via.placeholder.com/400x300/111111/cccccc?text=Character+${random}`;
+            });
 
-        // Инициализация страницы
-        document.addEventListener('DOMContentLoaded', () => {
-            // Обработчики для мини-контейнеров
-            document.querySelectorAll('.mini-container').forEach(container => {
-                const slot = container.getAttribute('slot-name');
-                container.addEventListener('click', () => {
-                    openAccessoriesModal(slot);
-                });
-            });
-            
-            // Обработчик для выбора аксессуара в модальном окне
-            document.querySelector('.modal-accs').addEventListener('click', (e) => {
-                const item = e.target.closest('.accessory-item');
-                if (item) {
-                    const slot = item.dataset.slot;
-                    const src = item.dataset.src;
-                    selectAccessory(slot, src);
-                    document.getElementById('modalOverlay').style.display = 'none';
-                }
-            });
-            
-            // Обработчик для закрытия модального окна
-            document.getElementById('closeModal').addEventListener('click', () => {
+            // Обработчики для модальных окон
+            document.getElementById('closeModal')?.addEventListener('click', function() {
                 document.getElementById('modalOverlay').style.display = 'none';
             });
-            
-            // Обработчик для смены персонажа
-            document.getElementById('character').addEventListener('click', changeCharacter);
-            
+
+            document.getElementById('noDelete')?.addEventListener('click', function() {
+                document.getElementById('modalDelete').style.display = 'none';
+            });
+
+            // Обработчики для мини-контейнеров (открытие модального окна)
+            document.querySelectorAll('.mini-container').forEach(container => {
+                container.addEventListener('click', function() {
+                    const slotName = this.getAttribute('slot-name');
+                    openAccessoryModal(slotName);
+                });
+            });
+
+            // Обработчики для кнопок +/-
+            document.querySelectorAll('.btn.plus').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const span = this.closest('.grid-text').querySelector('span');
+                    let value = parseInt(span.textContent.replace('+', '')) || 0;
+                    if (value < 14) {
+                        span.textContent = '+' + (value + 1);
+                        updateStats();
+                    }
+                });
+            });
+
+            document.querySelectorAll('.btn.minus').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const span = this.closest('.grid-text').querySelector('span');
+                    let value = parseInt(span.textContent.replace('+', '')) || 0;
+                    if (value > 0) {
+                        span.textContent = '+' + (value - 1);
+                        updateStats();
+                    }
+                });
+            });
+
+            // Обработчики для нашивок
+            document.querySelectorAll('.btn.nashivka').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const gridItem = this.closest('.grid-item');
+                    const img = gridItem.querySelector('img.main');
+                    
+                    if (img) {
+                        // Создаем меню выбора нашивки
+                        const menu = document.createElement('div');
+                        menu.className = 'nashivka-menu';
+                        menu.innerHTML = `
+                            <button data-type="deff" data-value="6">ДЕФФ (+6)</button>
+                            <button data-type="damage" data-value="3">УРОН (+3)</button>
+                            <button data-type="krit" data-value="3">КРИТ (+3)</button>
+                            <button data-type="otrazh" data-value="3">ОТРАЖЕНИЕ (+3)</button>
+                        `;
+                        
+                        // Обработчики для кнопок нашивок
+                        menu.querySelectorAll('button').forEach(menuBtn => {
+                            menuBtn.addEventListener('click', function() {
+                                const type = this.dataset.type;
+                                const value = parseInt(this.dataset.value);
+                                
+                                img.dataset.nashivka = JSON.stringify({ [type]: value });
+                                
+                                // Обновляем подсказку
+                                const tooltip = gridItem.querySelector('.tooltip');
+                                tooltip.innerHTML = `${gridItem.getAttribute('ru-name')}<br>Нашивка: ${RuTypes[type]}`;
+                                
+                                updateStats();
+                                menu.remove();
+                            });
+                        });
+                        
+                        gridItem.appendChild(menu);
+                    }
+                });
+            });
+
+            // Обработчик для нашивки бронежилета
+            document.querySelectorAll('.btn.nashivkabronik').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const gridItem = this.closest('.grid-item');
+                    const img = gridItem.querySelector('img.main');
+                    
+                    if (img) {
+                        img.dataset.nashivka = JSON.stringify({ neoglysh: 20 });
+                        
+                        // Обновляем подсказку
+                        const tooltip = gridItem.querySelector('.tooltip');
+                        tooltip.innerHTML = `${gridItem.getAttribute('ru-name')}<br>Нашивка: Есть`;
+                        
+                        updateStats();
+                    }
+                });
+            });
+
             // Инициализация корзины
             const trash = document.querySelector('.trash');
-            
-            trash.addEventListener('dragover', (e) => {
-                e.preventDefault();
-                trash.style.transform = 'scale(1.1)';
-                trash.style.opacity = '1';
-            });
-            
-            trash.addEventListener('dragleave', () => {
-                trash.style.transform = 'scale(1)';
-                trash.style.opacity = '0.7';
-            });
-            
-            trash.addEventListener('drop', (e) => {
-                e.preventDefault();
-                trash.style.transform = 'scale(1)';
-                trash.style.opacity = '0.7';
-                
-                const slot = e.dataTransfer.getData('text/plain');
-                if (slot) {
-                    // Показываем модальное окно подтверждения удаления
-                    const modal = document.getElementById('modalDelete');
-                    modal.style.display = 'flex';
+            if (trash) {
+                trash.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                });
+
+                trash.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    const imgHtml = e.dataTransfer.getData('img-html');
                     
-                    document.getElementById('yesDelete').addEventListener('click', () => {
-                        selectAccessory(slot, null);
-                        modal.style.display = 'none';
-                    });
-                    
-                    document.getElementById('noDelete').addEventListener('click', () => {
-                        modal.style.display = 'none';
-                    });
+                    if (imgHtml) {
+                        const tempDiv = document.createElement('div');
+                        tempDiv.innerHTML = imgHtml;
+                        const img = tempDiv.querySelector('img');
+                        
+                        if (img) {
+                            const gridItem = img.closest('.grid-item');
+                            if (gridItem) {
+                                img.remove();
+                                updateStats();
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Добавляем обработчики drag-and-drop для аксессуаров
+            document.addEventListener('dragstart', function(e) {
+                if (e.target.classList.contains('main')) {
+                    e.dataTransfer.setData('img-html', e.target.outerHTML);
                 }
             });
-            
-            // Делаем grid items перетаскиваемыми
-            document.querySelectorAll('.grid-item').forEach(item => {
-                const slot = item.id;
-                
-                item.setAttribute('draggable', 'true');
-                
-                item.addEventListener('dragstart', (e) => {
-                    if (currentAccessories[slot]) {
-                        e.dataTransfer.setData('text/plain', slot);
-                    } else {
-                        e.preventDefault();
-                    }
-                });
-                
-                item.addEventListener('click', () => {
-                    if (!currentAccessories[slot]) {
-                        openAccessoriesModal(slot);
-                    }
-                });
+
+            // Обработчик для кнопки удаления в модальном окне
+            document.getElementById('yesDelete')?.addEventListener('click', function() {
+                const activeSlot = document.querySelector('.grid-item.active');
+                if (activeSlot) {
+                    const img = activeSlot.querySelector('img.main');
+                    if (img) img.remove();
+                    updateStats();
+                }
+                document.getElementById('modalDelete').style.display = 'none';
             });
-            
-            // Инициализация характеристик
-            updateStatsDisplay();
+
+            // Первоначальное обновление статистик
+            updateStats();
         });
     </script>
 </body>
