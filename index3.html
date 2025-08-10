@@ -689,6 +689,23 @@
         // Загрузка объявлений при загрузке страницы
         document.addEventListener('DOMContentLoaded', function() {
             loadAds();
+            
+            // Проверяем, есть ли в URL параметр approved_id
+            const urlParams = new URLSearchParams(window.location.search);
+            const approvedId = urlParams.get('approved_id');
+            const rejectedId = urlParams.get('rejected_id');
+            
+            if (approvedId) {
+                updateAdStatus(approvedId, 'active');
+                // Удаляем параметр из URL
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
+            
+            if (rejectedId) {
+                updateAdStatus(rejectedId, 'rejected');
+                // Удаляем параметр из URL
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
         });
         
         // Открытие формы добавления
@@ -890,6 +907,76 @@
                 
                 adsContainer.appendChild(adCard);
             });
+            
+            // Также показываем отклоненные объявления для пользователя (чтобы он видел статус)
+            const userNickname = document.getElementById('nicknameInput')?.value;
+            if (userNickname) {
+                const userAds = ads.filter(ad => ad.nickname === userNickname && ad.status !== 'active');
+                
+                if (userAds.length > 0) {
+                    const userAdsSection = document.createElement('div');
+                    userAdsSection.className = 'ads-section';
+                    userAdsSection.innerHTML = `
+                        <h2 class="section-title">
+                            <i class="fas fa-user"></i>
+                            <span>Мои объявления</span>
+                        </h2>
+                        <div class="ads-grid" id="user-ads-container"></div>
+                    `;
+                    
+                    document.querySelector('.container').appendChild(userAdsSection);
+                    const userAdsContainer = document.getElementById('user-ads-container');
+                    
+                    userAds.forEach(ad => {
+                        const adCard = document.createElement('div');
+                        adCard.className = 'ad-card';
+                        
+                        const adDate = new Date(ad.date);
+                        const formattedDate = `${adDate.getDate()}.${adDate.getMonth() + 1}.${adDate.getFullYear()} ${adDate.getHours()}:${adDate.getMinutes().toString().padStart(2, '0')}`;
+                        const formattedPrice = ad.price === 'Договорная' ? 'Договорная' : `$${parseInt(ad.price).toLocaleString()}`;
+                        
+                        let statusClass = '';
+                        let statusText = '';
+                        
+                        switch (ad.status) {
+                            case 'pending':
+                                statusClass = 'status-pending';
+                                statusText = 'На модерации';
+                                break;
+                            case 'rejected':
+                                statusClass = 'status-rejected';
+                                statusText = 'Отклонено';
+                                break;
+                            case 'sold':
+                                statusClass = 'status-sold';
+                                statusText = 'Продано';
+                                break;
+                        }
+                        
+                        adCard.innerHTML = `
+                            <div class="ad-image">
+                                <span class="price-tag">${formattedPrice}</span>
+                                <img src="${ad.imageUrl || 'https://i.imgur.com/JqYeZnW.jpg'}" alt="${ad.title}">
+                            </div>
+                            <div class="ad-content">
+                                <h3 class="ad-title">${ad.title}</h3>
+                                <div class="ad-meta">
+                                    <span class="ad-price">${formattedPrice}</span>
+                                    <span class="ad-date">${formattedDate}</span>
+                                </div>
+                                <p class="ad-description">${ad.description || 'Описание отсутствует'}</p>
+                                <p class="ad-contacts">Контакты: ${ad.contacts}</p>
+                                <div class="ad-footer">
+                                    <span class="ad-category">${getCategoryName(ad.category)}</span>
+                                    <span class="ad-status ${statusClass}">${statusText}</span>
+                                </div>
+                            </div>
+                        `;
+                        
+                        userAdsContainer.appendChild(adCard);
+                    });
+                }
+            }
         }
         
         // Применение фильтров
@@ -921,6 +1008,13 @@
                 adsDatabase[adIndex].status = status;
                 localStorage.setItem('arizonaAds', JSON.stringify(adsDatabase));
                 renderAds(adsDatabase);
+                
+                // Показываем уведомление пользователю
+                if (status === 'active') {
+                    alert('Объявление было одобрено модератором и теперь видно на сайте!');
+                } else if (status === 'rejected') {
+                    alert('Объявление было отклонено модератором. Пожалуйста, проверьте правильность заполнения и попробуйте снова.');
+                }
             }
         }
         
