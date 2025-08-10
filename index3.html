@@ -106,20 +106,20 @@
             font-size: 1rem;
         }
         
-        .notification-badge {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background-color: var(--vegas-red);
+        .discord-link {
+            background: linear-gradient(135deg, #5865F2, #404EED);
             color: white;
-            border-radius: 50%;
-            width: 18px;
-            height: 18px;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 0.7rem;
-            font-weight: bold;
+            gap: 8px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .discord-link:hover {
+            background: linear-gradient(135deg, #404EED, #5865F2);
         }
         
         /* Шапка */
@@ -205,6 +205,12 @@
             color: var(--text-white);
             min-width: 180px;
             transition: all 0.3s;
+        }
+        
+        /* Исправление для выпадающего списка категорий */
+        .filter-select option {
+            background-color: var(--card-bg);
+            color: var(--text-white);
         }
         
         .filter-select:focus, .filter-input:focus {
@@ -315,6 +321,12 @@
             transition: all 0.3s;
         }
         
+        /* Исправление для выпадающего списка в форме */
+        .form-select option {
+            background-color: var(--card-bg);
+            color: var(--text-white);
+        }
+        
         .form-input:focus, .form-textarea:focus, .form-select:focus {
             border-color: var(--vegas-gold);
             box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.1);
@@ -340,11 +352,29 @@
             gap: 10px;
             font-size: 1rem;
             box-shadow: 0 4px 10px rgba(255, 215, 0, 0.2);
+            position: relative;
+            overflow: hidden;
         }
         
-        .form-submit:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(255, 215, 0, 0.3);
+        .form-submit::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255,255,255,0.2);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .form-submit:hover::after {
+            transform: translateX(0);
+        }
+        
+        .form-submit:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
         }
         
         .form-submit:active {
@@ -723,48 +753,6 @@
             font-size: 1.2rem;
         }
         
-        /* Чат */
-        .chat-btn {
-            position: fixed;
-            bottom: 110px;
-            right: 30px;
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
-            color: white;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(58, 134, 255, 0.3);
-            transition: all 0.3s;
-            z-index: 100;
-            border: none;
-        }
-        
-        .chat-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 20px rgba(58, 134, 255, 0.4);
-        }
-        
-        .chat-badge {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background-color: var(--vegas-red);
-            color: white;
-            border-radius: 50%;
-            width: 22px;
-            height: 22px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.7rem;
-            font-weight: bold;
-        }
-        
         /* Адаптив */
         @media (max-width: 768px) {
             .container {
@@ -801,14 +789,10 @@
                 grid-template-columns: 1fr;
             }
             
-            .add-ad-btn, .chat-btn {
+            .add-ad-btn {
                 width: 60px;
                 height: 60px;
                 font-size: 1.5rem;
-            }
-            
-            .chat-btn {
-                bottom: 100px;
             }
         }
     </style>
@@ -831,18 +815,12 @@
                     <span>Главная</span>
                 </a>
                 <a href="#" class="nav-link">
-                    <i class="fas fa-store nav-icon"></i>
-                    <span>Магазин</span>
-                    <span class="notification-badge">3</span>
-                </a>
-                <a href="#" class="nav-link">
                     <i class="fas fa-newspaper nav-icon"></i>
                     <span>Новости</span>
                 </a>
-                <a href="#" class="nav-link">
-                    <i class="fas fa-comments nav-icon"></i>
-                    <span>Чат</span>
-                    <span class="notification-badge">5</span>
+                <a href="https://discord.gg/YCg9JXPmCN" class="discord-link" target="_blank">
+                    <i class="fab fa-discord"></i>
+                    <span>Наш Discord</span>
                 </a>
             </div>
         </div>
@@ -857,7 +835,8 @@
                     <option value="house">Недвижимость</option>
                     <option value="vehicle">Транспорт</option>
                     <option value="item">Предметы</option>
-                    <option value="service">Услуги</option>
+                    <option value="skins">Скины и аксы</option>
+                    <option value="resources">Ресурсы</option>
                 </select>
             </div>
             
@@ -910,7 +889,8 @@
                         <option value="house">Недвижимость</option>
                         <option value="vehicle">Транспорт</option>
                         <option value="item">Предмет</option>
-                        <option value="service">Услуга</option>
+                        <option value="skins">Скины и аксы</option>
+                        <option value="resources">Ресурсы</option>
                     </select>
                 </div>
                 
@@ -963,12 +943,6 @@
     <!-- Кнопка добавления объявления -->
     <button class="add-ad-btn" id="addAdBtn">
         <i class="fas fa-plus"></i>
-    </button>
-
-    <!-- Кнопка чата -->
-    <button class="chat-btn" id="chatBtn">
-        <i class="fas fa-comment-dots"></i>
-        <span class="chat-badge">5</span>
     </button>
 
     <!-- Модальное окно успеха -->
@@ -1053,7 +1027,7 @@
             {
                 id: 'ad_4',
                 nickname: 'Alex_Gamer',
-                category: 'item',
+                category: 'skins',
                 title: 'Редкий скин "Dragon"',
                 price: '15000',
                 contacts: 'alexgamer#9999',
@@ -1064,6 +1038,20 @@
                 isNew: true,
                 views: 42,
                 favorites: 3
+            },
+            {
+                id: 'ad_5',
+                nickname: 'Resource_Seller',
+                category: 'resources',
+                title: 'Партия металла 1000ед.',
+                price: '50000',
+                contacts: 'resource_seller#1111',
+                description: 'Продаю большую партию металла. 1000 единиц. Самовывоз.',
+                imageUrl: '',
+                status: 'active',
+                date: new Date(Date.now() - 7200000).toISOString(),
+                views: 35,
+                favorites: 2
             }
         ];
 
@@ -1080,7 +1068,9 @@
         const viewAdBtn = document.getElementById('viewAdBtn');
         const notification = document.getElementById('notification');
         const closeNotification = document.getElementById('closeNotification');
-        const chatBtn = document.getElementById('chatBtn');
+
+        // Флаг для защиты от множественных нажатий
+        let isSubmitting = false;
 
         // Загрузка объявлений при старте
         document.addEventListener('DOMContentLoaded', function() {
@@ -1105,6 +1095,12 @@
         submitAdBtn.addEventListener('click', function(e) {
             e.preventDefault();
             
+            // Защита от множественных нажатий
+            if (isSubmitting) return;
+            isSubmitting = true;
+            submitAdBtn.disabled = true;
+            submitAdBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Публикация...';
+            
             // Собираем данные формы
             const formData = {
                 nickname: document.getElementById('nicknameInput').value,
@@ -1114,7 +1110,7 @@
                 contacts: document.getElementById('contactsInput').value,
                 description: document.getElementById('descriptionInput').value,
                 imageUrl: document.getElementById('imageUrlInput').value,
-                status: 'active', // Теперь объявления сразу активны
+                status: 'active',
                 date: new Date().toISOString(),
                 id: generateId(),
                 isNew: true,
@@ -1125,6 +1121,9 @@
             // Валидация
             if (!formData.nickname || !formData.category || !formData.title || !formData.price || !formData.contacts) {
                 showNotification('Ошибка', 'Пожалуйста, заполните все обязательные поля!', 'error');
+                isSubmitting = false;
+                submitAdBtn.disabled = false;
+                submitAdBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Опубликовать сейчас';
                 return;
             }
             
@@ -1152,6 +1151,13 @@
             
             // Отправка в Discord (если нужно)
             sendToDiscord(formData);
+            
+            // Восстанавливаем кнопку
+            setTimeout(() => {
+                isSubmitting = false;
+                submitAdBtn.disabled = false;
+                submitAdBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Опубликовать сейчас';
+            }, 2000);
         });
 
         // Функция для загрузки объявлений
@@ -1272,7 +1278,8 @@
                 'house': 'Недвижимость',
                 'vehicle': 'Транспорт',
                 'item': 'Предмет',
-                'service': 'Услуга'
+                'skins': 'Скины и аксы',
+                'resources': 'Ресурсы'
             };
             return categories[category] || 'Другое';
         }
@@ -1385,9 +1392,9 @@
 
         // Отправка в Discord (опционально)
         function sendToDiscord(adData) {
-            const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1401558296942608485/ecFzQM7Tg2HzMd1MG-WMtGiEgsc9lWVtHV3VsLq-QWNsQlYo4FrOTB_XQanNufdvZO6kL';
+            const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/ВАШ_WEBHOOK_URL';
             
-            if (!DISCORD_WEBHOOK_URL.includes('https://discord.com/api/webhooks/1401558296942608485/ecFzQM7Tg2HzMd1MG-WMtGiEgsc9lWVtHV3VsLq-QWNsQlYo4FrOTB_XQanNufdvZO6k')) {
+            if (!DISCORD_WEBHOOK_URL.includes('ВАШ_WEBHOOK_URL')) {
                 const discordMessage = {
                     username: 'Vegas+ | ARZ Торги',
                     avatar_url: 'https://i.imgur.com/JqYeZnW.jpg',
