@@ -161,7 +161,7 @@
             padding: 2rem;
             margin-bottom: 2rem;
             border: 1px solid var(--border);
-            display: none; /* Скрыто по умолчанию */
+            display: none;
         }
         
         .form-title {
@@ -568,17 +568,17 @@
             </button>
         </div>
 
-        <!-- Форма добавления объявления (скрыта по умолчанию) -->
+        <!-- Форма добавления объявления -->
         <div class="add-ad-form" id="adForm">
             <h2 class="form-title">Добавить объявление</h2>
             <div class="form-grid">
                 <div class="form-group">
-                    <label class="form-label">Ваш ник в игре</label>
+                    <label class="form-label">Ваш ник в игре*</label>
                     <input type="text" class="form-input" placeholder="Например: John_Doe" required>
                 </div>
                 
                 <div class="form-group">
-                    <label class="form-label">Категория</label>
+                    <label class="form-label">Категория*</label>
                     <select class="form-select" required>
                         <option value="">Выберите категорию</option>
                         <option value="business">Бизнес</option>
@@ -590,17 +590,17 @@
                 </div>
                 
                 <div class="form-group">
-                    <label class="form-label">Название</label>
+                    <label class="form-label">Название*</label>
                     <input type="text" class="form-input" placeholder="Например: Бизнес '24/7'" required>
                 </div>
                 
                 <div class="form-group">
-                    <label class="form-label">Цена ($)</label>
+                    <label class="form-label">Цена ($)*</label>
                     <input type="number" class="form-input" placeholder="Например: 500000" required>
                 </div>
                 
                 <div class="form-group">
-                    <label class="form-label">Контакты (Discord/Telegram)</label>
+                    <label class="form-label">Контакты (Discord/Telegram)*</label>
                     <input type="text" class="form-input" placeholder="Например: discord#1234" required>
                 </div>
                 
@@ -615,7 +615,7 @@
                 </div>
             </div>
             
-            <button type="submit" class="form-submit">
+            <button type="submit" class="form-submit" id="submitAdBtn">
                 <i class="fas fa-paper-plane"></i>
                 Опубликовать
             </button>
@@ -714,48 +714,6 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Пример объявления 5 -->
-                <div class="ad-card">
-                    <div class="ad-image">
-                        <span class="price-tag">$50/час</span>
-                        <img src="https://i.imgur.com/mXJQpZa.jpg" alt="Услуги телохранителя">
-                    </div>
-                    <div class="ad-content">
-                        <h3 class="ad-title">Услуги телохранителя</h3>
-                        <div class="ad-meta">
-                            <span class="ad-price">$50/час</span>
-                            <span class="ad-date">1 неделя назад</span>
-                        </div>
-                        <p class="ad-description">Опытный телохранитель с лицензией. Охрана на мероприятиях, сопровождение, защита бизнеса.</p>
-                        <p class="ad-contacts">Контакты: guard#7777</p>
-                        <div class="ad-footer">
-                            <span class="ad-category">Услуги</span>
-                            <span class="ad-status status-active">Активно</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Пример объявления 6 (продан) -->
-                <div class="ad-card">
-                    <div class="ad-image">
-                        <span class="price-tag">$800,000</span>
-                        <img src="https://i.imgur.com/QbJqYZn.jpg" alt="Ночной клуб">
-                    </div>
-                    <div class="ad-content">
-                        <h3 class="ad-title">Ночной клуб 'Vegas'</h3>
-                        <div class="ad-meta">
-                            <span class="ad-price">$800,000</span>
-                            <span class="ad-date">2 недели назад</span>
-                        </div>
-                        <p class="ad-description">Продается популярный ночной клуб в центре города. Высокий доход, полный штат.</p>
-                        <p class="ad-contacts">Контакты: sold</p>
-                        <div class="ad-footer">
-                            <span class="ad-category">Бизнес</span>
-                            <span class="ad-status status-sold">Продан</span>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -782,35 +740,127 @@
     </div>
 
     <script>
+        // Discord Webhook URL
+        const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1401558296942608485/ecFzQM7Tg2HzMd1MG-WMtGiEgsc9lWVtHV3VsLq-QWNsQlYo4FrOTB_XQanNufdvZO6k';
+        
+        // DOM элементы
+        const adForm = document.getElementById('adForm');
+        const addAdBtn = document.getElementById('addAdBtn');
+        const submitAdBtn = document.getElementById('submitAdBtn');
+        const successModal = document.getElementById('successModal');
+        const closeModal = document.getElementById('closeModal');
+        const modalCloseBtn = document.getElementById('modalCloseBtn');
+        
         // Открытие формы добавления
-        document.getElementById('addAdBtn').addEventListener('click', function() {
-            document.getElementById('adForm').style.display = 'block';
+        addAdBtn.addEventListener('click', function() {
+            adForm.style.display = 'block';
             window.scrollTo({
-                top: document.getElementById('adForm').offsetTop - 20,
+                top: adForm.offsetTop - 20,
                 behavior: 'smooth'
             });
         });
         
-        // Отправка формы (пример)
-        document.querySelector('.form-submit').addEventListener('click', function(e) {
+        // Отправка формы в Discord
+        submitAdBtn.addEventListener('click', async function(e) {
             e.preventDefault();
-            document.getElementById('adForm').style.display = 'none';
-            document.getElementById('successModal').style.display = 'flex';
+            
+            // Собираем данные формы
+            const formInputs = adForm.querySelectorAll('.form-input, .form-select, .form-textarea');
+            const formData = {
+                nickname: formInputs[0].value,
+                category: formInputs[1].value,
+                title: formInputs[2].value,
+                price: formInputs[3].value,
+                contacts: formInputs[4].value,
+                description: formInputs[5].value,
+                imageUrl: formInputs[6].value
+            };
+            
+            // Валидация
+            if (!formData.nickname || !formData.category || !formData.title || !formData.price || !formData.contacts) {
+                alert('Пожалуйста, заполните все обязательные поля!');
+                return;
+            }
+            
+            try {
+                // Создаем embed для Discord
+                const discordMessage = {
+                    username: 'Arizona RP Торги',
+                    avatar_url: 'https://i.imgur.com/JqYeZnW.jpg',
+                    embeds: [{
+                        title: `Новое объявление: ${formData.title}`,
+                        color: 0x3a86ff,
+                        fields: [
+                            { name: 'Категория', value: getCategoryName(formData.category), inline: true },
+                            { name: 'Цена', value: `$${formData.price}`, inline: true },
+                            { name: 'Ник игрока', value: formData.nickname, inline: true },
+                            { name: 'Контакты', value: formData.contacts, inline: true },
+                            { name: 'Описание', value: formData.description || 'Не указано' }
+                        ],
+                        timestamp: new Date().toISOString(),
+                        footer: { text: 'Требуется модерация' }
+                    }]
+                };
+                
+                // Добавляем изображение если есть
+                if (formData.imageUrl) {
+                    discordMessage.embeds[0].image = { url: formData.imageUrl };
+                }
+                
+                // Отправляем в Discord
+                const response = await fetch(DISCORD_WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(discordMessage)
+                });
+                
+                if (response.ok) {
+                    // Показываем успешное сообщение
+                    adForm.style.display = 'none';
+                    successModal.style.display = 'flex';
+                    
+                    // Очищаем форму
+                    formInputs.forEach(input => {
+                        if (input.tagName !== 'SELECT') {
+                            input.value = '';
+                        } else {
+                            input.selectedIndex = 0;
+                        }
+                    });
+                } else {
+                    throw new Error(`Ошибка HTTP: ${response.status}`);
+                }
+            } catch (error) {
+                console.error('Ошибка отправки:', error);
+                alert('Произошла ошибка при отправке объявления. Пожалуйста, попробуйте позже или свяжитесь с администрацией.');
+            }
         });
+        
+        // Функция для получения названия категории
+        function getCategoryName(category) {
+            const categories = {
+                'business': 'Бизнес',
+                'house': 'Дом',
+                'vehicle': 'Транспорт',
+                'item': 'Предмет',
+                'service': 'Услуга'
+            };
+            return categories[category] || 'Другое';
+        }
         
         // Закрытие модального окна
-        document.getElementById('closeModal').addEventListener('click', function() {
-            document.getElementById('successModal').style.display = 'none';
+        closeModal.addEventListener('click', function() {
+            successModal.style.display = 'none';
         });
         
-        document.getElementById('modalCloseBtn').addEventListener('click', function() {
-            document.getElementById('successModal').style.display = 'none';
+        modalCloseBtn.addEventListener('click', function() {
+            successModal.style.display = 'none';
         });
         
         // Закрытие модального при клике вне его
         window.addEventListener('click', function(e) {
-            if (e.target === document.getElementById('successModal')) {
-                document.getElementById('successModal').style.display = 'none';
+            if (e.target === successModal) {
+                successModal.style.display = 'none';
             }
         });
     </script>
