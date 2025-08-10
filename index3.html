@@ -670,53 +670,11 @@
         // Discord Webhook URL для отправки объявлений
         const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1401558296942608485/ecFzQM7Tg2HzMd1MG-WMtGiEgsc9lWVtHV3VsLq-QWNsQlYo4FrOTB_XQanNufdvZO6k';
         
-        // Discord Webhook URL для модерации (с кнопками)
-        const MODERATION_WEBHOOK_URL = 'https://discord.com/api/webhooks/1401558296942608485/ecFzQM7Tg2HzMd1MG-WMtGiEgsc9lWVtHV3VsLq-QWNsQlYo4FrOTB_XQanNufdvZO6k';
+             // Discord Webhook URL для модерации (с кнопками)
+        const MODERATION_WEBHOOK_URL = 'https://discord.com/api/webhooks/ВАШ_WEBHOOK_URL';
         
-        // База данных объявлений (в реальном проекте замените на серверную часть)
-        let adsDatabase = [];
-        
-        // DOM элементы
-        const adForm = document.getElementById('adForm');
-        const addAdBtn = document.getElementById('addAdBtn');
-        const submitAdBtn = document.getElementById('submitAdBtn');
-        const successModal = document.getElementById('successModal');
-        const closeModal = document.getElementById('closeModal');
-        const modalCloseBtn = document.getElementById('modalCloseBtn');
-        const adsContainer = document.getElementById('ads-container');
-        const applyFiltersBtn = document.getElementById('applyFiltersBtn');
-        
-        // Загрузка объявлений при загрузке страницы
-        document.addEventListener('DOMContentLoaded', function() {
-            loadAds();
-            
-            // Проверяем, есть ли в URL параметр approved_id
-            const urlParams = new URLSearchParams(window.location.search);
-            const approvedId = urlParams.get('approved_id');
-            const rejectedId = urlParams.get('rejected_id');
-            
-            if (approvedId) {
-                updateAdStatus(approvedId, 'active');
-                // Удаляем параметр из URL
-                window.history.replaceState({}, document.title, window.location.pathname);
-            }
-            
-            if (rejectedId) {
-                updateAdStatus(rejectedId, 'rejected');
-                // Удаляем параметр из URL
-                window.history.replaceState({}, document.title, window.location.pathname);
-            }
-        });
-        
-        // Открытие формы добавления
-        addAdBtn.addEventListener('click', function() {
-            adForm.style.display = 'block';
-            window.scrollTo({
-                top: adForm.offsetTop - 20,
-                behavior: 'smooth'
-            });
-        });
-        
+        // ... (остальные переменные без изменений) ...
+
         // Отправка формы в Discord для модерации
         submitAdBtn.addEventListener('click', async function(e) {
             e.preventDefault();
@@ -748,29 +706,29 @@
                     avatar_url: 'https://i.imgur.com/JqYeZnW.jpg',
                     embeds: [{
                         title: `Новое объявление на модерацию: ${formData.title}`,
-                        color: 0xffc107,
+                        color: 0xffc107, // желтый цвет для модерации
                         fields: [
                             { name: 'Категория', value: getCategoryName(formData.category), inline: true },
                             { name: 'Цена', value: `$${formData.price}`, inline: true },
                             { name: 'Ник игрока', value: formData.nickname, inline: true },
-                            { name: 'Контакты', value: formData.contacts, inline: true },
-                            { name: 'Описание', value: formData.description || 'Не указано' },
+                            { name: 'Контакты', value: formData.contacts, inline: false },
+                            { name: 'Описание', value: formData.description || 'Не указано', inline: false },
                             { name: 'ID объявления', value: formData.id, inline: false }
                         ],
                         timestamp: new Date().toISOString()
                     }],
                     components: [{
-                        type: 1,
+                        type: 1, // ACTION_ROW
                         components: [
                             {
-                                type: 2,
-                                style: 3,
+                                type: 2, // BUTTON
+                                style: 3, // GREEN (SUCCESS)
                                 label: "Одобрить",
                                 custom_id: `approve_${formData.id}`
                             },
                             {
-                                type: 2,
-                                style: 4,
+                                type: 2, // BUTTON
+                                style: 4, // RED (DANGER)
                                 label: "Отклонить",
                                 custom_id: `reject_${formData.id}`
                             }
@@ -783,31 +741,19 @@
                     discordMessage.embeds[0].image = { url: formData.imageUrl };
                 }
                 
-                // Отправляем в Discord
+                // Важно: Убедитесь что Content-Type установлен правильно
                 const response = await fetch(MODERATION_WEBHOOK_URL, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 
+                        'Content-Type': 'application/json'
+                    },
                     body: JSON.stringify(discordMessage)
                 });
                 
                 if (response.ok) {
-                    // Сохраняем объявление локально (в реальном проекте сохраняйте на сервере)
-                    adsDatabase.push(formData);
-                    localStorage.setItem('arizonaAds', JSON.stringify(adsDatabase));
-                    
-                    // Показываем успешное сообщение
-                    adForm.style.display = 'none';
-                    successModal.style.display = 'flex';
-                    
-                    // Очищаем форму
-                    document.getElementById('nicknameInput').value = '';
-                    document.getElementById('categoryInput').selectedIndex = 0;
-                    document.getElementById('titleInput').value = '';
-                    document.getElementById('priceInput').value = '';
-                    document.getElementById('contactsInput').value = '';
-                    document.getElementById('descriptionInput').value = '';
-                    document.getElementById('imageUrlInput').value = '';
+                    // ... (остальная обработка успешной отправки) ...
                 } else {
+                    console.error('Ошибка Discord API:', await response.text());
                     throw new Error(`Ошибка HTTP: ${response.status}`);
                 }
             } catch (error) {
