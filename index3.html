@@ -15,6 +15,7 @@
             --border: rgba(255,255,255,0.08);
             --success: #28a745;
             --warning: #ffc107;
+            --danger: #dc3545;
         }
         
         * {
@@ -360,6 +361,16 @@
             color: #6c757d;
         }
         
+        .status-pending {
+            background-color: rgba(255, 193, 7, 0.2);
+            color: var(--warning);
+        }
+        
+        .status-rejected {
+            background-color: rgba(220, 53, 69, 0.2);
+            color: var(--danger);
+        }
+        
         .badge {
             position: absolute;
             padding: 3px 8px;
@@ -532,29 +543,29 @@
         <div class="filters">
             <div class="filter-group">
                 <label class="filter-label">Категория</label>
-                <select class="filter-select">
+                <select class="filter-select" id="categoryFilter">
                     <option value="all">Все категории</option>
                     <option value="business">Бизнесы</option>
-                    <option value="houses">Дома</option>
-                    <option value="vehicles">Транспорт</option>
-                    <option value="items">Предметы</option>
-                    <option value="services">Услуги</option>
+                    <option value="house">Дома</option>
+                    <option value="vehicle">Транспорт</option>
+                    <option value="item">Предметы</option>
+                    <option value="service">Услуги</option>
                 </select>
             </div>
             
             <div class="filter-group">
                 <label class="filter-label">Цена от</label>
-                <input type="number" class="filter-input" placeholder="$">
+                <input type="number" class="filter-input" id="priceFromFilter" placeholder="$">
             </div>
             
             <div class="filter-group">
                 <label class="filter-label">Цена до</label>
-                <input type="number" class="filter-input" placeholder="$">
+                <input type="number" class="filter-input" id="priceToFilter" placeholder="$">
             </div>
             
             <div class="filter-group">
                 <label class="filter-label">Сортировка</label>
-                <select class="filter-select">
+                <select class="filter-select" id="sortFilter">
                     <option value="newest">Сначала новые</option>
                     <option value="oldest">Сначала старые</option>
                     <option value="price-low">Цена (по возрастанию)</option>
@@ -562,7 +573,7 @@
                 </select>
             </div>
             
-            <button class="filter-btn">
+            <button class="filter-btn" id="applyFiltersBtn">
                 <i class="fas fa-filter"></i>
                 Применить
             </button>
@@ -574,12 +585,12 @@
             <div class="form-grid">
                 <div class="form-group">
                     <label class="form-label">Ваш ник в игре*</label>
-                    <input type="text" class="form-input" placeholder="Например: John_Doe" required>
+                    <input type="text" class="form-input" id="nicknameInput" placeholder="Например: John_Doe" required>
                 </div>
                 
                 <div class="form-group">
                     <label class="form-label">Категория*</label>
-                    <select class="form-select" required>
+                    <select class="form-select" id="categoryInput" required>
                         <option value="">Выберите категорию</option>
                         <option value="business">Бизнес</option>
                         <option value="house">Дом</option>
@@ -591,27 +602,27 @@
                 
                 <div class="form-group">
                     <label class="form-label">Название*</label>
-                    <input type="text" class="form-input" placeholder="Например: Бизнес '24/7'" required>
+                    <input type="text" class="form-input" id="titleInput" placeholder="Например: Бизнес '24/7'" required>
                 </div>
                 
                 <div class="form-group">
                     <label class="form-label">Цена ($)*</label>
-                    <input type="number" class="form-input" placeholder="Например: 500000" required>
+                    <input type="number" class="form-input" id="priceInput" placeholder="Например: 500000" required>
                 </div>
                 
                 <div class="form-group">
                     <label class="form-label">Контакты (Discord/Telegram)*</label>
-                    <input type="text" class="form-input" placeholder="Например: discord#1234" required>
+                    <input type="text" class="form-input" id="contactsInput" placeholder="Например: discord#1234" required>
                 </div>
                 
                 <div class="form-group" style="grid-column: span 2;">
                     <label class="form-label">Описание</label>
-                    <textarea class="form-textarea" placeholder="Подробно опишите что вы продаете..."></textarea>
+                    <textarea class="form-textarea" id="descriptionInput" placeholder="Подробно опишите что вы продаете..."></textarea>
                 </div>
                 
                 <div class="form-group" style="grid-column: span 2;">
                     <label class="form-label">Ссылка на изображение</label>
-                    <input type="text" class="form-input" placeholder="https://...">
+                    <input type="text" class="form-input" id="imageUrlInput" placeholder="https://...">
                 </div>
             </div>
             
@@ -629,91 +640,7 @@
             </h2>
             
             <div class="ads-grid" id="ads-container">
-                <!-- Пример объявления 1 -->
-                <div class="ad-card">
-                    <div class="ad-image">
-                        <span class="badge admin-badge">ADMIN</span>
-                        <span class="price-tag">$750,000</span>
-                        <img src="https://i.imgur.com/JqYeZnW.jpg" alt="Бизнес 24/7">
-                    </div>
-                    <div class="ad-content">
-                        <h3 class="ad-title">Бизнес '24/7' в центре</h3>
-                        <div class="ad-meta">
-                            <span class="ad-price">$750,000</span>
-                            <span class="ad-date">2 часа назад</span>
-                        </div>
-                        <p class="ad-description">Продается готовый бизнес 24/7 в центре города. Полностью укомплектован, высокая проходимость. Возможен торг.</p>
-                        <p class="ad-contacts">Контакты: discord#admin</p>
-                        <div class="ad-footer">
-                            <span class="ad-category">Бизнес</span>
-                            <span class="ad-status status-active">Активно</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Пример объявления 2 -->
-                <div class="ad-card">
-                    <div class="ad-image">
-                        <span class="badge vip-badge">VIP</span>
-                        <span class="price-tag">$1,200,000</span>
-                        <img src="https://i.imgur.com/pXJQq3a.jpg" alt="Дом на холме">
-                    </div>
-                    <div class="ad-content">
-                        <h3 class="ad-title">Роскошный дом на холме</h3>
-                        <div class="ad-meta">
-                            <span class="ad-price">$1,200,000</span>
-                            <span class="ad-date">5 часов назад</span>
-                        </div>
-                        <p class="ad-description">Продается большой дом с бассейном и гаражом на 2 машины в престижном районе. Вид на город.</p>
-                        <p class="ad-contacts">Контакты: @richguy (Telegram)</p>
-                        <div class="ad-footer">
-                            <span class="ad-category">Дом</span>
-                            <span class="ad-status status-active">Активно</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Пример объявления 3 -->
-                <div class="ad-card">
-                    <div class="ad-image">
-                        <span class="price-tag">$350,000</span>
-                        <img src="https://i.imgur.com/KbYQJjN.jpg" alt="Спортивный автомобиль">
-                    </div>
-                    <div class="ad-content">
-                        <h3 class="ad-title">Sports Car - новое состояние</h3>
-                        <div class="ad-meta">
-                            <span class="ad-price">$350,000</span>
-                            <span class="ad-date">1 день назад</span>
-                        </div>
-                        <p class="ad-description">Продается спортивный автомобиль, пробег минимальный, полный тюнинг, без ДТП.</p>
-                        <p class="ad-contacts">Контакты: carlover#5678 (Discord)</p>
-                        <div class="ad-footer">
-                            <span class="ad-category">Транспорт</span>
-                            <span class="ad-status status-active">Активно</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Пример объявления 4 -->
-                <div class="ad-card">
-                    <div class="ad-image">
-                        <span class="price-tag">Договорная</span>
-                        <img src="https://i.imgur.com/9ZJQzVq.jpg" alt="Редкий предмет">
-                    </div>
-                    <div class="ad-content">
-                        <h3 class="ad-title">Редкий золотой пистолет</h3>
-                        <div class="ad-meta">
-                            <span class="ad-price">Договорная</span>
-                            <span class="ad-date">3 дня назад</span>
-                        </div>
-                        <p class="ad-description">Продается редкий золотой пистолет, ограниченная серия. Только серьезные предложения.</p>
-                        <p class="ad-contacts">Контакты: goldman#9999</p>
-                        <div class="ad-footer">
-                            <span class="ad-category">Предмет</span>
-                            <span class="ad-status status-active">Активно</span>
-                        </div>
-                    </div>
-                </div>
+                <!-- Объявления будут загружаться здесь автоматически -->
             </div>
         </div>
     </div>
@@ -740,8 +667,14 @@
     </div>
 
     <script>
-        // Discord Webhook URL
+        // Discord Webhook URL для отправки объявлений
         const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1401558296942608485/ecFzQM7Tg2HzMd1MG-WMtGiEgsc9lWVtHV3VsLq-QWNsQlYo4FrOTB_XQanNufdvZO6k';
+        
+        // Discord Webhook URL для модерации (с кнопками)
+        const MODERATION_WEBHOOK_URL = 'https://discord.com/api/webhooks/1401558296942608485/ecFzQM7Tg2HzMd1MG-WMtGiEgsc9lWVtHV3VsLq-QWNsQlYo4FrOTB_XQanNufdvZO6k';
+        
+        // База данных объявлений (в реальном проекте замените на серверную часть)
+        let adsDatabase = [];
         
         // DOM элементы
         const adForm = document.getElementById('adForm');
@@ -750,6 +683,13 @@
         const successModal = document.getElementById('successModal');
         const closeModal = document.getElementById('closeModal');
         const modalCloseBtn = document.getElementById('modalCloseBtn');
+        const adsContainer = document.getElementById('ads-container');
+        const applyFiltersBtn = document.getElementById('applyFiltersBtn');
+        
+        // Загрузка объявлений при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            loadAds();
+        });
         
         // Открытие формы добавления
         addAdBtn.addEventListener('click', function() {
@@ -760,20 +700,22 @@
             });
         });
         
-        // Отправка формы в Discord
+        // Отправка формы в Discord для модерации
         submitAdBtn.addEventListener('click', async function(e) {
             e.preventDefault();
             
             // Собираем данные формы
-            const formInputs = adForm.querySelectorAll('.form-input, .form-select, .form-textarea');
             const formData = {
-                nickname: formInputs[0].value,
-                category: formInputs[1].value,
-                title: formInputs[2].value,
-                price: formInputs[3].value,
-                contacts: formInputs[4].value,
-                description: formInputs[5].value,
-                imageUrl: formInputs[6].value
+                nickname: document.getElementById('nicknameInput').value,
+                category: document.getElementById('categoryInput').value,
+                title: document.getElementById('titleInput').value,
+                price: document.getElementById('priceInput').value,
+                contacts: document.getElementById('contactsInput').value,
+                description: document.getElementById('descriptionInput').value,
+                imageUrl: document.getElementById('imageUrlInput').value,
+                status: 'pending',
+                date: new Date().toISOString(),
+                id: generateId()
             };
             
             // Валидация
@@ -783,22 +725,39 @@
             }
             
             try {
-                // Создаем embed для Discord
+                // Создаем embed для Discord с кнопками модерации
                 const discordMessage = {
-                    username: 'Arizona RP Торги',
+                    username: 'Arizona RP Торги - Модерация',
                     avatar_url: 'https://i.imgur.com/JqYeZnW.jpg',
                     embeds: [{
-                        title: `Новое объявление: ${formData.title}`,
-                        color: 0x3a86ff,
+                        title: `Новое объявление на модерацию: ${formData.title}`,
+                        color: 0xffc107,
                         fields: [
                             { name: 'Категория', value: getCategoryName(formData.category), inline: true },
                             { name: 'Цена', value: `$${formData.price}`, inline: true },
                             { name: 'Ник игрока', value: formData.nickname, inline: true },
                             { name: 'Контакты', value: formData.contacts, inline: true },
-                            { name: 'Описание', value: formData.description || 'Не указано' }
+                            { name: 'Описание', value: formData.description || 'Не указано' },
+                            { name: 'ID объявления', value: formData.id, inline: false }
                         ],
-                        timestamp: new Date().toISOString(),
-                        footer: { text: 'Требуется модерация' }
+                        timestamp: new Date().toISOString()
+                    }],
+                    components: [{
+                        type: 1,
+                        components: [
+                            {
+                                type: 2,
+                                style: 3,
+                                label: "Одобрить",
+                                custom_id: `approve_${formData.id}`
+                            },
+                            {
+                                type: 2,
+                                style: 4,
+                                label: "Отклонить",
+                                custom_id: `reject_${formData.id}`
+                            }
+                        ]
                     }]
                 };
                 
@@ -808,25 +767,29 @@
                 }
                 
                 // Отправляем в Discord
-                const response = await fetch(DISCORD_WEBHOOK_URL, {
+                const response = await fetch(MODERATION_WEBHOOK_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(discordMessage)
                 });
                 
                 if (response.ok) {
+                    // Сохраняем объявление локально (в реальном проекте сохраняйте на сервере)
+                    adsDatabase.push(formData);
+                    localStorage.setItem('arizonaAds', JSON.stringify(adsDatabase));
+                    
                     // Показываем успешное сообщение
                     adForm.style.display = 'none';
                     successModal.style.display = 'flex';
                     
                     // Очищаем форму
-                    formInputs.forEach(input => {
-                        if (input.tagName !== 'SELECT') {
-                            input.value = '';
-                        } else {
-                            input.selectedIndex = 0;
-                        }
-                    });
+                    document.getElementById('nicknameInput').value = '';
+                    document.getElementById('categoryInput').selectedIndex = 0;
+                    document.getElementById('titleInput').value = '';
+                    document.getElementById('priceInput').value = '';
+                    document.getElementById('contactsInput').value = '';
+                    document.getElementById('descriptionInput').value = '';
+                    document.getElementById('imageUrlInput').value = '';
                 } else {
                     throw new Error(`Ошибка HTTP: ${response.status}`);
                 }
@@ -834,6 +797,104 @@
                 console.error('Ошибка отправки:', error);
                 alert('Произошла ошибка при отправке объявления. Пожалуйста, попробуйте позже или свяжитесь с администрацией.');
             }
+        });
+        
+        // Функция для загрузки объявлений
+        function loadAds() {
+            // В реальном проекте загружайте с сервера
+            const savedAds = localStorage.getItem('arizonaAds');
+            if (savedAds) {
+                adsDatabase = JSON.parse(savedAds);
+                renderAds(adsDatabase);
+            }
+        }
+        
+        // Функция для отображения объявлений
+        function renderAds(ads) {
+            adsContainer.innerHTML = '';
+            
+            // Фильтрация по статусу (показываем только активные)
+            const activeAds = ads.filter(ad => ad.status === 'active');
+            
+            // Применение фильтров
+            const categoryFilter = document.getElementById('categoryFilter').value;
+            const priceFrom = document.getElementById('priceFromFilter').value;
+            const priceTo = document.getElementById('priceToFilter').value;
+            const sortBy = document.getElementById('sortFilter').value;
+            
+            let filteredAds = [...activeAds];
+            
+            // Фильтрация по категории
+            if (categoryFilter !== 'all') {
+                filteredAds = filteredAds.filter(ad => ad.category === categoryFilter);
+            }
+            
+            // Фильтрация по цене
+            if (priceFrom) {
+                filteredAds = filteredAds.filter(ad => parseInt(ad.price) >= parseInt(priceFrom));
+            }
+            
+            if (priceTo) {
+                filteredAds = filteredAds.filter(ad => parseInt(ad.price) <= parseInt(priceTo));
+            }
+            
+            // Сортировка
+            switch (sortBy) {
+                case 'newest':
+                    filteredAds.sort((a, b) => new Date(b.date) - new Date(a.date));
+                    break;
+                case 'oldest':
+                    filteredAds.sort((a, b) => new Date(a.date) - new Date(b.date));
+                    break;
+                case 'price-low':
+                    filteredAds.sort((a, b) => parseInt(a.price) - parseInt(b.price));
+                    break;
+                case 'price-high':
+                    filteredAds.sort((a, b) => parseInt(b.price) - parseInt(a.price));
+                    break;
+            }
+            
+            // Рендеринг объявлений
+            filteredAds.forEach(ad => {
+                const adCard = document.createElement('div');
+                adCard.className = 'ad-card';
+                
+                // Форматирование даты
+                const adDate = new Date(ad.date);
+                const formattedDate = `${adDate.getDate()}.${adDate.getMonth() + 1}.${adDate.getFullYear()} ${adDate.getHours()}:${adDate.getMinutes().toString().padStart(2, '0')}`;
+                
+                // Форматирование цены
+                const formattedPrice = ad.price === 'Договорная' ? 'Договорная' : `$${parseInt(ad.price).toLocaleString()}`;
+                
+                adCard.innerHTML = `
+                    <div class="ad-image">
+                        ${ad.isAdmin ? '<span class="badge admin-badge">ADMIN</span>' : ''}
+                        ${ad.isVip ? '<span class="badge vip-badge">VIP</span>' : ''}
+                        <span class="price-tag">${formattedPrice}</span>
+                        <img src="${ad.imageUrl || 'https://i.imgur.com/JqYeZnW.jpg'}" alt="${ad.title}">
+                    </div>
+                    <div class="ad-content">
+                        <h3 class="ad-title">${ad.title}</h3>
+                        <div class="ad-meta">
+                            <span class="ad-price">${formattedPrice}</span>
+                            <span class="ad-date">${formattedDate}</span>
+                        </div>
+                        <p class="ad-description">${ad.description || 'Описание отсутствует'}</p>
+                        <p class="ad-contacts">Контакты: ${ad.contacts}</p>
+                        <div class="ad-footer">
+                            <span class="ad-category">${getCategoryName(ad.category)}</span>
+                            <span class="ad-status status-active">Активно</span>
+                        </div>
+                    </div>
+                `;
+                
+                adsContainer.appendChild(adCard);
+            });
+        }
+        
+        // Применение фильтров
+        applyFiltersBtn.addEventListener('click', function() {
+            renderAds(adsDatabase);
         });
         
         // Функция для получения названия категории
@@ -846,6 +907,21 @@
                 'service': 'Услуга'
             };
             return categories[category] || 'Другое';
+        }
+        
+        // Функция для генерации ID
+        function generateId() {
+            return 'ad_' + Math.random().toString(36).substr(2, 9);
+        }
+        
+        // Функция для обновления статуса объявления
+        function updateAdStatus(adId, status) {
+            const adIndex = adsDatabase.findIndex(ad => ad.id === adId);
+            if (adIndex !== -1) {
+                adsDatabase[adIndex].status = status;
+                localStorage.setItem('arizonaAds', JSON.stringify(adsDatabase));
+                renderAds(adsDatabase);
+            }
         }
         
         // Закрытие модального окна
@@ -863,6 +939,19 @@
                 successModal.style.display = 'none';
             }
         });
+        
+        // В реальном проекте добавьте WebSocket или polling для получения обновлений от сервера
+        // Например, проверка новых объявлений каждые 30 секунд
+        setInterval(() => {
+            const savedAds = localStorage.getItem('arizonaAds');
+            if (savedAds) {
+                const currentAds = JSON.parse(savedAds);
+                if (currentAds.length !== adsDatabase.length) {
+                    adsDatabase = currentAds;
+                    renderAds(adsDatabase);
+                }
+            }
+        }, 30000);
     </script>
 </body>
 </html>
