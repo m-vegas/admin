@@ -3,19 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arizona RP | Торговая площадка</title>
+    <title>Vegas+ | ARZ Торговая площадка</title>
     <style>
         :root {
             --main-bg: #0f0f12;
             --card-bg: #1a1a1f;
             --accent-blue: #3a86ff;
             --accent-orange: #ff7b25;
+            --accent-purple: #9c27b0;
             --text-white: #ffffff;
             --text-gray: #b0b0b0;
             --border: rgba(255,255,255,0.08);
-            --success: #28a745;
-            --warning: #ffc107;
-            --danger: #dc3545;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --danger: #f44336;
+            --vegas-gold: #FFD700;
+            --vegas-red: #FF0000;
         }
         
         * {
@@ -32,6 +35,7 @@
                 radial-gradient(circle at 10% 20%, rgba(58, 134, 255, 0.05) 0%, transparent 25%),
                 radial-gradient(circle at 90% 80%, rgba(255, 123, 37, 0.05) 0%, transparent 25%);
             min-height: 100vh;
+            overflow-x: hidden;
         }
         
         .container {
@@ -48,6 +52,7 @@
             padding: 1rem 0;
             margin-bottom: 1rem;
             border-bottom: 1px solid var(--border);
+            position: relative;
         }
         
         .nav-links {
@@ -65,20 +70,56 @@
             transition: all 0.2s;
             padding: 0.5rem 1rem;
             border-radius: 5px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--vegas-gold), var(--vegas-red));
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::before {
+            width: 100%;
         }
         
         .nav-link:hover {
-            background-color: rgba(255,255,255,0.05);
-            color: var(--accent-blue);
+            color: var(--vegas-gold);
         }
         
         .nav-link.active {
-            background-color: var(--accent-blue);
-            color: white;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 0, 0, 0.2));
+            color: var(--vegas-gold);
+        }
+        
+        .nav-link.active::before {
+            width: 100%;
         }
         
         .nav-icon {
             font-size: 1rem;
+        }
+        
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: var(--vegas-red);
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: bold;
         }
         
         /* Шапка */
@@ -96,171 +137,288 @@
             gap: 0.8rem;
             font-size: 1.8rem;
             font-weight: bold;
+            position: relative;
         }
         
         .logo-icon {
-            color: var(--accent-orange);
+            color: var(--vegas-gold);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
         }
         
         .logo-text {
-            background: linear-gradient(to right, var(--accent-blue), var(--accent-orange));
+            background: linear-gradient(to right, var(--vegas-gold), var(--vegas-red));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .logo-subtext {
+            position: absolute;
+            bottom: -15px;
+            right: 0;
+            font-size: 0.7rem;
+            color: var(--vegas-gold);
+            background: rgba(0,0,0,0.7);
+            padding: 2px 8px;
+            border-radius: 10px;
         }
         
         /* Фильтры */
         .filters {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 15px;
             margin-bottom: 2rem;
-            padding: 1rem;
+            padding: 1.5rem;
             background-color: var(--card-bg);
-            border-radius: 8px;
+            border-radius: 10px;
             border: 1px solid var(--border);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
         
         .filter-group {
             display: flex;
             flex-direction: column;
-            gap: 5px;
+            gap: 8px;
+            position: relative;
         }
         
         .filter-label {
             font-size: 0.8rem;
-            color: var(--text-gray);
+            color: var(--vegas-gold);
+            font-weight: 600;
         }
         
         .filter-select, .filter-input {
-            padding: 8px 12px;
+            padding: 10px 15px;
             background-color: rgba(255,255,255,0.05);
             border: 1px solid var(--border);
-            border-radius: 5px;
+            border-radius: 8px;
             color: var(--text-white);
-            min-width: 150px;
+            min-width: 180px;
+            transition: all 0.3s;
+        }
+        
+        .filter-select:focus, .filter-input:focus {
+            border-color: var(--vegas-gold);
+            box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.2);
+            outline: none;
         }
         
         .filter-btn {
-            padding: 8px 20px;
-            background-color: var(--accent-blue);
-            color: white;
+            padding: 10px 25px;
+            background: linear-gradient(135deg, var(--vegas-gold), var(--vegas-red));
+            color: #000;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
-            transition: background-color 0.2s;
+            transition: all 0.3s;
             align-self: flex-end;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         
         .filter-btn:hover {
-            background-color: #2a75e6;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+        }
+        
+        .filter-btn:active {
+            transform: translateY(0);
+        }
+        
+        .filter-reset {
+            background: none;
+            border: 1px solid var(--vegas-red);
+            color: var(--vegas-red);
+            margin-left: 10px;
         }
         
         /* Форма добавления объявления */
         .add-ad-form {
             background-color: var(--card-bg);
-            border-radius: 10px;
+            border-radius: 15px;
             padding: 2rem;
             margin-bottom: 2rem;
             border: 1px solid var(--border);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
             display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         .form-title {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             margin-bottom: 1.5rem;
-            color: var(--text-white);
+            color: var(--vegas-gold);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .form-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--vegas-gold), var(--vegas-red));
+            border-radius: 3px;
         }
         
         .form-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1rem;
+            gap: 1.5rem;
             margin-bottom: 1.5rem;
         }
         
         .form-group {
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
+            gap: 0.8rem;
         }
         
         .form-label {
             font-size: 0.9rem;
-            color: var(--text-gray);
+            color: var(--vegas-gold);
+            font-weight: 600;
+        }
+        
+        .form-label.required::after {
+            content: '*';
+            color: var(--vegas-red);
+            margin-left: 3px;
         }
         
         .form-input, .form-textarea, .form-select {
-            padding: 10px;
+            padding: 12px;
             background-color: rgba(255,255,255,0.05);
             border: 1px solid var(--border);
-            border-radius: 5px;
+            border-radius: 8px;
             color: var(--text-white);
             width: 100%;
+            transition: all 0.3s;
+        }
+        
+        .form-input:focus, .form-textarea:focus, .form-select:focus {
+            border-color: var(--vegas-gold);
+            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.1);
+            outline: none;
         }
         
         .form-textarea {
-            min-height: 100px;
+            min-height: 120px;
             resize: vertical;
         }
         
         .form-submit {
-            background-color: var(--accent-orange);
-            color: white;
+            background: linear-gradient(135deg, var(--vegas-gold), var(--vegas-red));
+            color: #000;
             border: none;
-            padding: 12px 25px;
-            border-radius: 5px;
+            padding: 14px 30px;
+            border-radius: 8px;
             font-weight: bold;
             cursor: pointer;
-            transition: background-color 0.2s;
+            transition: all 0.3s;
             display: inline-flex;
             align-items: center;
             gap: 10px;
+            font-size: 1rem;
+            box-shadow: 0 4px 10px rgba(255, 215, 0, 0.2);
         }
         
         .form-submit:hover {
-            background-color: #e66a1a;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(255, 215, 0, 0.3);
+        }
+        
+        .form-submit:active {
+            transform: translateY(0);
         }
         
         /* Объявления */
         .ads-section {
             margin-bottom: 3rem;
+            position: relative;
         }
         
         .section-title {
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-            color: var(--text-white);
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            color: var(--vegas-gold);
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 15px;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, var(--vegas-gold), transparent);
+            margin-left: 15px;
         }
         
         .section-title i {
-            color: var(--accent-orange);
+            color: var(--vegas-gold);
+            font-size: 1.5rem;
         }
         
         .ads-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
         }
         
         .ad-card {
             background-color: var(--card-bg);
-            border-radius: 10px;
+            border-radius: 12px;
             overflow: hidden;
             border: 1px solid var(--border);
-            transition: all 0.3s;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+        }
+        
+        .ad-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.05), rgba(255, 0, 0, 0.05));
+            opacity: 0;
+            transition: opacity 0.3s;
         }
         
         .ad-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-            border-color: var(--accent-blue);
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+            border-color: var(--vegas-gold);
+        }
+        
+        .ad-card:hover::before {
+            opacity: 1;
         }
         
         .ad-image {
-            height: 180px;
+            height: 200px;
             background-color: rgba(0, 0, 0, 0.3);
             display: flex;
             align-items: center;
@@ -273,137 +431,169 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.3s;
+            transition: transform 0.5s ease;
         }
         
         .ad-card:hover .ad-image img {
-            transform: scale(1.05);
+            transform: scale(1.1);
         }
         
         .ad-content {
-            padding: 15px;
+            padding: 20px;
         }
         
         .ad-title {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             font-weight: bold;
-            margin-bottom: 10px;
-            color: var(--text-white);
+            margin-bottom: 12px;
+            color: var(--vegas-gold);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            position: relative;
+            padding-bottom: 8px;
+        }
+        
+        .ad-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--vegas-gold), transparent);
         }
         
         .ad-description {
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             color: var(--text-gray);
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             display: -webkit-box;
             -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
             overflow: hidden;
+            line-height: 1.5;
         }
         
         .ad-meta {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 10px;
-            font-size: 0.8rem;
+            margin-bottom: 15px;
+            font-size: 0.85rem;
         }
         
         .ad-price {
-            color: var(--accent-orange);
+            color: var(--vegas-gold);
             font-weight: bold;
+            font-size: 1.1rem;
         }
         
         .ad-date {
             color: var(--text-gray);
+            font-size: 0.8rem;
         }
         
         .ad-contacts {
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             color: var(--accent-blue);
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             word-break: break-all;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         
         .ad-footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding-top: 10px;
+            padding-top: 15px;
             border-top: 1px solid var(--border);
         }
         
         .ad-category {
-            font-size: 0.75rem;
-            padding: 3px 8px;
-            border-radius: 3px;
-            background-color: rgba(58, 134, 255, 0.2);
-            color: var(--accent-blue);
+            font-size: 0.8rem;
+            padding: 5px 10px;
+            border-radius: 5px;
+            background-color: rgba(255, 215, 0, 0.1);
+            color: var(--vegas-gold);
             font-weight: bold;
+            border: 1px solid rgba(255, 215, 0, 0.3);
         }
         
-        .ad-status {
-            font-size: 0.75rem;
-            padding: 3px 8px;
-            border-radius: 3px;
-            font-weight: bold;
+        .ad-actions {
+            display: flex;
+            gap: 10px;
         }
         
-        .status-active {
-            background-color: rgba(40, 167, 69, 0.2);
-            color: var(--success);
+        .ad-action-btn {
+            background: none;
+            border: none;
+            color: var(--text-gray);
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 1rem;
         }
         
-        .status-sold {
-            background-color: rgba(108, 117, 125, 0.2);
-            color: #6c757d;
+        .ad-action-btn:hover {
+            color: var(--vegas-gold);
+            transform: scale(1.1);
         }
         
-        .status-pending {
-            background-color: rgba(255, 193, 7, 0.2);
-            color: var(--warning);
-        }
-        
-        .status-rejected {
-            background-color: rgba(220, 53, 69, 0.2);
-            color: var(--danger);
+        .ad-action-btn.favorite.active {
+            color: var(--vegas-red);
         }
         
         .badge {
             position: absolute;
-            padding: 3px 8px;
-            border-radius: 3px;
-            font-size: 0.75rem;
+            padding: 5px 12px;
+            border-radius: 5px;
+            font-size: 0.8rem;
             font-weight: bold;
             z-index: 2;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
         
         .admin-badge {
-            top: 10px;
-            right: 10px;
-            background-color: var(--accent-blue);
+            top: 15px;
+            right: 15px;
+            background-color: var(--vegas-red);
             color: white;
         }
         
         .vip-badge {
-            top: 10px;
-            left: 10px;
-            background-color: var(--accent-orange);
+            top: 15px;
+            left: 15px;
+            background: linear-gradient(135deg, var(--vegas-gold), var(--vegas-red));
             color: #000;
+            font-weight: bold;
+        }
+        
+        .new-badge {
+            top: 15px;
+            left: 15px;
+            background-color: var(--success);
+            color: white;
         }
         
         .price-tag {
             position: absolute;
-            bottom: 10px;
-            left: 10px;
-            background-color: rgba(0,0,0,0.7);
-            color: var(--accent-orange);
-            padding: 5px 10px;
-            border-radius: 3px;
+            bottom: 15px;
+            left: 15px;
+            background-color: rgba(0,0,0,0.8);
+            color: var(--vegas-gold);
+            padding: 8px 15px;
+            border-radius: 5px;
             font-weight: bold;
-            font-size: 0.9rem;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .price-tag i {
+            font-size: 0.8rem;
         }
         
         /* Кнопка добавления */
@@ -411,25 +601,26 @@
             position: fixed;
             bottom: 30px;
             right: 30px;
-            background-color: var(--accent-orange);
-            color: white;
-            width: 60px;
-            height: 60px;
+            background: linear-gradient(135deg, var(--vegas-gold), var(--vegas-red));
+            color: #000;
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(255, 123, 37, 0.3);
+            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4);
             transition: all 0.3s;
             z-index: 100;
             border: none;
+            animation: pulse 2s infinite;
         }
         
         .add-ad-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 20px rgba(255, 123, 37, 0.4);
+            transform: scale(1.1) rotate(90deg);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.5);
         }
         
         /* Модальное окно */
@@ -440,37 +631,138 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.7);
+            background-color: rgba(0,0,0,0.8);
             z-index: 1000;
             align-items: center;
             justify-content: center;
+            backdrop-filter: blur(5px);
+            animation: fadeIn 0.3s ease;
         }
         
         .modal-content {
             background-color: var(--card-bg);
-            border-radius: 10px;
-            padding: 2rem;
+            border-radius: 15px;
+            padding: 2.5rem;
             max-width: 500px;
             width: 90%;
             max-height: 90vh;
             overflow-y: auto;
             position: relative;
-            border: 1px solid var(--border);
+            border: 1px solid var(--vegas-gold);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            animation: slideIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
         
         .close-modal {
             position: absolute;
-            top: 15px;
-            right: 15px;
-            font-size: 1.5rem;
+            top: 20px;
+            right: 20px;
+            font-size: 1.8rem;
             color: var(--text-gray);
             cursor: pointer;
             background: none;
             border: none;
+            transition: all 0.2s;
         }
         
         .close-modal:hover {
-            color: var(--text-white);
+            color: var(--vegas-red);
+            transform: rotate(90deg);
+        }
+        
+        /* Уведомления */
+        .notification {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: linear-gradient(135deg, var(--vegas-gold), var(--vegas-red));
+            color: #000;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            z-index: 1000;
+            transform: translateX(-150%);
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            max-width: 350px;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification-icon {
+            font-size: 1.5rem;
+        }
+        
+        .notification-content {
+            flex: 1;
+        }
+        
+        .notification-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .notification-message {
+            font-size: 0.9rem;
+        }
+        
+        .close-notification {
+            background: none;
+            border: none;
+            color: rgba(0,0,0,0.7);
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+        
+        /* Чат */
+        .chat-btn {
+            position: fixed;
+            bottom: 110px;
+            right: 30px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(58, 134, 255, 0.3);
+            transition: all 0.3s;
+            z-index: 100;
+            border: none;
+        }
+        
+        .chat-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(58, 134, 255, 0.4);
+        }
+        
+        .chat-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: var(--vegas-red);
+            color: white;
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: bold;
         }
         
         /* Адаптив */
@@ -491,8 +783,10 @@
                 width: 100%;
             }
             
-            .filter-btn {
+            .filter-btn, .filter-reset {
                 width: 100%;
+                margin-left: 0;
+                margin-top: 10px;
             }
             
             .ads-grid {
@@ -500,23 +794,35 @@
             }
             
             .add-ad-form {
-                padding: 1rem;
+                padding: 1.5rem;
             }
             
             .form-grid {
                 grid-template-columns: 1fr;
             }
+            
+            .add-ad-btn, .chat-btn {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+            
+            .chat-btn {
+                bottom: 100px;
+            }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 </head>
 <body>
     <div class="container">
         <!-- Навигация -->
         <div class="top-bar">
             <div class="logo">
-                <i class="fas fa-handshake logo-icon"></i>
-                <span class="logo-text">Arizona RP | Торги</span>
+                <i class="fas fa-crown logo-icon"></i>
+                <span class="logo-text">Vegas+ | ARZ</span>
+                <span class="logo-subtext">ТОРГОВАЯ ПЛОЩАДКА</span>
             </div>
             
             <div class="nav-links">
@@ -527,14 +833,16 @@
                 <a href="#" class="nav-link">
                     <i class="fas fa-store nav-icon"></i>
                     <span>Магазин</span>
+                    <span class="notification-badge">3</span>
                 </a>
                 <a href="#" class="nav-link">
                     <i class="fas fa-newspaper nav-icon"></i>
                     <span>Новости</span>
                 </a>
                 <a href="#" class="nav-link">
-                    <i class="fas fa-question-circle nav-icon"></i>
-                    <span>Помощь</span>
+                    <i class="fas fa-comments nav-icon"></i>
+                    <span>Чат</span>
+                    <span class="notification-badge">5</span>
                 </a>
             </div>
         </div>
@@ -546,7 +854,7 @@
                 <select class="filter-select" id="categoryFilter">
                     <option value="all">Все категории</option>
                     <option value="business">Бизнесы</option>
-                    <option value="house">Дома</option>
+                    <option value="house">Недвижимость</option>
                     <option value="vehicle">Транспорт</option>
                     <option value="item">Предметы</option>
                     <option value="service">Услуги</option>
@@ -570,12 +878,18 @@
                     <option value="oldest">Сначала старые</option>
                     <option value="price-low">Цена (по возрастанию)</option>
                     <option value="price-high">Цена (по убыванию)</option>
+                    <option value="popular">Популярные</option>
                 </select>
             </div>
             
             <button class="filter-btn" id="applyFiltersBtn">
                 <i class="fas fa-filter"></i>
                 Применить
+            </button>
+            
+            <button class="filter-btn filter-reset" id="resetFiltersBtn">
+                <i class="fas fa-undo"></i>
+                Сбросить
             </button>
         </div>
 
@@ -584,16 +898,16 @@
             <h2 class="form-title">Добавить объявление</h2>
             <div class="form-grid">
                 <div class="form-group">
-                    <label class="form-label">Ваш ник в игре*</label>
+                    <label class="form-label required">Ваш ник в игре</label>
                     <input type="text" class="form-input" id="nicknameInput" placeholder="Например: John_Doe" required>
                 </div>
                 
                 <div class="form-group">
-                    <label class="form-label">Категория*</label>
+                    <label class="form-label required">Категория</label>
                     <select class="form-select" id="categoryInput" required>
                         <option value="">Выберите категорию</option>
                         <option value="business">Бизнес</option>
-                        <option value="house">Дом</option>
+                        <option value="house">Недвижимость</option>
                         <option value="vehicle">Транспорт</option>
                         <option value="item">Предмет</option>
                         <option value="service">Услуга</option>
@@ -601,18 +915,18 @@
                 </div>
                 
                 <div class="form-group">
-                    <label class="form-label">Название*</label>
+                    <label class="form-label required">Название</label>
                     <input type="text" class="form-input" id="titleInput" placeholder="Например: Бизнес '24/7'" required>
                 </div>
                 
                 <div class="form-group">
-                    <label class="form-label">Цена ($)*</label>
+                    <label class="form-label required">Цена ($)</label>
                     <input type="number" class="form-input" id="priceInput" placeholder="Например: 500000" required>
                 </div>
                 
                 <div class="form-group">
-                    <label class="form-label">Контакты (Discord/Telegram)*</label>
-                    <input type="text" class="form-input" id="contactsInput" placeholder="Например: discord#1234" required>
+                    <label class="form-label required">Контакты</label>
+                    <input type="text" class="form-input" id="contactsInput" placeholder="Discord/Telegram" required>
                 </div>
                 
                 <div class="form-group" style="grid-column: span 2;">
@@ -623,20 +937,21 @@
                 <div class="form-group" style="grid-column: span 2;">
                     <label class="form-label">Ссылка на изображение</label>
                     <input type="text" class="form-input" id="imageUrlInput" placeholder="https://...">
+                    <small style="color: var(--text-gray); font-size: 0.8rem;">Оставьте пустым для изображения по умолчанию</small>
                 </div>
             </div>
             
             <button type="submit" class="form-submit" id="submitAdBtn">
                 <i class="fas fa-paper-plane"></i>
-                Опубликовать
+                Опубликовать сейчас
             </button>
         </div>
 
         <!-- Список объявлений -->
         <div class="ads-section">
             <h2 class="section-title">
-                <i class="fas fa-gem"></i>
-                <span>Актуальные предложения</span>
+                <i class="fas fa-bolt"></i>
+                <span>Горячие предложения</span>
             </h2>
             
             <div class="ads-grid" id="ads-container">
@@ -650,33 +965,144 @@
         <i class="fas fa-plus"></i>
     </button>
 
-    <!-- Модальное окно -->
+    <!-- Кнопка чата -->
+    <button class="chat-btn" id="chatBtn">
+        <i class="fas fa-comment-dots"></i>
+        <span class="chat-badge">5</span>
+    </button>
+
+    <!-- Модальное окно успеха -->
     <div class="modal" id="successModal">
         <div class="modal-content">
             <button class="close-modal" id="closeModal">&times;</button>
-            <h2 style="margin-bottom: 1rem; color: var(--success);">
+            <h2 style="margin-bottom: 1rem; color: var(--vegas-gold);">
                 <i class="fas fa-check-circle"></i> Успешно!
             </h2>
-            <p style="margin-bottom: 1.5rem;">
-                Ваше объявление успешно отправлено на модерацию. После проверки оно появится на сайте.
+            <p style="margin-bottom: 1.5rem; line-height: 1.6;">
+                Ваше объявление успешно опубликовано на торговой площадке Vegas+ | ARZ. 
+                Оно сразу доступно для просмотра всем пользователям.
             </p>
-            <button class="form-submit" style="width: 100%;" id="modalCloseBtn">
-                <i class="fas fa-thumbs-up"></i> Понятно
-            </button>
+            <div style="display: flex; gap: 10px;">
+                <button class="form-submit" style="flex: 1;" id="viewAdBtn">
+                    <i class="fas fa-eye"></i> Посмотреть
+                </button>
+                <button class="form-submit" style="flex: 1; background: var(--card-bg); color: var(--vegas-gold); border: 1px solid var(--vegas-gold);" id="modalCloseBtn">
+                    <i class="fas fa-thumbs-up"></i> ОК
+                </button>
+            </div>
         </div>
     </div>
 
-    <script>
-        // Discord Webhook URL для отправки объявлений
-        const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1401558296942608485/ecFzQM7Tg2HzMd1MG-WMtGiEgsc9lWVtHV3VsLq-QWNsQlYo4FrOTB_XQanNufdvZO6k';
-        
-             // Discord Webhook URL для модерации (с кнопками)
-        const MODERATION_WEBHOOK_URL = 'https://discord.com/api/webhooks/ВАШ_WEBHOOK_URL';
-        
-        // ... (остальные переменные без изменений) ...
+    <!-- Уведомление -->
+    <div class="notification" id="notification">
+        <i class="fas fa-bell notification-icon"></i>
+        <div class="notification-content">
+            <div class="notification-title">Новое объявление!</div>
+            <div class="notification-message">Дом в центре за $500,000</div>
+        </div>
+        <button class="close-notification" id="closeNotification">&times;</button>
+    </div>
 
-        // Отправка формы в Discord для модерации
-        submitAdBtn.addEventListener('click', async function(e) {
+    <script>
+        // База данных объявлений
+        let adsDatabase = [
+            {
+                id: 'ad_1',
+                nickname: 'John_Doe',
+                category: 'house',
+                title: 'Роскошный дом в центре',
+                price: '500000',
+                contacts: 'discord#1234',
+                description: 'Продается прекрасный дом в центре города с видом на океан. 3 спальни, 2 ванные, гараж на 2 машины.',
+                imageUrl: 'https://i.imgur.com/JqYeZnW.jpg',
+                status: 'active',
+                date: new Date().toISOString(),
+                isVip: true,
+                views: 124,
+                favorites: 8
+            },
+            {
+                id: 'ad_2',
+                nickname: 'Mike_Smith',
+                category: 'vehicle',
+                title: 'BMW M5 2022 года',
+                price: '250000',
+                contacts: 'telegram@mike',
+                description: 'Продаю BMW M5 в идеальном состоянии, пробег 5000 км, полный пакет опций.',
+                imageUrl: 'https://i.imgur.com/abc123.jpg',
+                status: 'active',
+                date: new Date(Date.now() - 86400000).toISOString(),
+                isAdmin: true,
+                views: 89,
+                favorites: 5
+            },
+            {
+                id: 'ad_3',
+                nickname: 'Anna_K',
+                category: 'business',
+                title: 'Бизнес "24/7"',
+                price: '750000',
+                contacts: 'anna_k#5678',
+                description: 'Продается прибыльный бизнес "24/7" в центре города. Высокий доход, оборудование входит в стоимость.',
+                imageUrl: 'https://i.imgur.com/xyz789.jpg',
+                status: 'active',
+                date: new Date(Date.now() - 172800000).toISOString(),
+                views: 156,
+                favorites: 12
+            },
+            {
+                id: 'ad_4',
+                nickname: 'Alex_Gamer',
+                category: 'item',
+                title: 'Редкий скин "Dragon"',
+                price: '15000',
+                contacts: 'alexgamer#9999',
+                description: 'Продаю редкий скин "Dragon" для оружия. Торг уместен.',
+                imageUrl: '',
+                status: 'active',
+                date: new Date(Date.now() - 3600000).toISOString(),
+                isNew: true,
+                views: 42,
+                favorites: 3
+            }
+        ];
+
+        // DOM элементы
+        const adsContainer = document.getElementById('ads-container');
+        const addAdBtn = document.getElementById('addAdBtn');
+        const adForm = document.getElementById('adForm');
+        const submitAdBtn = document.getElementById('submitAdBtn');
+        const applyFiltersBtn = document.getElementById('applyFiltersBtn');
+        const resetFiltersBtn = document.getElementById('resetFiltersBtn');
+        const successModal = document.getElementById('successModal');
+        const closeModal = document.getElementById('closeModal');
+        const modalCloseBtn = document.getElementById('modalCloseBtn');
+        const viewAdBtn = document.getElementById('viewAdBtn');
+        const notification = document.getElementById('notification');
+        const closeNotification = document.getElementById('closeNotification');
+        const chatBtn = document.getElementById('chatBtn');
+
+        // Загрузка объявлений при старте
+        document.addEventListener('DOMContentLoaded', function() {
+            loadAds();
+            loadFavorites();
+            
+            // Проверяем есть ли сохраненные объявления в localStorage
+            const savedAds = localStorage.getItem('vegasPlusAds');
+            if (savedAds) {
+                adsDatabase = JSON.parse(savedAds);
+                renderAds(adsDatabase);
+            }
+        });
+
+        // Открытие/закрытие формы добавления
+        addAdBtn.addEventListener('click', function() {
+            adForm.style.display = adForm.style.display === 'block' ? 'none' : 'block';
+            this.innerHTML = adForm.style.display === 'block' ? '<i class="fas fa-times"></i>' : '<i class="fas fa-plus"></i>';
+        });
+
+        // Отправка формы объявления
+        submitAdBtn.addEventListener('click', function(e) {
             e.preventDefault();
             
             // Собираем данные формы
@@ -688,96 +1114,54 @@
                 contacts: document.getElementById('contactsInput').value,
                 description: document.getElementById('descriptionInput').value,
                 imageUrl: document.getElementById('imageUrlInput').value,
-                status: 'pending',
+                status: 'active', // Теперь объявления сразу активны
                 date: new Date().toISOString(),
-                id: generateId()
+                id: generateId(),
+                isNew: true,
+                views: 0,
+                favorites: 0
             };
             
             // Валидация
             if (!formData.nickname || !formData.category || !formData.title || !formData.price || !formData.contacts) {
-                alert('Пожалуйста, заполните все обязательные поля!');
+                showNotification('Ошибка', 'Пожалуйста, заполните все обязательные поля!', 'error');
                 return;
             }
             
-            try {
-                // Создаем embed для Discord с кнопками модерации
-                const discordMessage = {
-                    username: 'Arizona RP Торги - Модерация',
-                    avatar_url: 'https://i.imgur.com/JqYeZnW.jpg',
-                    embeds: [{
-                        title: `Новое объявление на модерацию: ${formData.title}`,
-                        color: 0xffc107, // желтый цвет для модерации
-                        fields: [
-                            { name: 'Категория', value: getCategoryName(formData.category), inline: true },
-                            { name: 'Цена', value: `$${formData.price}`, inline: true },
-                            { name: 'Ник игрока', value: formData.nickname, inline: true },
-                            { name: 'Контакты', value: formData.contacts, inline: false },
-                            { name: 'Описание', value: formData.description || 'Не указано', inline: false },
-                            { name: 'ID объявления', value: formData.id, inline: false }
-                        ],
-                        timestamp: new Date().toISOString()
-                    }],
-                    components: [{
-                        type: 1, // ACTION_ROW
-                        components: [
-                            {
-                                type: 2, // BUTTON
-                                style: 3, // GREEN (SUCCESS)
-                                label: "Одобрить",
-                                custom_id: `approve_${formData.id}`
-                            },
-                            {
-                                type: 2, // BUTTON
-                                style: 4, // RED (DANGER)
-                                label: "Отклонить",
-                                custom_id: `reject_${formData.id}`
-                            }
-                        ]
-                    }]
-                };
-                
-                // Добавляем изображение если есть
-                if (formData.imageUrl) {
-                    discordMessage.embeds[0].image = { url: formData.imageUrl };
-                }
-                
-                // Важно: Убедитесь что Content-Type установлен правильно
-                const response = await fetch(MODERATION_WEBHOOK_URL, {
-                    method: 'POST',
-                    headers: { 
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(discordMessage)
-                });
-                
-                if (response.ok) {
-                    // ... (остальная обработка успешной отправки) ...
-                } else {
-                    console.error('Ошибка Discord API:', await response.text());
-                    throw new Error(`Ошибка HTTP: ${response.status}`);
-                }
-            } catch (error) {
-                console.error('Ошибка отправки:', error);
-                alert('Произошла ошибка при отправке объявления. Пожалуйста, попробуйте позже или свяжитесь с администрацией.');
-            }
+            // Добавляем объявление в базу данных
+            adsDatabase.unshift(formData);
+            
+            // Сохраняем в localStorage
+            localStorage.setItem('vegasPlusAds', JSON.stringify(adsDatabase));
+            
+            // Очищаем форму
+            document.getElementById('adForm').reset();
+            
+            // Закрываем форму
+            adForm.style.display = 'none';
+            addAdBtn.innerHTML = '<i class="fas fa-plus"></i>';
+            
+            // Показываем модальное окно успеха
+            successModal.style.display = 'flex';
+            
+            // Обновляем список объявлений
+            renderAds(adsDatabase);
+            
+            // Показываем уведомление другим пользователям
+            showNotification('Новое объявление!', formData.title, 'new-ad');
+            
+            // Отправка в Discord (если нужно)
+            sendToDiscord(formData);
         });
-        
+
         // Функция для загрузки объявлений
         function loadAds() {
-            // В реальном проекте загружайте с сервера
-            const savedAds = localStorage.getItem('arizonaAds');
-            if (savedAds) {
-                adsDatabase = JSON.parse(savedAds);
-                renderAds(adsDatabase);
-            }
+            renderAds(adsDatabase);
         }
-        
+
         // Функция для отображения объявлений
         function renderAds(ads) {
             adsContainer.innerHTML = '';
-            
-            // Фильтрация по статусу (показываем только активные)
-            const activeAds = ads.filter(ad => ad.status === 'active');
             
             // Применение фильтров
             const categoryFilter = document.getElementById('categoryFilter').value;
@@ -785,7 +1169,7 @@
             const priceTo = document.getElementById('priceToFilter').value;
             const sortBy = document.getElementById('sortFilter').value;
             
-            let filteredAds = [...activeAds];
+            let filteredAds = [...ads];
             
             // Фильтрация по категории
             if (categoryFilter !== 'all') {
@@ -815,12 +1199,18 @@
                 case 'price-high':
                     filteredAds.sort((a, b) => parseInt(b.price) - parseInt(a.price));
                     break;
+                case 'popular':
+                    filteredAds.sort((a, b) => (b.views + b.favorites * 5) - (a.views + a.favorites * 5));
+                    break;
             }
             
             // Рендеринг объявлений
             filteredAds.forEach(ad => {
                 const adCard = document.createElement('div');
                 adCard.className = 'ad-card';
+                
+                // Проверяем, новое ли объявление (менее 24 часов)
+                const isNew = (new Date() - new Date(ad.date)) < 86400000;
                 
                 // Форматирование даты
                 const adDate = new Date(ad.date);
@@ -829,24 +1219,36 @@
                 // Форматирование цены
                 const formattedPrice = ad.price === 'Договорная' ? 'Договорная' : `$${parseInt(ad.price).toLocaleString()}`;
                 
+                // Проверяем, есть ли объявление в избранном
+                const favorites = JSON.parse(localStorage.getItem('vegasPlusFavorites')) || [];
+                const isFavorite = favorites.includes(ad.id);
+                
                 adCard.innerHTML = `
                     <div class="ad-image">
                         ${ad.isAdmin ? '<span class="badge admin-badge">ADMIN</span>' : ''}
                         ${ad.isVip ? '<span class="badge vip-badge">VIP</span>' : ''}
-                        <span class="price-tag">${formattedPrice}</span>
+                        ${isNew ? '<span class="badge new-badge">NEW</span>' : ''}
+                        <span class="price-tag"><i class="fas fa-tag"></i> ${formattedPrice}</span>
                         <img src="${ad.imageUrl || 'https://i.imgur.com/JqYeZnW.jpg'}" alt="${ad.title}">
                     </div>
                     <div class="ad-content">
                         <h3 class="ad-title">${ad.title}</h3>
                         <div class="ad-meta">
                             <span class="ad-price">${formattedPrice}</span>
-                            <span class="ad-date">${formattedDate}</span>
+                            <span class="ad-date"><i class="far fa-clock"></i> ${formattedDate}</span>
                         </div>
                         <p class="ad-description">${ad.description || 'Описание отсутствует'}</p>
-                        <p class="ad-contacts">Контакты: ${ad.contacts}</p>
+                        <p class="ad-contacts"><i class="fas fa-user"></i> ${ad.nickname} | <i class="fas fa-phone-alt"></i> ${ad.contacts}</p>
                         <div class="ad-footer">
                             <span class="ad-category">${getCategoryName(ad.category)}</span>
-                            <span class="ad-status status-active">Активно</span>
+                            <div class="ad-actions">
+                                <button class="ad-action-btn favorite ${isFavorite ? 'active' : ''}" data-ad-id="${ad.id}">
+                                    <i class="fas fa-heart"></i>
+                                </button>
+                                <button class="ad-action-btn">
+                                    <i class="fas fa-share-alt"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 `;
@@ -854,144 +1256,193 @@
                 adsContainer.appendChild(adCard);
             });
             
-            // Также показываем отклоненные объявления для пользователя (чтобы он видел статус)
-            const userNickname = document.getElementById('nicknameInput')?.value;
-            if (userNickname) {
-                const userAds = ads.filter(ad => ad.nickname === userNickname && ad.status !== 'active');
-                
-                if (userAds.length > 0) {
-                    const userAdsSection = document.createElement('div');
-                    userAdsSection.className = 'ads-section';
-                    userAdsSection.innerHTML = `
-                        <h2 class="section-title">
-                            <i class="fas fa-user"></i>
-                            <span>Мои объявления</span>
-                        </h2>
-                        <div class="ads-grid" id="user-ads-container"></div>
-                    `;
-                    
-                    document.querySelector('.container').appendChild(userAdsSection);
-                    const userAdsContainer = document.getElementById('user-ads-container');
-                    
-                    userAds.forEach(ad => {
-                        const adCard = document.createElement('div');
-                        adCard.className = 'ad-card';
-                        
-                        const adDate = new Date(ad.date);
-                        const formattedDate = `${adDate.getDate()}.${adDate.getMonth() + 1}.${adDate.getFullYear()} ${adDate.getHours()}:${adDate.getMinutes().toString().padStart(2, '0')}`;
-                        const formattedPrice = ad.price === 'Договорная' ? 'Договорная' : `$${parseInt(ad.price).toLocaleString()}`;
-                        
-                        let statusClass = '';
-                        let statusText = '';
-                        
-                        switch (ad.status) {
-                            case 'pending':
-                                statusClass = 'status-pending';
-                                statusText = 'На модерации';
-                                break;
-                            case 'rejected':
-                                statusClass = 'status-rejected';
-                                statusText = 'Отклонено';
-                                break;
-                            case 'sold':
-                                statusClass = 'status-sold';
-                                statusText = 'Продано';
-                                break;
-                        }
-                        
-                        adCard.innerHTML = `
-                            <div class="ad-image">
-                                <span class="price-tag">${formattedPrice}</span>
-                                <img src="${ad.imageUrl || 'https://i.imgur.com/JqYeZnW.jpg'}" alt="${ad.title}">
-                            </div>
-                            <div class="ad-content">
-                                <h3 class="ad-title">${ad.title}</h3>
-                                <div class="ad-meta">
-                                    <span class="ad-price">${formattedPrice}</span>
-                                    <span class="ad-date">${formattedDate}</span>
-                                </div>
-                                <p class="ad-description">${ad.description || 'Описание отсутствует'}</p>
-                                <p class="ad-contacts">Контакты: ${ad.contacts}</p>
-                                <div class="ad-footer">
-                                    <span class="ad-category">${getCategoryName(ad.category)}</span>
-                                    <span class="ad-status ${statusClass}">${statusText}</span>
-                                </div>
-                            </div>
-                        `;
-                        
-                        userAdsContainer.appendChild(adCard);
-                    });
-                }
-            }
+            // Добавляем обработчики для кнопок избранного
+            document.querySelectorAll('.favorite').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    toggleFavorite(this.dataset.adId);
+                    this.classList.toggle('active');
+                });
+            });
         }
-        
-        // Применение фильтров
-        applyFiltersBtn.addEventListener('click', function() {
-            renderAds(adsDatabase);
-        });
-        
+
         // Функция для получения названия категории
         function getCategoryName(category) {
             const categories = {
                 'business': 'Бизнес',
-                'house': 'Дом',
+                'house': 'Недвижимость',
                 'vehicle': 'Транспорт',
                 'item': 'Предмет',
                 'service': 'Услуга'
             };
             return categories[category] || 'Другое';
         }
-        
+
         // Функция для генерации ID
         function generateId() {
             return 'ad_' + Math.random().toString(36).substr(2, 9);
         }
-        
-        // Функция для обновления статуса объявления
-        function updateAdStatus(adId, status) {
-            const adIndex = adsDatabase.findIndex(ad => ad.id === adId);
-            if (adIndex !== -1) {
-                adsDatabase[adIndex].status = status;
-                localStorage.setItem('arizonaAds', JSON.stringify(adsDatabase));
-                renderAds(adsDatabase);
-                
-                // Показываем уведомление пользователю
-                if (status === 'active') {
-                    alert('Объявление было одобрено модератором и теперь видно на сайте!');
-                } else if (status === 'rejected') {
-                    alert('Объявление было отклонено модератором. Пожалуйста, проверьте правильность заполнения и попробуйте снова.');
-                }
-            }
-        }
-        
+
+        // Применение фильтров
+        applyFiltersBtn.addEventListener('click', function() {
+            renderAds(adsDatabase);
+        });
+
+        // Сброс фильтров
+        resetFiltersBtn.addEventListener('click', function() {
+            document.getElementById('categoryFilter').value = 'all';
+            document.getElementById('priceFromFilter').value = '';
+            document.getElementById('priceToFilter').value = '';
+            document.getElementById('sortFilter').value = 'newest';
+            renderAds(adsDatabase);
+        });
+
         // Закрытие модального окна
         closeModal.addEventListener('click', function() {
             successModal.style.display = 'none';
         });
-        
+
         modalCloseBtn.addEventListener('click', function() {
             successModal.style.display = 'none';
         });
-        
+
+        viewAdBtn.addEventListener('click', function() {
+            successModal.style.display = 'none';
+            // Прокручиваем к первому объявлению
+            document.querySelector('.ad-card')?.scrollIntoView({ behavior: 'smooth' });
+        });
+
         // Закрытие модального при клике вне его
         window.addEventListener('click', function(e) {
             if (e.target === successModal) {
                 successModal.style.display = 'none';
             }
         });
-        
-        // В реальном проекте добавьте WebSocket или polling для получения обновлений от сервера
-        // Например, проверка новых объявлений каждые 30 секунд
-        setInterval(() => {
-            const savedAds = localStorage.getItem('arizonaAds');
-            if (savedAds) {
-                const currentAds = JSON.parse(savedAds);
-                if (currentAds.length !== adsDatabase.length) {
-                    adsDatabase = currentAds;
-                    renderAds(adsDatabase);
+
+        // Управление уведомлениями
+        function showNotification(title, message, type) {
+            const notification = document.getElementById('notification');
+            const notificationTitle = notification.querySelector('.notification-title');
+            const notificationMessage = notification.querySelector('.notification-message');
+            
+            // Устанавливаем стили в зависимости от типа уведомления
+            switch(type) {
+                case 'error':
+                    notification.style.background = 'linear-gradient(135deg, var(--danger), var(--warning))';
+                    break;
+                case 'new-ad':
+                    notification.style.background = 'linear-gradient(135deg, var(--vegas-gold), var(--vegas-red))';
+                    break;
+                default:
+                    notification.style.background = 'linear-gradient(135deg, var(--success), var(--accent-blue))';
+            }
+            
+            notificationTitle.textContent = title;
+            notificationMessage.textContent = message;
+            
+            notification.classList.add('show');
+            
+            // Автоматическое закрытие через 5 секунд
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 5000);
+        }
+
+        closeNotification.addEventListener('click', function() {
+            notification.classList.remove('show');
+        });
+
+        // Управление избранным
+        function loadFavorites() {
+            if (!localStorage.getItem('vegasPlusFavorites')) {
+                localStorage.setItem('vegasPlusFavorites', JSON.stringify([]));
+            }
+        }
+
+        function toggleFavorite(adId) {
+            const favorites = JSON.parse(localStorage.getItem('vegasPlusFavorites'));
+            const index = favorites.indexOf(adId);
+            
+            if (index === -1) {
+                favorites.push(adId);
+                // Увеличиваем счетчик в базе данных
+                const adIndex = adsDatabase.findIndex(ad => ad.id === adId);
+                if (adIndex !== -1) {
+                    adsDatabase[adIndex].favorites += 1;
+                    localStorage.setItem('vegasPlusAds', JSON.stringify(adsDatabase));
+                }
+            } else {
+                favorites.splice(index, 1);
+                // Уменьшаем счетчик в базе данных
+                const adIndex = adsDatabase.findIndex(ad => ad.id === adId);
+                if (adIndex !== -1) {
+                    adsDatabase[adIndex].favorites -= 1;
+                    localStorage.setItem('vegasPlusAds', JSON.stringify(adsDatabase));
                 }
             }
+            
+            localStorage.setItem('vegasPlusFavorites', JSON.stringify(favorites));
+        }
+
+        // Отправка в Discord (опционально)
+        function sendToDiscord(adData) {
+            const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1401558296942608485/ecFzQM7Tg2HzMd1MG-WMtGiEgsc9lWVtHV3VsLq-QWNsQlYo4FrOTB_XQanNufdvZO6kL';
+            
+            if (!DISCORD_WEBHOOK_URL.includes('https://discord.com/api/webhooks/1401558296942608485/ecFzQM7Tg2HzMd1MG-WMtGiEgsc9lWVtHV3VsLq-QWNsQlYo4FrOTB_XQanNufdvZO6k')) {
+                const discordMessage = {
+                    username: 'Vegas+ | ARZ Торги',
+                    avatar_url: 'https://i.imgur.com/JqYeZnW.jpg',
+                    embeds: [{
+                        title: `Новое объявление: ${adData.title}`,
+                        description: adData.description || 'Без описания',
+                        color: 0xFFD700, // золотой цвет
+                        fields: [
+                            { name: 'Категория', value: getCategoryName(adData.category), inline: true },
+                            { name: 'Цена', value: `$${adData.price}`, inline: true },
+                            { name: 'Ник игрока', value: adData.nickname, inline: true },
+                            { name: 'Контакты', value: adData.contacts, inline: true }
+                        ],
+                        timestamp: new Date().toISOString()
+                    }]
+                };
+                
+                if (adData.imageUrl) {
+                    discordMessage.embeds[0].image = { url: adData.imageUrl };
+                }
+                
+                fetch(DISCORD_WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(discordMessage)
+                }).catch(error => console.error('Ошибка отправки в Discord:', error));
+            }
+        }
+
+        // Симуляция новых объявлений для демонстрации уведомлений
+        setInterval(() => {
+            // Только для демонстрации - в реальном приложении это будет приходить с сервера
+            if (Math.random() > 0.7 && adsDatabase.length > 0) {
+                const randomAd = adsDatabase[Math.floor(Math.random() * adsDatabase.length)];
+                showNotification('Новое предложение!', randomAd.title, 'new-ad');
+            }
         }, 30000);
+
+        // Обновление счетчика просмотров при клике на объявление
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.ad-card')) {
+                const adCard = e.target.closest('.ad-card');
+                const adId = adCard.querySelector('.favorite')?.dataset.adId;
+                
+                if (adId) {
+                    const adIndex = adsDatabase.findIndex(ad => ad.id === adId);
+                    if (adIndex !== -1) {
+                        adsDatabase[adIndex].views += 1;
+                        localStorage.setItem('vegasPlusAds', JSON.stringify(adsDatabase));
+                    }
+                }
+            }
+        });
     </script>
 </body>
 </html>
