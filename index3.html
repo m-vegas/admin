@@ -38,10 +38,74 @@
             overflow-x: hidden;
         }
         
+        /* Прелоадер */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--main-bg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+        
+        .preloader-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+        }
+        
+        .preloader-logo-icon {
+            color: var(--vegas-gold);
+            animation: pulse 1.5s infinite;
+        }
+        
+        .preloader-logo-text {
+            background: linear-gradient(to right, var(--vegas-gold), var(--vegas-red));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255, 215, 0, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--vegas-gold);
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 2rem;
+            opacity: 0;
+            animation: fadeIn 0.5s ease 0.5s forwards;
+        }
+        
+        @keyframes fadeIn {
+            to { opacity: 1; }
         }
         
         /* Навигация */
@@ -116,6 +180,23 @@
             gap: 8px;
             text-decoration: none;
             font-weight: 600;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .discord-link::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: white;
+            transition: width 0.3s ease;
+        }
+        
+        .discord-link:hover::before {
+            width: 100%;
         }
         
         .discord-link:hover {
@@ -143,12 +224,6 @@
         .logo-icon {
             color: var(--vegas-gold);
             animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
         }
         
         .logo-text {
@@ -284,6 +359,28 @@
             height: 3px;
             background: linear-gradient(90deg, var(--vegas-gold), var(--vegas-red));
             border-radius: 3px;
+        }
+        
+        .loading-notice {
+            background-color: rgba(255, 215, 0, 0.1);
+            border-left: 4px solid var(--vegas-gold);
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 0 5px 5px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: pulseBackground 2s infinite;
+        }
+        
+        @keyframes pulseBackground {
+            0% { background-color: rgba(255, 215, 0, 0.1); }
+            50% { background-color: rgba(255, 215, 0, 0.2); }
+            100% { background-color: rgba(255, 215, 0, 0.1); }
+        }
+        
+        .loading-notice i {
+            color: var(--vegas-gold);
         }
         
         .form-grid {
@@ -800,6 +897,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 </head>
 <body>
+    <!-- Прелоадер -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-logo">
+            <i class="fas fa-crown preloader-logo-icon"></i>
+            <span class="preloader-logo-text">Vegas+ | ARZ</span>
+        </div>
+        <div class="loader"></div>
+    </div>
+
     <div class="container">
         <!-- Навигация -->
         <div class="top-bar">
@@ -814,7 +920,7 @@
                     <i class="fas fa-home nav-icon"></i>
                     <span>Главная</span>
                 </a>
-                <a href="#" class="nav-link">
+                <a href="#" class="nav-link" id="newsLink">
                     <i class="fas fa-newspaper nav-icon"></i>
                     <span>Новости</span>
                 </a>
@@ -875,6 +981,12 @@
         <!-- Форма добавления объявления -->
         <div class="add-ad-form" id="adForm">
             <h2 class="form-title">Добавить объявление</h2>
+            
+            <div class="loading-notice">
+                <i class="fas fa-info-circle"></i>
+                <span>Если ваше объявление все еще загружается, обновите страницу - оно уже возможно появилось.</span>
+            </div>
+            
             <div class="form-grid">
                 <div class="form-group">
                     <label class="form-label required">Ваш ник в игре</label>
@@ -977,25 +1089,26 @@
         <button class="close-notification" id="closeNotification">&times;</button>
     </div>
 
+    <!-- Модальное окно новостей -->
+    <div class="modal" id="newsModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeNewsModal">&times;</button>
+            <h2 style="margin-bottom: 1.5rem; color: var(--vegas-gold);">
+                <i class="fas fa-newspaper"></i> Последние новости
+            </h2>
+            <div style="margin-bottom: 1.5rem;">
+                <p>Все актуальные новости публикуются в нашем Discord-канале.</p>
+                <p>Присоединяйтесь, чтобы быть в курсе всех событий!</p>
+            </div>
+            <a href="https://discord.gg/YCg9JXPmCN" class="form-submit" style="text-decoration: none; text-align: center; display: block;" target="_blank">
+                <i class="fab fa-discord"></i> Перейти в Discord
+            </a>
+        </div>
+    </div>
+
     <script>
         // База данных объявлений
-        let adsDatabase = [
-            {
-                id: 'ad_1',
-                nickname: 'Malloy_Vegas',
-                category: 'house',
-                title: 'Трейлере',
-                price: '95000000',
-                contacts: 'm.vegas',
-                description: 'Продается прекрасный дом в центре города с видом на океан. 3 спальни, 2 ванные, гараж на 2 машины.',
-                imageUrl: 'https://i.imgur.com/VnyRffMl.jpg',
-                status: 'active',
-                date: new Date().toISOString(),
-                isVip: true,
-                views: 124,
-                favorites: 8
-            },
-        ];
+        let adsDatabase = [];
 
         // DOM элементы
         const adsContainer = document.getElementById('ads-container');
@@ -1010,12 +1123,24 @@
         const viewAdBtn = document.getElementById('viewAdBtn');
         const notification = document.getElementById('notification');
         const closeNotification = document.getElementById('closeNotification');
+        const newsLink = document.getElementById('newsLink');
+        const newsModal = document.getElementById('newsModal');
+        const closeNewsModal = document.getElementById('closeNewsModal');
+        const preloader = document.getElementById('preloader');
 
         // Флаг для защиты от множественных нажатий
         let isSubmitting = false;
 
-        // Загрузка объявлений при старте
-        document.addEventListener('DOMContentLoaded', function() {
+        // Загрузка страницы
+        window.addEventListener('load', function() {
+            // Имитация загрузки (в реальном проекте здесь будет загрузка данных)
+            setTimeout(() => {
+                preloader.style.opacity = '0';
+                setTimeout(() => {
+                    preloader.style.display = 'none';
+                }, 500);
+            }, 1500);
+            
             loadAds();
             loadFavorites();
             
@@ -1265,6 +1390,9 @@
             if (e.target === successModal) {
                 successModal.style.display = 'none';
             }
+            if (e.target === newsModal) {
+                newsModal.style.display = 'none';
+            }
         });
 
         // Управление уведомлениями
@@ -1367,6 +1495,16 @@
                 }).catch(error => console.error('Ошибка отправки в Discord:', error));
             }
         }
+
+        // Открытие модального окна новостей
+        newsLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            newsModal.style.display = 'flex';
+        });
+
+        closeNewsModal.addEventListener('click', function() {
+            newsModal.style.display = 'none';
+        });
 
         // Симуляция новых объявлений для демонстрации уведомлений
         setInterval(() => {
