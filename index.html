@@ -20,6 +20,8 @@
             --border-hover: rgba(255, 46, 46, 0.3);
             --shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
             --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --vk-blue: #4a76a8;
+            --vk-blue-dark: #3d638f;
         }
         
         * {
@@ -637,107 +639,70 @@
             }
         }
         
-        /* Страница личного кабинета */
+        /* Страница личного кабинета в стиле ВК */
         .profile-page {
             display: none;
             padding: 2rem 0;
         }
         
         .profile-header {
-            display: flex;
-            align-items: center;
-            gap: 30px;
-            margin-bottom: 40px;
-            padding: 30px;
-            background: rgba(17, 17, 17, 0.7);
+            position: relative;
+            margin-bottom: 20px;
             border-radius: 15px;
-            border: 1px solid var(--border);
-            backdrop-filter: blur(5px);
+            overflow: hidden;
             box-shadow: var(--shadow);
         }
         
-        .profile-avatar {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--accent-red), var(--accent-gold));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 40px;
-            color: white;
+        .profile-cover {
+            height: 300px;
+            background: linear-gradient(135deg, var(--vk-blue), var(--accent-gold));
             position: relative;
-            overflow: hidden;
-        }
-        
-        .profile-avatar::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(255, 46, 46, 0.3), rgba(255, 204, 0, 0.3));
         }
         
         .profile-info {
+            padding: 30px;
+            background: rgba(17, 17, 17, 0.7);
+            backdrop-filter: blur(5px);
+            border: 1px solid var(--border);
+            border-top: none;
+            border-radius: 0 0 15px 15px;
+        }
+        
+        .profile-main {
+            display: flex;
+            align-items: flex-start;
+            gap: 30px;
+        }
+        
+        .profile-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--vk-blue), var(--accent-gold));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            border: 5px solid var(--card-bg);
+            margin-top: -75px;
+            box-shadow: var(--shadow);
+        }
+        
+        .profile-details {
             flex-grow: 1;
+            padding-top: 20px;
         }
         
         .profile-name {
-            font-size: 32px;
+            font-size: 28px;
             font-weight: bold;
             margin-bottom: 10px;
             display: flex;
             align-items: center;
             gap: 15px;
-        }
-        
-        .profile-badge {
-            background: linear-gradient(135deg, var(--accent-red), var(--accent-gold));
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 600;
-            position: relative;
-            cursor: pointer;
-        }
-        
-        .profile-badge:hover .badge-tooltip {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-        
-        .badge-tooltip {
-            position: absolute;
-            bottom: 100%;
-            left: 50%;
-            transform: translateX(-50%) translateY(10px);
-            background: var(--card-bg);
-            color: var(--text-white);
-            padding: 10px 15px;
-            border-radius: 8px;
-            font-size: 13px;
-            width: 200px;
-            text-align: center;
-            box-shadow: var(--shadow);
-            border: 1px solid var(--border);
-            opacity: 0;
-            visibility: hidden;
-            transition: var(--transition);
-            z-index: 10;
-        }
-        
-        .badge-tooltip::after {
-            content: '';
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            border-width: 6px;
-            border-style: solid;
-            border-color: var(--card-bg) transparent transparent transparent;
         }
         
         .profile-status {
@@ -747,33 +712,23 @@
         }
         
         .profile-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 40px;
+            display: flex;
+            gap: 30px;
+            margin-bottom: 30px;
         }
         
         .profile-stat {
-            background: rgba(17, 17, 17, 0.7);
-            padding: 25px;
-            border-radius: 15px;
-            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             text-align: center;
-            transition: var(--transition);
-            backdrop-filter: blur(5px);
-        }
-        
-        .profile-stat:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent-red);
-            box-shadow: var(--shadow);
         }
         
         .stat-number {
-            font-size: 32px;
+            font-size: 24px;
             font-weight: bold;
             color: var(--accent-gold);
-            margin-bottom: 10px;
+            margin-bottom: 5px;
         }
         
         .stat-label {
@@ -781,26 +736,67 @@
             color: var(--text-gray);
         }
         
+        .profile-actions {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .profile-btn {
+            background: var(--vk-blue);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .profile-btn:hover {
+            background: var(--vk-blue-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+        
+        .profile-btn.secondary {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border);
+        }
+        
+        .profile-btn.secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
         .profile-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .profile-section {
             background: rgba(17, 17, 17, 0.7);
-            padding: 30px;
+            padding: 25px;
             border-radius: 15px;
             border: 1px solid var(--border);
             backdrop-filter: blur(5px);
             box-shadow: var(--shadow);
-            text-align: center;
         }
         
-        .profile-content h2 {
-            font-size: 24px;
+        .profile-section h2 {
+            font-size: 20px;
             margin-bottom: 20px;
             color: var(--accent-gold);
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
         }
         
-        .profile-content p {
+        .profile-section p {
             color: var(--text-gray);
-            margin-bottom: 30px;
-            font-size: 16px;
+            margin-bottom: 15px;
             line-height: 1.6;
         }
         
@@ -851,9 +847,18 @@
                 width: 95%;
             }
             
-            .profile-header {
+            .profile-main {
                 flex-direction: column;
                 text-align: center;
+            }
+            
+            .profile-avatar {
+                margin-top: -100px;
+                align-self: center;
+            }
+            
+            .profile-content {
+                grid-template-columns: 1fr;
             }
         }
         
@@ -888,6 +893,16 @@
                 flex-direction: column;
                 gap: 10px;
             }
+            
+            .profile-stats {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .profile-actions {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
         }
         
         @media (max-width: 576px) {
@@ -910,13 +925,6 @@
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        // Проверяем, был ли уже показан экран загрузки
-        if (!sessionStorage.getItem('loadingShown')) {
-            sessionStorage.setItem('loadingShown', 'true');
-            window.location.href = "index4.html";
-        }
-    </script>
 </head>
 <body>
     <div class="container">
@@ -990,52 +998,70 @@
             </div>
         </div>
 
-        <!-- Страница личного кабинета -->
+        <!-- Страница личного кабинета в стиле ВК -->
         <div class="profile-page" id="profile-page">
             <div class="profile-header">
-                <div class="profile-avatar">
-                    <i class="fas fa-user"></i>
-                </div>
+                <div class="profile-cover"></div>
                 <div class="profile-info">
-                    <div class="profile-name">
-                        Аноним
-                        <div class="profile-badge">
-                            <i class="fas fa-medal"></i> Будущий пользователь
-                            <div class="badge-tooltip">
-                                Вы еще не зарегистрированы в системе. После регистрации получите доступ ко всем функциям магазина.
+                    <div class="profile-main">
+                        <div class="profile-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="profile-details">
+                            <div class="profile-name">
+                                Аноним
+                            </div>
+                            <div class="profile-status">Не в системе</div>
+                            
+                            <div class="profile-stats">
+                                <div class="profile-stat">
+                                    <div class="stat-number">-</div>
+                                    <div class="stat-label">Покупок</div>
+                                </div>
+                                <div class="profile-stat">
+                                    <div class="stat-number">-</div>
+                                    <div class="stat-label">В избранном</div>
+                                </div>
+                                <div class="profile-stat">
+                                    <div class="stat-number">-</div>
+                                    <div class="stat-label">Баланс</div>
+                                </div>
+                                <div class="profile-stat">
+                                    <div class="stat-number">-</div>
+                                    <div class="stat-label">Уровень</div>
+                                </div>
+                            </div>
+                            
+                            <div class="profile-actions">
+                                <button class="profile-btn">
+                                    <i class="fas fa-shopping-cart"></i> Мои покупки
+                                </button>
+                                <button class="profile-btn secondary">
+                                    <i class="fas fa-heart"></i> Избранное
+                                </button>
+                                <button class="profile-btn secondary">
+                                    <i class="fas fa-cog"></i> Настройки
+                                </button>
                             </div>
                         </div>
                     </div>
-                    <div class="profile-status">Не в системе</div>
-                </div>
-            </div>
-
-            <div class="profile-stats">
-                <div class="profile-stat">
-                    <div class="stat-number">0</div>
-                    <div class="stat-label">Покупок</div>
-                </div>
-                <div class="profile-stat">
-                    <div class="stat-number">0</div>
-                    <div class="stat-label">В избранном</div>
-                </div>
-                <div class="profile-stat">
-                    <div class="stat-number">0</div>
-                    <div class="stat-label">Баланс</div>
-                </div>
-                <div class="profile-stat">
-                    <div class="stat-number">0</div>
-                    <div class="stat-label">Уровень</div>
                 </div>
             </div>
 
             <div class="profile-content">
-                <h2>Система находится в разработке</h2>
-                <p>В данный момент функционал личного кабинета недоступен. Мы работаем над созданием полноценной системы профилей, которая позволит отслеживать ваши покупки, управлять избранными товарами и получать персонализированные предложения.</p>
-                <p>Следите за обновлениями в нашем Discord-сообществе!</p>
-                <button class="back-btn" id="back-to-main">
-                    <i class="fas fa-arrow-left"></i> Вернуться в магазин
-                </button>
+                <div class="profile-section">
+                    <h2>О себе</h2>
+                    <p>Вы еще не зарегистрированы в системе. После регистрации получите доступ ко всем функциям магазина.</p>
+                    <p>Следите за обновлениями в нашем Discord-сообществе!</p>
+                </div>
+                
+                <div class="profile-section">
+                    <h2>Статистика</h2>
+                    <p>Система профилей находится в разработке. В будущем здесь будет отображаться ваша статистика покупок, активность и достижения.</p>
+                    <button class="back-btn" id="back-to-main">
+                        <i class="fas fa-arrow-left"></i> Вернуться в магазин
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -1070,315 +1096,195 @@
                 document.getElementById('main-page').style.display = 'block';
             });
 
-            // Загрузка данных
-            fetch('prices.json')
-                .then(response => response.json())
-                .then(data => {
-                    const itemsData = Object.entries(data.list).map(([name, item]) => {
-                        // Генерируем случайное изображение для каждого товара
-                        const imageUrls = [
-                            'https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-                            'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-                            'https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-                            'https://images.unsplash.com/photo-1546868871-7041f2a55e12?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-                            'https://images.unsplash.com/photo-1585386959984-a4155224a1ad?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-                            'https://images.unsplash.com/photo-1581235720704-06d3acfcb36f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-                            'https://images.unsplash.com/photo-1556656793-08538906a9f8?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-                            'https://images.unsplash.com/photo-1503602642458-232111445657?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'
-                        ];
+            // Загрузка данных с обработкой ошибок
+            function loadItemsData() {
+                fetch('prices.json')
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Ошибка загрузки данных: ' + response.status);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (!data || !data.list) {
+                            throw new Error('Некорректный формат данных');
+                        }
                         
-                        const randomImage = imageUrls[Math.floor(Math.random() * imageUrls.length)];
-                        
-                        return {
-                            name: name,
-                            price: item.price,
-                            updated: item.updated,
-                            image: randomImage
-                        };
+                        const itemsData = Object.entries(data.list).map(([name, item]) .catch(error => {
+                        console.error('Ошибка загрузки данных:', error);
+                        // Показываем заглушки в случае ошибки
+                        displayFallbackItems();
                     });
-                    
-                    // Отображаем товары
-                    displayItems(itemsData);
-                    
-                    // Настраиваем пагинацию
-                    setupPagination(itemsData);
-                    
-                    // Настраиваем фильтры
-                    setupFilters(itemsData);
-                    
-                    // Настраиваем поиск
-                    setupSearch(itemsData);
-                })
-                .catch(error => {
-                    console.error('Ошибка загрузки данных:', error);
-                    document.getElementById('items-container').innerHTML = '<div class="loading">Ошибка загрузки данных. Пожалуйста, попробуйте позже. (Тех.Работы)</div>';
-                });
+            }
 
-            // Функция отображения товаров
-            function displayItems(items, page = 1, itemsPerPage = 12) {
-                const container = document.getElementById('items-container');
-                container.innerHTML = '';
+            // Отображение заглушек при ошибке загрузки
+            function displayFallbackItems() {
+                const itemsContainer = document.getElementById('items-container');
+                itemsContainer.innerHTML = '';
                 
-                const startIndex = (page - 1) * itemsPerPage;
-                const endIndex = startIndex + itemsPerPage;
-                const paginatedItems = items.slice(startIndex, endIndex);
+                const fallbackItems = [
+                    { name: 'Скин "Красный дракон"', price: 150000, category: 'skin', updated: 'Сегодня' },
+                    { name: 'Спортивный автомобиль', price: 2500000, category: 'vehicle', updated: 'Вчера' },
+                    { name: 'Золотой пистолет', price: 500000, category: 'weapon', updated: '2 дня назад' },
+                    { name: 'Редкая шапка', price: 75000, category: 'accessory', updated: 'Неделю назад' },
+                    { name: 'Эксклюзивный костюм', price: 1200000, category: 'skin', updated: 'Сегодня' },
+                    { name: 'Мотоцикл', price: 800000, category: 'vehicle', updated: '3 дня назад' }
+                ];
                 
-                if (paginatedItems.length === 0) {
-                    container.innerHTML = '<div class="loading">Товары не найдены</div>';
+                fallbackItems.forEach(item => {
+                    const itemCard = createItemCard(item);
+                    itemsContainer.appendChild(itemCard);
+                });
+                
+                // Показываем уведомление об ошибке
+                showNotification('Данные не загружены. Используются демо-товары.');
+            }
+
+            // Создание карточки товара
+            function createItemCard(item) {
+                const itemCard = document.createElement('div');
+                itemCard.className = 'item-card';
+                
+                // Форматирование цены
+                const formattedPrice = new Intl.NumberFormat('ru-RU').format(item.price);
+                
+                itemCard.innerHTML = `
+                    <div class="item-image" style="background-color: rgba(0,0,0,0.3);">
+                        <i class="fas fa-image" style="font-size: 3rem; color: #666;"></i>
+                    </div>
+                    <div class="item-info">
+                        <div class="item-name">${item.name}</div>
+                        <div class="item-price">${formattedPrice}</div>
+                        <div class="item-updated">
+                            <i class="far fa-clock"></i> Обновлено: ${item.updated}
+                        </div>
+                    </div>
+                `;
+                
+                itemCard.addEventListener('click', function() {
+                    showItemModal(item);
+                });
+                
+                return itemCard;
+            }
+
+            // Отображение товаров
+            function displayItems(items) {
+                const itemsContainer = document.getElementById('items-container');
+                itemsContainer.innerHTML = '';
+                
+                if (items.length === 0) {
+                    itemsContainer.innerHTML = '<div class="no-items">Товары не найдены</div>';
                     return;
                 }
                 
-                paginatedItems.forEach(item => {
-                    const itemCard = document.createElement('div');
-                    itemCard.className = 'item-card';
-                    itemCard.innerHTML = `
-                        <div class="item-image" style="background-image: url('${item.image}')">
-                        </div>
-                        <div class="item-info">
-                            <div class="item-name">${item.name}</div>
-                            <div class="item-price">${formatPrice(item.price)}</div>
-                            <div class="item-updated">
-                                <i class="far fa-clock"></i> Обновлено: ${item.updated}
-                            </div>
-                        </div>
-                    `;
-                    
-                    itemCard.addEventListener('click', () => {
-                        showItemModal(item);
-                    });
-                    
-                    container.appendChild(itemCard);
+                items.forEach(item => {
+                    const itemCard = createItemCard(item);
+                    itemsContainer.appendChild(itemCard);
                 });
             }
-            
-            // Функция форматирования цены
-            function formatPrice(price) {
-                return price.toLocaleString('ru-RU');
+
+            // Настройка пагинации
+            function setupPagination(items) {
+                // Здесь будет код для пагинации
+                // В демо-версии не реализовано
             }
-            
-            // Функция настройки пагинации
-            function setupPagination(items, itemsPerPage = 12) {
-                const paginationContainer = document.getElementById('pagination');
-                const pageCount = Math.ceil(items.length / itemsPerPage);
-                
-                if (pageCount <= 1) {
-                    paginationContainer.innerHTML = '';
-                    return;
-                }
-                
-                let paginationHTML = '';
-                
-                // Кнопка "Назад"
-                paginationHTML += `<button class="pagination-prev" disabled><i class="fas fa-chevron-left"></i></button>`;
-                
-                // Номера страниц
-                for (let i = 1; i <= pageCount; i++) {
-                    if (i === 1) {
-                        paginationHTML += `<button class="pagination-page active">${i}</button>`;
-                    } else {
-                        paginationHTML += `<button class="pagination-page">${i}</button>`;
-                    }
-                }
-                
-                // Кнопка "Вперед"
-                paginationHTML += `<button class="pagination-next">${pageCount > 1 ? '<i class="fas fa-chevron-right"></i>' : ''}</button>`;
-                
-                paginationContainer.innerHTML = paginationHTML;
-                
-                // Обработчики событий для пагинации
-                const pageButtons = paginationContainer.querySelectorAll('.pagination-page');
-                const prevButton = paginationContainer.querySelector('.pagination-prev');
-                const nextButton = paginationContainer.querySelector('.pagination-next');
-                
-                let currentPage = 1;
-                
-                pageButtons.forEach(button => {
-                    button.addEventListener('click', () => {
-                        const pageNum = parseInt(button.textContent);
-                        if (pageNum !== currentPage) {
-                            currentPage = pageNum;
-                            updatePagination();
-                            displayItems(items, currentPage, itemsPerPage);
-                        }
-                    });
-                });
-                
-                prevButton.addEventListener('click', () => {
-                    if (currentPage > 1) {
-                        currentPage--;
-                        updatePagination();
-                        displayItems(items, currentPage, itemsPerPage);
-                    }
-                });
-                
-                nextButton.addEventListener('click', () => {
-                    if (currentPage < pageCount) {
-                        currentPage++;
-                        updatePagination();
-                        displayItems(items, currentPage, itemsPerPage);
-                    }
-                });
-                
-                function updatePagination() {
-                    // Обновляем активную страницу
-                    pageButtons.forEach(button => {
-                        button.classList.remove('active');
-                        if (parseInt(button.textContent) === currentPage) {
-                            button.classList.add('active');
-                        }
-                    });
-                    
-                    // Обновляем состояние кнопок "Назад" и "Вперед"
-                    prevButton.disabled = currentPage === 1;
-                    nextButton.disabled = currentPage === pageCount;
-                }
-            }
-            
-            // Функция настройки фильтров
-            function setupFilters(originalItems) {
-                let filteredItems = [...originalItems];
-                
-                const categoryFilter = document.getElementById('category-filter');
-                const priceFilter = document.getElementById('price-filter');
-                const sortBy = document.getElementById('sort-by');
-                
-                function applyFilters() {
-                    // Применяем фильтр по категории
-                    const categoryValue = categoryFilter.value;
-                    if (categoryValue !== 'all') {
-                        // В реальном приложении здесь будет фильтрация по реальным категориям
-                        // Для демонстрации просто оставляем все товары
-                        filteredItems = [...originalItems];
-                    } else {
-                        filteredItems = [...originalItems];
-                    }
-                    
-                    // Применяем фильтр по цене
-                    const priceValue = priceFilter.value;
-                    if (priceValue === 'cheap') {
-                        filteredItems = filteredItems.filter(item => item.price < 100000);
-                    } else if (priceValue === 'medium') {
-                        filteredItems = filteredItems.filter(item => item.price >= 100000 && item.price <= 1000000);
-                    } else if (priceValue === 'expensive') {
-                        filteredItems = filteredItems.filter(item => item.price > 1000000);
-                    }
-                    
-                    // Применяем сортировку
-                    const sortValue = sortBy.value;
-                    if (sortValue === 'name-asc') {
-                        filteredItems.sort((a, b) => a.name.localeCompare(b.name));
-                    } else if (sortValue === 'name-desc') {
-                        filteredItems.sort((a, b) => b.name.localeCompare(a.name));
-                    } else if (sortValue === 'price-asc') {
-                        filteredItems.sort((a, b) => a.price - b.price);
-                    } else if (sortValue === 'price-desc') {
-                        filteredItems.sort((a, b) => b.price - a.price);
-                    }
-                    
-                    // Обновляем отображение
-                    displayItems(filteredItems);
-                    setupPagination(filteredItems);
-                }
-                
-                categoryFilter.addEventListener('change', applyFilters);
-                priceFilter.addEventListener('change', applyFilters);
-                sortBy.addEventListener('change', applyFilters);
-            }
-            
-            // Функция настройки поиска
-            function setupSearch(originalItems) {
-                const searchInput = document.getElementById('search-input');
-                const searchButton = document.getElementById('search-btn');
-                
-                function performSearch() {
-                    const searchTerm = searchInput.value.toLowerCase().trim();
-                    
-                    if (searchTerm === '') {
-                        displayItems(originalItems);
-                        setupPagination(originalItems);
-                        return;
-                    }
-                    
-                    const filteredItems = originalItems.filter(item => 
-                        item.name.toLowerCase().includes(searchTerm)
-                    );
-                    
-                    displayItems(filteredItems);
-                    setupPagination(filteredItems);
-                }
-                
-                searchButton.addEventListener('click', performSearch);
-                searchInput.addEventListener('keyup', (event) => {
-                    if (event.key === 'Enter') {
-                        performSearch();
-                    }
-                });
-            }
-            
-            // Функция показа модального окна товара
+
+            // Показать модальное окно товара
             function showItemModal(item) {
                 const modal = document.getElementById('item-modal');
                 const modalBody = document.getElementById('modal-body');
                 
+                // Форматирование цены
+                const formattedPrice = new Intl.NumberFormat('ru-RU').format(item.price);
+                
                 modalBody.innerHTML = `
-                    <div class="modal-image" style="background-image: url('${item.image}')">
+                    <div class="modal-image" style="background-color: rgba(0,0,0,0.3);">
+                        <i class="fas fa-image" style="font-size: 5rem; color: #666;"></i>
                     </div>
                     <h2 class="modal-title">${item.name}</h2>
-                    <div class="modal-price">${formatPrice(item.price)}</div>
+                    <div class="modal-price">${formattedPrice}</div>
+                    
                     <div class="modal-stats">
                         <div class="stat-item">
                             <div class="stat-label">Категория</div>
-                            <div class="stat-value">Игровой предмет</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-label">Редкость</div>
-                            <div class="stat-value">Обычный</div>
+                            <div class="stat-value">${getCategoryName(item.category)}</div>
                         </div>
                         <div class="stat-item">
                             <div class="stat-label">Обновлено</div>
                             <div class="stat-value">${item.updated}</div>
                         </div>
                         <div class="stat-item">
-                            <div class="stat-label">В наличии</div>
-                            <div class="stat-value">Да</div>
+                            <div class="stat-label">Статус</div>
+                            <div class="stat-value">В наличии</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Доставка</div>
+                            <div class="stat-value">Мгновенная</div>
                         </div>
                     </div>
-                    <button class="back-btn" id="buy-btn">
-                        <i class="fas fa-shopping-cart"></i> Купить сейчас
-                    </button>
+                    
+                    <div style="display: flex; gap: 15px; margin-top: 30px;">
+                        <button class="profile-btn" style="background: var(--accent-red);">
+                            <i class="fas fa-shopping-cart"></i> Купить сейчас
+                        </button>
+                        <button class="profile-btn secondary">
+                            <i class="fas fa-heart"></i> В избранное
+                        </button>
+                    </div>
                 `;
                 
                 modal.style.display = 'block';
                 
-                // Обработчик для кнопки покупки
-                document.getElementById('buy-btn').addEventListener('click', function() {
-                    showNotification();
-                });
+                // Закрытие модального окна
+                document.querySelector('.close-btn').onclick = function() {
+                    modal.style.display = 'none';
+                };
+                
+                window.onclick = function(event) {
+                    if (event.target === modal) {
+                        modal.style.display = 'none';
+                    }
+                };
             }
-            
-            // Функция показа уведомления
-            function showNotification() {
+
+            // Получение названия категории
+            function getCategoryName(category) {
+                const categories = {
+                    'skin': 'Скин',
+                    'accessory': 'Аксессуар',
+                    'vehicle': 'Транспорт',
+                    'weapon': 'Оружие',
+                    'other': 'Другое'
+                };
+                
+                return categories[category] || 'Другое';
+            }
+
+            // Показать уведомление
+            function showNotification(message) {
                 const notification = document.getElementById('notification');
+                notification.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
                 notification.style.display = 'block';
                 
-                setTimeout(() => {
+                setTimeout(function() {
                     notification.style.display = 'none';
-                }, 3000);
+                }, 5000);
             }
-            
-            // Закрытие модального окна
-            document.querySelector('.close-btn').addEventListener('click', function() {
-                document.getElementById('item-modal').style.display = 'none';
+
+            // Обработчики для кнопок
+            document.querySelectorAll('.profile-btn, .top-link, .account-btn').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    if (this.id !== 'account-btn' && this.id !== 'back-to-main') {
+                        e.preventDefault();
+                        showNotification('Функция находится в разработке');
+                    }
+                });
             });
-            
-            window.addEventListener('click', function(event) {
-                const modal = document.getElementById('item-modal');
-                if (event.target === modal) {
-                    modal.style.display = 'none';
-                }
-            });
+
+            // Загрузка данных при старте
+            loadItemsData();
         });
     </script>
 </body>
 </html>
-
