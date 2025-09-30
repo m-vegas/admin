@@ -3,565 +3,1248 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Технические работы | Vegas+ | ARZ</title>
+    <title>Vegas+ | ARZ - Административная панель</title>
+    <link rel="icon" type="image/x-icon" href="https://i.postimg.cc/dVwByx97/2025-09-30-160005.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        :root {
+            --main-bg: #0a0a0a;
+            --card-bg: #111111;
+            --card-hover-bg: #1a1a1a;
+            --accent-red: #ff2e2e;
+            --accent-red-dark: #cc2525;
+            --accent-gold: #ffcc00;
+            --accent-gold-dark: #e6b800;
+            --text-white: #ffffff;
+            --text-gray: #aaaaaa;
+            --text-dark: #666666;
+            --border: rgba(255,255,255,0.1);
+            --border-hover: rgba(255, 46, 46, 0.3);
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', 'Roboto', sans-serif;
         }
         
         body {
-            background: #0a0a0a;
-            color: #fff;
-            overflow: hidden;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-        }
-        
-        /* Анимированный фон */
-        .background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 20% 30%, rgba(30, 10, 60, 0.4) 0%, transparent 40%),
-                radial-gradient(circle at 80% 70%, rgba(60, 10, 30, 0.4) 0%, transparent 40%),
-                radial-gradient(circle at 40% 80%, rgba(10, 30, 60, 0.4) 0%, transparent 40%),
-                linear-gradient(45deg, #0a0a0a, #1a1a2e, #16213e, #0f3460);
-            background-size: 400% 400%;
-            animation: gradientShift 20s ease infinite;
-            z-index: -2;
-        }
-        
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        
-        /* Эффект частиц */
-        .particles {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
-        
-        .particle {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.5);
-            border-radius: 50%;
-        }
-        
-        /* Основной контейнер */
-        .container {
-            text-align: center;
-            z-index: 10;
-            padding: 3rem;
-            background: rgba(10, 10, 10, 0.7);
-            border-radius: 15px;
-            box-shadow: 0 0 40px rgba(255, 0, 0, 0.3);
-            position: relative;
-            overflow: hidden;
-            max-width: 800px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        /* Эффект глитча для заголовка */
-        .glitch {
-            font-size: 4rem;
-            font-weight: bold;
-            text-transform: uppercase;
-            position: relative;
-            text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.75),
-                         -0.025em -0.05em 0 rgba(0, 255, 0, 0.75),
-                         0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
-            animation: glitch 725ms infinite;
-            margin-bottom: 1.5rem;
-            letter-spacing: 2px;
-        }
-        
-        .glitch span {
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
-        
-        @keyframes glitch {
-            0% {
-                text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.75),
-                         -0.05em -0.025em 0 rgba(0, 255, 0, 0.75),
-                         -0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
-            }
-            14% {
-                text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.75),
-                         -0.05em -0.025em 0 rgba(0, 255, 0, 0.75),
-                         -0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
-            }
-            15% {
-                text-shadow: -0.05em -0.025em 0 rgba(255, 0, 0, 0.75),
-                         0.025em 0.025em 0 rgba(0, 255, 0, 0.75),
-                         -0.05em -0.05em 0 rgba(0, 0, 255, 0.75);
-            }
-            49% {
-                text-shadow: -0.05em -0.025em 0 rgba(255, 0, 0, 0.75),
-                         0.025em 0.025em 0 rgba(0, 255, 0, 0.75),
-                         -0.05em -0.05em 0 rgba(0, 0, 255, 0.75);
-            }
-            50% {
-                text-shadow: 0.025em 0.05em 0 rgba(255, 0, 0, 0.75),
-                         0.05em 0 0 rgba(0, 255, 0, 0.75),
-                         0 -0.05em 0 rgba(0, 0, 255, 0.75);
-            }
-            99% {
-                text-shadow: 0.025em 0.05em 0 rgba(255, 0, 0, 0.75),
-                         0.05em 0 0 rgba(0, 255, 0, 0.75),
-                         0 -0.05em 0 rgba(0, 0, 255, 0.75);
-            }
-            100% {
-                text-shadow: -0.025em 0 0 rgba(255, 0, 0, 0.75),
-                         -0.025em -0.025em 0 rgba(0, 255, 0, 0.75),
-                         -0.025em -0.05em 0 rgba(0, 0, 255, 0.75);
-            }
-        }
-        
-        .message {
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
-            color: #e0e0e0;
+            background-color: var(--main-bg);
+            color: var(--text-white);
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(255, 46, 46, 0.05) 0%, transparent 25%),
+                radial-gradient(circle at 80% 70%, rgba(255, 204, 0, 0.05) 0%, transparent 25%);
             line-height: 1.6;
-        }
-        
-        .date {
-            font-size: 2.2rem;
-            color: #ff5555;
-            margin-bottom: 2rem;
-            font-weight: bold;
-            text-shadow: 0 0 10px rgba(255, 85, 85, 0.5);
-            animation: pulse 2s infinite;
-            padding: 0.5rem 1rem;
-            background: rgba(255, 0, 0, 0.1);
-            border-radius: 5px;
-            display: inline-block;
-        }
-        
-        @keyframes pulse {
-            0% { opacity: 0.7; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.02); }
-            100% { opacity: 0.7; transform: scale(1); }
-        }
-        
-        .brands {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-        
-        .brand {
-            font-size: 2rem;
-            font-weight: bold;
-            padding: 0.5rem 1.5rem;
-            border-radius: 5px;
-            background: rgba(255, 255, 255, 0.1);
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-        
-        .brand:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-        
-        .vegas {
-            color: #ffcc00;
-            text-shadow: 0 0 10px rgba(255, 204, 0, 0.5);
-        }
-        
-        .arz {
-            color: #00ccff;
-            text-shadow: 0 0 10px rgba(0, 204, 255, 0.5);
-        }
-        
-        /* Слой с ошибками */
-        .error-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 5;
-            opacity: 0.1;
-        }
-        
-        .error-text {
-            position: absolute;
-            color: #ff0000;
-            font-family: 'Courier New', monospace;
-            font-size: 0.8rem;
-            opacity: 0;
-            animation: errorFlicker 5s infinite;
-            text-transform: uppercase;
-            font-weight: bold;
-        }
-        
-        @keyframes errorFlicker {
-            0% { opacity: 0; transform: translateY(0); }
-            10% { opacity: 0.8; transform: translateY(-5px); }
-            20% { opacity: 0; transform: translateY(-10px); }
-            30% { opacity: 0.7; transform: translateY(-15px); }
-            40% { opacity: 0; transform: translateY(-20px); }
-            50% { opacity: 0.9; transform: translateY(-25px); }
-            60% { opacity: 0; transform: translateY(-30px); }
-            70% { opacity: 0.6; transform: translateY(-35px); }
-            80% { opacity: 0; transform: translateY(-40px); }
-            90% { opacity: 0.5; transform: translateY(-45px); }
-            100% { opacity: 0; transform: translateY(-50px); }
-        }
-        
-        /* Сканирующая линия */
-        .scanline {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.8), transparent);
-            animation: scanline 3s linear infinite;
-            z-index: 1;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-        }
-        
-        @keyframes scanline {
-            0% { top: 0; }
-            100% { top: 100%; }
-        }
-        
-        /* Шум */
-        .noise {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjc1IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIiBmaWx0ZXI9InVybCgjYSkiIG9wYWNpdHk9Ii4xNSIvPjwvc3ZnPg==');
-            opacity: 0.2;
-            z-index: -1;
-        }
-        
-        /* Мигание */
-        .flicker {
-            animation: flicker 3s linear infinite;
-        }
-        
-        @keyframes flicker {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.95; }
+            min-height: 100vh;
         }
         
         /* Экран загрузки */
-        .loading-screen {
+        #loading-screen {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: #0a0a0a;
+            background-color: var(--main-bg);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 100;
-            transition: opacity 1s ease;
+            z-index: 9999;
+            transition: opacity 0.5s ease-out;
         }
         
         .loading-logo {
-            font-size: 4rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 3rem;
             font-weight: bold;
             margin-bottom: 2rem;
-            text-transform: uppercase;
-            background: linear-gradient(45deg, #ffcc00, #00ccff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
         }
         
-        .loading-bar-container {
+        .loading-logo-icon {
+            color: var(--accent-red);
+            font-size: 3.5rem;
+            filter: drop-shadow(0 0 10px rgba(255, 46, 46, 0.5));
+        }
+        
+        .loading-logo-text {
+            background: linear-gradient(to right, var(--accent-red), var(--accent-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .loading-bar {
             width: 300px;
-            height: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 5px;
+            height: 6px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
             overflow: hidden;
             margin-bottom: 1rem;
         }
         
-        .loading-bar {
+        .loading-progress {
             height: 100%;
             width: 0%;
-            background: linear-gradient(90deg, #ffcc00, #00ccff);
-            border-radius: 5px;
+            background: linear-gradient(to right, var(--accent-red), var(--accent-gold));
+            border-radius: 3px;
             transition: width 0.3s ease;
         }
         
         .loading-text {
-            font-size: 1.2rem;
-            color: #e0e0e0;
+            color: var(--text-gray);
+            font-size: 1rem;
         }
         
-        /* Дополнительные эффекты */
-        .binary-rain {
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: none;
+        }
+        
+        /* Верхняя панель */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .top-links {
+            display: flex;
+            gap: 25px;
+        }
+        
+        .top-link {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            color: var(--text-white);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            background: rgba(17, 17, 17, 0.7);
+            backdrop-filter: blur(5px);
+        }
+        
+        .top-link:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+        
+        .discord-link:hover {
+            background: rgba(88, 101, 242, 0.1);
+            color: #5865F2;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 2rem;
+            font-weight: bold;
+            position: relative;
+        }
+        
+        .logo-icon {
+            color: var(--accent-red);
+            font-size: 2.5rem;
+            filter: drop-shadow(0 0 10px rgba(255, 46, 46, 0.5));
+        }
+        
+        .logo-text {
+            background: linear-gradient(to right, var(--accent-red), var(--accent-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+        
+        .logo-text::after {
+            content: 'АДМИН ПАНЕЛЬ';
             position: absolute;
+            bottom: -1.5rem;
+            left: 0;
+            font-size: 0.8rem;
+            font-weight: normal;
+            color: var(--text-gray);
+            width: 100%;
+            background: none;
+            -webkit-background-clip: initial;
+            -webkit-text-fill-color: initial;
+        }
+        
+        /* Навигация */
+        .nav-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px;
+        }
+        
+        .nav-tab {
+            padding: 12px 25px;
+            background: rgba(17, 17, 17, 0.7);
+            color: var(--text-white);
+            border: 1px solid var(--border);
+            border-radius: 8px 8px 0 0;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            backdrop-filter: blur(5px);
+        }
+        
+        .nav-tab.active {
+            background: linear-gradient(to right, var(--accent-red), #ff5e5e);
+            border-color: var(--accent-red);
+            box-shadow: 0 4px 15px rgba(255, 46, 46, 0.3);
+        }
+        
+        .nav-tab:hover:not(.active) {
+            background: rgba(255, 46, 46, 0.1);
+            border-color: var(--accent-red);
+        }
+        
+        /* Контейнеры вкладок */
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        /* Система заметок */
+        .notes-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .note-card {
+            background-color: rgba(17, 17, 17, 0.7);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: var(--transition);
+            backdrop-filter: blur(5px);
+            box-shadow: var(--shadow);
+            position: relative;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .note-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(to right, var(--accent-red), var(--accent-gold));
+            opacity: 0;
+            transition: var(--transition);
+        }
+        
+        .note-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-red);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+        }
+        
+        .note-card:hover::before {
+            opacity: 1;
+        }
+        
+        .note-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .note-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-white);
+        }
+        
+        .note-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .note-action {
+            background: none;
+            border: none;
+            color: var(--text-gray);
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 16px;
+            padding: 5px;
+            border-radius: 4px;
+        }
+        
+        .note-action:hover {
+            color: var(--accent-gold);
+            background: rgba(255, 204, 0, 0.1);
+        }
+        
+        .note-content {
+            padding: 20px;
+            flex-grow: 1;
+            color: var(--text-gray);
+            overflow-y: auto;
+            max-height: 150px;
+        }
+        
+        .note-footer {
+            padding: 15px 20px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: var(--text-dark);
+        }
+        
+        .add-note-btn {
+            background: linear-gradient(135deg, rgba(255, 46, 46, 0.2), rgba(255, 204, 0, 0.2));
+            border: 1px solid var(--border);
+            color: var(--text-white);
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.7rem;
+            padding: 1.5rem;
+            border-radius: 15px;
+            transition: var(--transition);
+            backdrop-filter: blur(5px);
+            font-size: 18px;
+            margin-bottom: 30px;
+            width: 100%;
+        }
+        
+        .add-note-btn:hover {
+            background: linear-gradient(135deg, rgba(255, 46, 46, 0.3), rgba(255, 204, 0, 0.3));
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+            color: var(--accent-gold);
+            border-color: var(--accent-gold);
+        }
+        
+        /* Модальное окно заметки */
+        .modal {
+            display: none;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none;
-            z-index: -1;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            overflow-y: auto;
+            backdrop-filter: blur(5px);
+            animation: fadeIn 0.3s ease-out;
         }
         
-        .binary-digit {
+        .modal-content {
+            background-color: var(--card-bg);
+            margin: 50px auto;
+            max-width: 600px;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid var(--border);
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+            animation: slideUp 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        
+        @keyframes slideUp {
+            from { 
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to { 
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .close-btn {
             position: absolute;
-            color: rgba(0, 255, 0, 0.3);
-            font-family: 'Courier New', monospace;
-            font-size: 1rem;
-            animation: binaryFall linear infinite;
+            top: 20px;
+            right: 20px;
+            font-size: 28px;
+            cursor: pointer;
+            z-index: 10;
+            color: var(--text-white);
+            background: rgba(0, 0, 0, 0.5);
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: var(--transition);
+            border: 1px solid var(--border);
         }
         
-        @keyframes binaryFall {
-            0% { transform: translateY(-100px); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(100vh); opacity: 0; }
+        .close-btn:hover {
+            background: var(--accent-red);
+            transform: rotate(90deg);
         }
         
-        .glitch-box {
+        .modal-body {
+            padding: 40px;
+        }
+        
+        .modal-title {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: var(--text-white);
+            font-weight: 600;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .modal-title::after {
+            content: '';
             position: absolute;
-            border: 1px solid rgba(255, 0, 0, 0.5);
-            background: rgba(255, 0, 0, 0.05);
-            animation: glitchBox 10s infinite;
+            bottom: 0;
+            left: 0;
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(to right, var(--accent-red), var(--accent-gold));
+            border-radius: 3px;
         }
         
-        @keyframes glitchBox {
-            0% { transform: translate(0, 0); opacity: 0; }
-            5% { opacity: 0.5; }
-            10% { transform: translate(10px, 5px); opacity: 0; }
-            100% { transform: translate(0, 0); opacity: 0; }
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-gray);
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background-color: rgba(10, 10, 10, 0.7);
+            color: var(--text-white);
+            font-size: 16px;
+            transition: var(--transition);
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-red);
+            box-shadow: 0 0 0 3px rgba(255, 46, 46, 0.2);
+        }
+        
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .modal-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(to right, var(--accent-red), #ff5e5e);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(to right, var(--accent-red-dark), #ff4e4e);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 46, 46, 0.3);
+        }
+        
+        .btn-secondary {
+            background: rgba(17, 17, 17, 0.7);
+            color: var(--text-white);
+            border: 1px solid var(--border);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 46, 46, 0.1);
+            border-color: var(--accent-red);
+        }
+        
+        /* Раздел рулетки */
+        .roulette-container {
+            background-color: rgba(17, 17, 17, 0.7);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid var(--border);
+            backdrop-filter: blur(5px);
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+        }
+        
+        .roulette-controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+        
+        .roulette-input {
+            flex-grow: 1;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background-color: rgba(10, 10, 10, 0.7);
+            color: var(--text-white);
+            font-size: 16px;
+            transition: var(--transition);
+        }
+        
+        .roulette-input:focus {
+            outline: none;
+            border-color: var(--accent-red);
+            box-shadow: 0 0 0 3px rgba(255, 46, 46, 0.2);
+        }
+        
+        .roulette-btn {
+            background: linear-gradient(to right, var(--accent-red), #ff5e5e);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .roulette-btn:hover {
+            background: linear-gradient(to right, var(--accent-red-dark), #ff4e4e);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 46, 46, 0.3);
+        }
+        
+        .roulette-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .roulette-display {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 25px;
+            min-height: 100px;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            border: 1px solid var(--border);
+        }
+        
+        .roulette-item {
+            background: rgba(255, 46, 46, 0.1);
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .roulette-item.active {
+            background: rgba(255, 204, 0, 0.2);
+            border-color: var(--accent-gold);
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(255, 204, 0, 0.3);
+        }
+        
+        .roulette-item.eliminated {
+            opacity: 0.4;
+            text-decoration: line-through;
+        }
+        
+        .roulette-results {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            margin-top: 20px;
+        }
+        
+        .roulette-results h3 {
+            margin-bottom: 15px;
+            color: var(--accent-gold);
+            font-size: 20px;
+        }
+        
+        .winner {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--accent-gold);
+            text-align: center;
+            padding: 15px;
+            background: rgba(255, 204, 0, 0.1);
+            border-radius: 8px;
+            margin-top: 15px;
+            border: 1px solid var(--accent-gold);
+            animation: pulse 2s infinite, winnerGlow 3s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 204, 0, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 204, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 204, 0, 0); }
+        }
+        
+        @keyframes winnerGlow {
+            0%, 100% { 
+                background: rgba(255, 204, 0, 0.1);
+                transform: scale(1);
+            }
+            50% { 
+                background: rgba(255, 204, 0, 0.3);
+                transform: scale(1.05);
+            }
+        }
+        
+        .roulette-mode {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .mode-btn {
+            flex: 1;
+            padding: 12px;
+            background: rgba(17, 17, 17, 0.7);
+            color: var(--text-white);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .mode-btn.active {
+            background: linear-gradient(to right, var(--accent-red), #ff5e5e);
+            border-color: var(--accent-red);
+        }
+        
+        .mode-btn:hover:not(.active) {
+            background: rgba(255, 46, 46, 0.1);
+            border-color: var(--accent-red);
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 1200px) {
+            .container {
+                padding: 1.5rem;
+            }
+            
+            .notes-container {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .nav-tabs {
+                flex-wrap: wrap;
+            }
+            
+            .roulette-controls {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .top-links {
+                gap: 15px;
+            }
+            
+            .top-link span {
+                display: none;
+            }
+            
+            .notes-container {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 15px;
+            }
+            
+            .modal-body {
+                padding: 25px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .logo {
+                font-size: 1.5rem;
+            }
+            
+            .logo-icon {
+                font-size: 2rem;
+            }
+            
+            .modal-content {
+                margin: 20px auto;
+                width: 95%;
+            }
+            
+            .modal-actions {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
         }
     </style>
 </head>
 <body>
     <!-- Экран загрузки -->
-    <div class="loading-screen" id="loadingScreen">
-        <div class="loading-logo">Vegas+ | ARZ</div>
-        <div class="loading-bar-container">
-            <div class="loading-bar" id="loadingBar"></div>
+    <div id="loading-screen">
+        <div class="loading-logo">
+            <i class="fas fa-tools loading-logo-icon"></i>
+            <span class="loading-logo-text">VEGAS+ | ARZ</span>
         </div>
-        <div class="loading-text" id="loadingText">Загрузка системы...</div>
+        <div class="loading-bar">
+            <div class="loading-progress" id="loading-progress"></div>
+        </div>
+        <div class="loading-text">Загрузка административной панели...</div>
     </div>
-    
-    <!-- Основной контент -->
-    <div class="background"></div>
-    <div class="noise"></div>
-    <div class="scanline"></div>
-    <div class="particles" id="particles"></div>
-    <div class="binary-rain" id="binaryRain"></div>
-    
-    <div class="container flicker">
-        <h1 class="glitch">ВЕДУТСЯ ТЕХНИЧЕСКИЕ РАБОТЫ</h1>
-        
-        <div class="message">
-            Приносим извинения за временные неудобства.<br>
-            Мы работаем над улучшением нашего сервиса.
+
+    <div class="container">
+        <!-- Верхняя панель -->
+        <div class="top-bar">
+            <div class="top-links">
+                <a href="https://discord.gg/YCg9JXPmCN" class="top-link discord-link" target="_blank">
+                    <i class="fab fa-discord"></i>
+                    <span>Наш Дискорд</span>
+                </a>
+            </div>
+            <div class="logo">
+                <i class="fas fa-tools logo-icon"></i>
+                <span class="logo-text">VEGAS+ | ARZ</span>
+            </div>
         </div>
-        
-        <div class="date">
-            30.09.2025 до 00:00
+
+        <!-- Навигация -->
+        <div class="nav-tabs">
+            <div class="nav-tab active" data-tab="notes">Умные заметки</div>
+            <div class="nav-tab" data-tab="roulette">Рулетка</div>
         </div>
-        
-        <div class="brands">
-            <div class="brand vegas">Vegas+</div>
-            <div class="brand arz">ARZ</div>
+
+        <!-- Вкладка заметок -->
+        <div id="notes" class="tab-content active">
+            <button class="add-note-btn" id="add-note-btn">
+                <i class="fas fa-plus"></i>
+                <span>Добавить новую заметку</span>
+            </button>
+            
+            <div class="notes-container" id="notes-container">
+                <!-- Заметки будут загружены через JavaScript -->
+            </div>
+        </div>
+
+        <!-- Вкладка рулетки -->
+        <div id="roulette" class="tab-content">
+            <div class="roulette-container">
+                <div class="roulette-mode">
+                    <div class="mode-btn active" data-mode="single">Один победитель</div>
+                    <div class="mode-btn" data-mode="elimination">Выбывание</div>
+                </div>
+                
+                <div class="roulette-controls">
+                    <input type="text" class="roulette-input" id="participant-input" placeholder="Введите имя участника">
+                    <button class="roulette-btn" id="add-participant-btn">
+                        <i class="fas fa-plus"></i>
+                        Добавить
+                    </button>
+                    <button class="roulette-btn" id="spin-btn" disabled>
+                        <i class="fas fa-sync-alt"></i>
+                        Крутить рулетку
+                    </button>
+                    <button class="roulette-btn" id="reset-btn">
+                        <i class="fas fa-redo"></i>
+                        Сбросить
+                    </button>
+                </div>
+                
+                <div class="roulette-display" id="participants-container">
+                    <!-- Участники будут добавлены через JavaScript -->
+                </div>
+                
+                <div class="roulette-results" id="results-container">
+                    <h3>Результаты:</h3>
+                    <div id="winners-list"></div>
+                </div>
+            </div>
         </div>
     </div>
-    
-    <div class="error-overlay" id="errorOverlay"></div>
+
+    <!-- Модальное окно для заметок -->
+    <div class="modal" id="note-modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <div class="modal-body">
+                <h2 class="modal-title" id="modal-note-title">Новая заметка</h2>
+                <form id="note-form">
+                    <div class="form-group">
+                        <label for="note-title">Заголовок</label>
+                        <input type="text" id="note-title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="note-content">Содержание</label>
+                        <textarea id="note-content" required></textarea>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" class="btn btn-secondary" id="cancel-note-btn">Отмена</button>
+                        <button type="submit" class="btn btn-primary">Сохранить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <script>
-        // Инициализация после загрузки DOM
         document.addEventListener('DOMContentLoaded', function() {
-            // Создание частиц для фона
-            createParticles();
-            
-            // Создание бинарного дождя
-            createBinaryRain();
-            
-            // Создание эффекта случайных ошибок на экране
-            const errorOverlay = document.getElementById('errorOverlay');
-            const errorMessages = [
-                "ERROR", "ERROR", "ERROR", "ERROR", "ERROR", "ERROR", "ERROR", "ERROR", "ERROR", "ERROR",
-                "SYSTEM FAILURE", "ACCESS DENIED", "CORRUPTED DATA", 
-                "SERVER OFFLINE", "NETWORK ERROR", "DATABASE ERROR", 
-                "CONNECTION LOST", "UNAUTHORIZED", "INVALID REQUEST", 
-                "TIMEOUT", "MEMORY OVERFLOW", "404", "500", "503"
-            ];
-            
-            function createError() {
-                const error = document.createElement('div');
-                error.className = 'error-text';
-                error.textContent = errorMessages[Math.floor(Math.random() * errorMessages.length)];
-                error.style.left = Math.random() * 100 + '%';
-                error.style.top = Math.random() * 100 + '%';
-                error.style.fontSize = (Math.random() * 0.8 + 0.5) + 'rem';
-                error.style.animationDelay = Math.random() * 5 + 's';
-                error.style.animationDuration = (Math.random() * 3 + 2) + 's';
-                
-                errorOverlay.appendChild(error);
-                
-                setTimeout(() => {
-                    error.remove();
-                }, 6000);
-            }
-            
-            // Создаем ошибки каждые 0.3 секунды
-            setInterval(createError, 300);
-            
-            // Создаем несколько ошибок сразу при загрузке
-            for (let i = 0; i < 20; i++) {
-                setTimeout(createError, i * 150);
-            }
-            
-            // Создаем глитч-боксы
-            function createGlitchBox() {
-                const box = document.createElement('div');
-                box.className = 'glitch-box';
-                box.style.left = Math.random() * 100 + '%';
-                box.style.top = Math.random() * 100 + '%';
-                box.style.width = (Math.random() * 100 + 50) + 'px';
-                box.style.height = (Math.random() * 100 + 50) + 'px';
-                box.style.animationDelay = Math.random() * 10 + 's';
-                box.style.animationDuration = (Math.random() * 5 + 5) + 's';
-                
-                document.body.appendChild(box);
-                
-                setTimeout(() => {
-                    box.remove();
-                }, 15000);
-            }
-            
-            // Создаем глитч-боксы каждые 2 секунды
-            setInterval(createGlitchBox, 2000);
-            
-            // Имитация загрузки
-            const loadingScreen = document.getElementById('loadingScreen');
-            const loadingBar = document.getElementById('loadingBar');
-            const loadingText = document.getElementById('loadingText');
+            // Загрузка страницы
+            const loadingScreen = document.getElementById('loading-screen');
+            const loadingProgress = document.getElementById('loading-progress');
+            const container = document.querySelector('.container');
             
             let progress = 0;
             const loadingInterval = setInterval(() => {
-                progress += Math.random() * 10;
+                progress += Math.random() * 15;
                 if (progress >= 100) {
                     progress = 100;
                     clearInterval(loadingInterval);
-                    
-                    loadingText.textContent = "Загрузка завершена!";
                     
                     setTimeout(() => {
                         loadingScreen.style.opacity = '0';
                         setTimeout(() => {
                             loadingScreen.style.display = 'none';
-                        }, 1000);
-                    }, 1000);
+                            container.style.display = 'block';
+                        }, 500);
+                    }, 300);
+                }
+                loadingProgress.style.width = `${progress}%`;
+            }, 200);
+            
+            // Переключение вкладок
+            const navTabs = document.querySelectorAll('.nav-tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            navTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Убираем активный класс у всех вкладок
+                    navTabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    
+                    // Добавляем активный класс к выбранной вкладке
+                    tab.classList.add('active');
+                    const tabId = tab.getAttribute('data-tab');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+            
+            // Система заметок
+            const notesContainer = document.getElementById('notes-container');
+            const addNoteBtn = document.getElementById('add-note-btn');
+            const noteModal = document.getElementById('note-modal');
+            const closeBtn = document.querySelector('.close-btn');
+            const cancelNoteBtn = document.getElementById('cancel-note-btn');
+            const noteForm = document.getElementById('note-form');
+            const modalNoteTitle = document.getElementById('modal-note-title');
+            const noteTitleInput = document.getElementById('note-title');
+            const noteContentInput = document.getElementById('note-content');
+            
+            let notes = JSON.parse(localStorage.getItem('admin-notes')) || [];
+            let editingNoteId = null;
+            
+            // Функция отображения заметок
+            function renderNotes() {
+                notesContainer.innerHTML = '';
+                
+                if (notes.length === 0) {
+                    notesContainer.innerHTML = '<div class="no-notes">Заметок пока нет</div>';
+                    return;
                 }
                 
-                loadingBar.style.width = progress + '%';
+                notes.forEach(note => {
+                    const noteCard = document.createElement('div');
+                    noteCard.className = 'note-card';
+                    noteCard.innerHTML = `
+                        <div class="note-header">
+                            <div class="note-title">${note.title}</div>
+                            <div class="note-actions">
+                                <button class="note-action edit-note" data-id="${note.id}">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="note-action delete-note" data-id="${note.id}">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="note-content">${note.content}</div>
+                        <div class="note-footer">
+                            <span>Создано: ${formatDate(note.createdAt)}</span>
+                            ${note.updatedAt ? `<span>Обновлено: ${formatDate(note.updatedAt)}</span>` : ''}
+                        </div>
+                    `;
+                    notesContainer.appendChild(noteCard);
+                });
                 
-                // Меняем текст в процессе загрузки
-                if (progress < 30) {
-                    loadingText.textContent = "Инициализация системы...";
-                } else if (progress < 60) {
-                    loadingText.textContent = "Загрузка модулей...";
-                } else if (progress < 90) {
-                    loadingText.textContent = "Проверка соединения...";
+                // Добавляем обработчики для кнопок редактирования и удаления
+                document.querySelectorAll('.edit-note').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const noteId = this.getAttribute('data-id');
+                        editNote(noteId);
+                    });
+                });
+                
+                document.querySelectorAll('.delete-note').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const noteId = this.getAttribute('data-id');
+                        deleteNote(noteId);
+                    });
+                });
+            }
+            
+            // Функция форматирования даты
+            function formatDate(timestamp) {
+                const date = new Date(timestamp);
+                return date.toLocaleDateString('ru-RU') + ' ' + date.toLocaleTimeString('ru-RU', {hour: '2-digit', minute: '2-digit'});
+            }
+            
+            // Функция открытия модального окна для новой заметки
+            function openNewNoteModal() {
+                modalNoteTitle.textContent = 'Новая заметка';
+                noteTitleInput.value = '';
+                noteContentInput.value = '';
+                editingNoteId = null;
+                noteModal.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            }
+            
+            // Функция открытия модального окна для редактирования заметки
+            function editNote(noteId) {
+                const note = notes.find(n => n.id === noteId);
+                if (note) {
+                    modalNoteTitle.textContent = 'Редактировать заметку';
+                    noteTitleInput.value = note.title;
+                    noteContentInput.value = note.content;
+                    editingNoteId = noteId;
+                    noteModal.style.display = 'block';
+                    document.body.style.overflow = 'hidden';
                 }
-            }, 300);
+            }
+            
+            // Функция удаления заметки
+            function deleteNote(noteId) {
+                if (confirm('Вы уверены, что хотите удалить эту заметку?')) {
+                    notes = notes.filter(note => note.id !== noteId);
+                    saveNotes();
+                    renderNotes();
+                }
+            }
+            
+            // Функция сохранения заметок в localStorage
+            function saveNotes() {
+                localStorage.setItem('admin-notes', JSON.stringify(notes));
+            }
+            
+            // Обработчик отправки формы заметки
+            noteForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const title = noteTitleInput.value.trim();
+                const content = noteContentInput.value.trim();
+                
+                if (!title || !content) {
+                    alert('Заполните все поля');
+                    return;
+                }
+                
+                if (editingNoteId) {
+                    // Редактирование существующей заметки
+                    const noteIndex = notes.findIndex(note => note.id === editingNoteId);
+                    if (noteIndex !== -1) {
+                        notes[noteIndex].title = title;
+                        notes[noteIndex].content = content;
+                        notes[noteIndex].updatedAt = Date.now();
+                    }
+                } else {
+                    // Создание новой заметки
+                    const newNote = {
+                        id: Date.now().toString(),
+                        title,
+                        content,
+                        createdAt: Date.now(),
+                        updatedAt: null
+                    };
+                    notes.push(newNote);
+                }
+                
+                saveNotes();
+                renderNotes();
+                closeNoteModal();
+            });
+            
+            // Функция закрытия модального окна заметки
+            function closeNoteModal() {
+                noteModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+            
+            // Обработчики событий для модального окна заметки
+            addNoteBtn.addEventListener('click', openNewNoteModal);
+            closeBtn.addEventListener('click', closeNoteModal);
+            cancelNoteBtn.addEventListener('click', closeNoteModal);
+            window.addEventListener('click', (event) => {
+                if (event.target === noteModal) {
+                    closeNoteModal();
+                }
+            });
+            
+            // Инициализация заметок
+            renderNotes();
+            
+            // Система рулетки
+            const participantInput = document.getElementById('participant-input');
+            const addParticipantBtn = document.getElementById('add-participant-btn');
+            const spinBtn = document.getElementById('spin-btn');
+            const resetBtn = document.getElementById('reset-btn');
+            const participantsContainer = document.getElementById('participants-container');
+            const winnersList = document.getElementById('winners-list');
+            const modeButtons = document.querySelectorAll('.mode-btn');
+            
+            let participants = [];
+            let winners = [];
+            let currentMode = 'single'; // single или elimination
+            let isSpinning = false;
+            
+            // Функция добавления участника
+            function addParticipant() {
+                const name = participantInput.value.trim();
+                if (name && !participants.includes(name)) {
+                    participants.push(name);
+                    participantInput.value = '';
+                    renderParticipants();
+                    updateSpinButton();
+                } else if (participants.includes(name)) {
+                    alert('Этот участник уже добавлен!');
+                }
+            }
+            
+            // Функция отображения участников
+            function renderParticipants() {
+                participantsContainer.innerHTML = '';
+                
+                if (participants.length === 0) {
+                    participantsContainer.innerHTML = '<div class="no-participants">Участники не добавлены</div>';
+                    return;
+                }
+                
+                participants.forEach((participant, index) => {
+                    const participantElement = document.createElement('div');
+                    participantElement.className = 'roulette-item';
+                    participantElement.textContent = participant;
+                    participantElement.setAttribute('data-index', index);
+                    
+                    // Добавляем обработчик для удаления участника
+                    participantElement.addEventListener('click', function() {
+                        if (!isSpinning) {
+                            participants.splice(index, 1);
+                            renderParticipants();
+                            updateSpinButton();
+                        }
+                    });
+                    
+                    participantsContainer.appendChild(participantElement);
+                });
+            }
+            
+            // Функция обновления состояния кнопки "Крутить рулетку"
+            function updateSpinButton() {
+                spinBtn.disabled = participants.length < 2 || isSpinning;
+            }
+            
+            // Функция запуска рулетки
+            function spinRoulette() {
+                if (participants.length < 2) {
+                    alert('Добавьте как минимум 2 участника!');
+                    return;
+                }
+                
+                isSpinning = true;
+                updateSpinButton();
+                
+                let spins = 0;
+                const maxSpins = 20 + Math.floor(Math.random() * 10);
+                const spinInterval = setInterval(() => {
+                    // Убираем активный класс у всех участников
+                    document.querySelectorAll('.roulette-item').forEach(item => {
+                        item.classList.remove('active');
+                    });
+                    
+                    // Выбираем случайного участника и подсвечиваем его
+                    const randomIndex = Math.floor(Math.random() * participants.length);
+                    const activeParticipant = document.querySelector(`.roulette-item[data-index="${randomIndex}"]`);
+                    if (activeParticipant) {
+                        activeParticipant.classList.add('active');
+                    }
+                    
+                    spins++;
+                    if (spins >= maxSpins) {
+                        clearInterval(spinInterval);
+                        
+                        // Определяем победителя
+                        const winnerIndex = Math.floor(Math.random() * participants.length);
+                        const winner = participants[winnerIndex];
+                        
+                        // Анимация победителя
+                        const winnerElement = document.querySelector(`.roulette-item[data-index="${winnerIndex}"]`);
+                        if (winnerElement) {
+                            winnerElement.classList.add('active');
+                            
+                            // Добавляем победителя в список
+                            winners.push(winner);
+                            renderWinners();
+                            
+                            // Обработка в зависимости от режима
+                            if (currentMode === 'single') {
+                                // В режиме одного победителя - завершаем игру
+                                setTimeout(() => {
+                                    isSpinning = false;
+                                    spinBtn.disabled = true;
+                                }, 1000);
+                            } else {
+                                // В режиме выбывания - удаляем победителя из списка участников
+                                participants.splice(winnerIndex, 1);
+                                setTimeout(() => {
+                                    renderParticipants();
+                                    isSpinning = false;
+                                    updateSpinButton();
+                                }, 1000);
+                            }
+                        }
+                    }
+                }, 100);
+            }
+            
+            // Функция отображения победителей
+            function renderWinners() {
+                winnersList.innerHTML = '';
+                
+                if (winners.length === 0) {
+                    winnersList.innerHTML = '<div>Победители еще не определены</div>';
+                    return;
+                }
+                
+                if (currentMode === 'single') {
+                    // В режиме одного победителя показываем только последнего
+                    const lastWinner = winners[winners.length - 1];
+                    winnersList.innerHTML = `<div class="winner">ПОБЕДИТЕЛЬ: ${lastWinner}</div>`;
+                } else {
+                    // В режиме выбывания показываем всех победителей
+                    winners.forEach((winner, index) => {
+                        const winnerElement = document.createElement('div');
+                        winnerElement.className = 'winner';
+                        winnerElement.textContent = `${index + 1}. ${winner}`;
+                        winnersList.appendChild(winnerElement);
+                    });
+                }
+            }
+            
+            // Функция сброса рулетки
+            function resetRoulette() {
+                participants = [];
+                winners = [];
+                isSpinning = false;
+                renderParticipants();
+                renderWinners();
+                updateSpinButton();
+            }
+            
+            // Обработчики событий для рулетки
+            addParticipantBtn.addEventListener('click', addParticipant);
+            participantInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    addParticipant();
+                }
+            });
+            spinBtn.addEventListener('click', spinRoulette);
+            resetBtn.addEventListener('click', resetRoulette);
+            
+            // Обработчики для переключения режимов
+            modeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    modeButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    currentMode = this.getAttribute('data-mode');
+                    resetRoulette();
+                });
+            });
+            
+            // Инициализация рулетки
+            renderParticipants();
+            renderWinners();
         });
-        
-        // Функция создания частиц
-        function createParticles() {
-            const particlesContainer = document.getElementById('particles');
-            const particleCount = 50;
-            
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                
-                const size = Math.random() * 3 + 1;
-                particle.style.width = size + 'px';
-                particle.style.height = size + 'px';
-                
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.top = Math.random() * 100 + '%';
-                
-                particle.style.animation = `float ${Math.random() * 20 + 10}s linear infinite`;
-                particle.style.animationDelay = Math.random() * 5 + 's';
-                
-                particlesContainer.appendChild(particle);
-            }
-            
-            // Добавляем CSS анимацию для частиц
-            const style = document.createElement('style');
-            style.textContent = `
-                @keyframes float {
-                    0% { transform: translate(0, 0) rotate(0deg); opacity: 0; }
-                    10% { opacity: 1; }
-                    90% { opacity: 1; }
-                    100% { transform: translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 - 50}px) rotate(360deg); opacity: 0; }
-                }
-            `;
-            document.head.appendChild(style);
-        }
-        
-        // Функция создания бинарного дождя
-        function createBinaryRain() {
-            const binaryRain = document.getElementById('binaryRain');
-            
-            function createBinaryDigit() {
-                const digit = document.createElement('div');
-                digit.className = 'binary-digit';
-                digit.textContent = Math.round(Math.random());
-                
-                digit.style.left = Math.random() * 100 + '%';
-                digit.style.animationDuration = (Math.random() * 5 + 3) + 's';
-                digit.style.animationDelay = Math.random() * 2 + 's';
-                
-                binaryRain.appendChild(digit);
-                
-                setTimeout(() => {
-                    digit.remove();
-                }, 8000);
-            }
-            
-            // Создаем бинарные цифры каждые 0.1 секунды
-            setInterval(createBinaryDigit, 100);
-            
-            // Создаем начальные цифры
-            for (let i = 0; i < 50; i++) {
-                setTimeout(createBinaryDigit, i * 50);
-            }
-        }
     </script>
 </body>
 </html>
-
