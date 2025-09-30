@@ -191,6 +191,7 @@
             margin-bottom: 30px;
             border-bottom: 1px solid var(--border);
             padding-bottom: 10px;
+            flex-wrap: wrap;
         }
         
         .nav-tab {
@@ -685,6 +686,174 @@
             border-color: var(--accent-red);
         }
         
+        /* Игра "Случайное число" */
+        .number-game-container {
+            background-color: rgba(17, 17, 17, 0.7);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid var(--border);
+            backdrop-filter: blur(5px);
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+        }
+        
+        .number-game-controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+        
+        .number-input {
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background-color: rgba(10, 10, 10, 0.7);
+            color: var(--text-white);
+            font-size: 16px;
+            transition: var(--transition);
+            width: 150px;
+            text-align: center;
+        }
+        
+        .number-input:focus {
+            outline: none;
+            border-color: var(--accent-red);
+            box-shadow: 0 0 0 3px rgba(255, 46, 46, 0.2);
+        }
+        
+        .number-game-btn {
+            background: linear-gradient(to right, var(--accent-red), #ff5e5e);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .number-game-btn:hover {
+            background: linear-gradient(to right, var(--accent-red-dark), #ff4e4e);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 46, 46, 0.3);
+        }
+        
+        .number-game-display {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-bottom: 25px;
+            min-height: 150px;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+        
+        .number-result {
+            font-size: 48px;
+            font-weight: bold;
+            color: var(--accent-gold);
+            text-shadow: 0 0 10px rgba(255, 204, 0, 0.5);
+            transition: var(--transition);
+        }
+        
+        .number-range {
+            font-size: 18px;
+            color: var(--text-gray);
+        }
+        
+        .number-history {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 15px;
+        }
+        
+        .history-item {
+            background: rgba(255, 46, 46, 0.1);
+            padding: 8px 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            font-size: 14px;
+        }
+        
+        /* Раздел логов/новостей */
+        .logs-container {
+            background-color: rgba(17, 17, 17, 0.7);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid var(--border);
+            backdrop-filter: blur(5px);
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+        }
+        
+        .logs-list {
+            max-height: 500px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+        
+        .log-item {
+            padding: 20px;
+            border-bottom: 1px solid var(--border);
+            transition: var(--transition);
+        }
+        
+        .log-item:hover {
+            background: rgba(255, 46, 46, 0.05);
+        }
+        
+        .log-item:last-child {
+            border-bottom: none;
+        }
+        
+        .log-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .log-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-white);
+        }
+        
+        .log-date {
+            color: var(--text-dark);
+            font-size: 14px;
+        }
+        
+        .log-content {
+            color: var(--text-gray);
+            line-height: 1.5;
+        }
+        
+        .log-type-news {
+            border-left: 4px solid var(--accent-gold);
+            padding-left: 15px;
+        }
+        
+        .log-type-update {
+            border-left: 4px solid var(--accent-red);
+            padding-left: 15px;
+        }
+        
+        .log-type-info {
+            border-left: 4px solid #2e8bff;
+            padding-left: 15px;
+        }
+        
         /* Адаптивность */
         @media (max-width: 1200px) {
             .container {
@@ -702,6 +871,10 @@
             }
             
             .roulette-controls {
+                flex-direction: column;
+            }
+            
+            .number-game-controls {
                 flex-direction: column;
             }
         }
@@ -727,6 +900,10 @@
             .modal-body {
                 padding: 25px;
             }
+            
+            .number-result {
+                font-size: 36px;
+            }
         }
         
         @media (max-width: 576px) {
@@ -750,6 +927,10 @@
             .btn {
                 width: 100%;
                 justify-content: center;
+            }
+            
+            .number-input {
+                width: 100%;
             }
         }
     </style>
@@ -786,6 +967,8 @@
         <div class="nav-tabs">
             <div class="nav-tab active" data-tab="notes">Умные заметки</div>
             <div class="nav-tab" data-tab="roulette">Рулетка</div>
+            <div class="nav-tab" data-tab="number-game">Случайное число</div>
+            <div class="nav-tab" data-tab="logs">Логи/Новости</div>
         </div>
 
         <!-- Вкладка заметок -->
@@ -834,45 +1017,107 @@
                 </div>
             </div>
         </div>
+
+        <!-- Вкладка игры "Случайное число" -->
+        <div id="number-game" class="tab-content">
+            <div class="number-game-container">
+                <div class="number-game-controls">
+                    <input type="number" class="number-input" id="min-number" placeholder="От" value="1" min="1">
+                    <input type="number" class="number-input" id="max-number" placeholder="До" value="100" min="2">
+                    <button class="number-game-btn" id="generate-number-btn">
+                        <i class="fas fa-dice"></i>
+                        Сгенерировать число
+                    </button>
+                    <button class="number-game-btn" id="clear-history-btn">
+                        <i class="fas fa-trash"></i>
+                        Очистить историю
+                    </button>
+                </div>
+                
+                <div class="number-game-display">
+                    <div class="number-range" id="number-range">Диапазон: 1 - 100</div>
+                    <div class="number-result" id="number-result">?</div>
+                    <div class="number-history" id="number-history">
+                        <!-- История будет добавлена через JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Вкладка логов/новостей -->
+        <div id="logs" class="tab-content">
+            <div class="logs-container">
+                <div class="logs-list" id="logs-list">
+                    <div class="log-item log-type-news">
+                        <div class="log-header">
+                            <div class="log-title">Запуск платформы Vegas+</div>
+                            <div class="log-date">30.09.2025</div>
+                        </div>
+                        <div class="log-content">
+                            Запущена обновленная админ-панель Vegas+ с новыми функциями: умные заметки, рулетка, игра "Случайное число".
+                        </div>
+                    </div>
+                    
+                    <div class="log-item log-type-update">
+                        <div class="log-header">
+                            <div class="log-title">Добавление игры "Рулетка"</div>
+                            <div class="log-date">28.09.2025</div>
+                        </div>
+                        <div class="log-content">
+                            В систему добавлена игра "Рулетка" с двумя режимами: выбор одного победителя и режим выбывания.
+                        </div>
+                    </div>
+                    
+                    <div class="log-item log-type-info">
+                        <div class="log-header">
+                            <div class="log-title">Добавление игры "Случайное число"</div>
+                            <div class="log-date">25.09.2025</div>
+                        </div>
+                        <div class="log-content">
+                            В админ-панель добавлена новая игра "Случайное число" для проведения розыгрышей среди администраторов.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Модальное окно для заметок -->
-    <div class="modal" id="note-modal">
+    <div id="note-modal" class="modal">
         <div class="modal-content">
-            <span class="close-btn">&times;</span>
+            <span class="close-btn" id="close-modal">&times;</span>
             <div class="modal-body">
-                <h2 class="modal-title" id="modal-note-title">Новая заметка</h2>
-                <form id="note-form">
-                    <div class="form-group">
-                        <label for="note-title">Заголовок</label>
-                        <input type="text" id="note-title" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="note-content">Содержание</label>
-                        <textarea id="note-content" required></textarea>
-                    </div>
-                    <div class="modal-actions">
-                        <button type="button" class="btn btn-secondary" id="cancel-note-btn">Отмена</button>
-                        <button type="submit" class="btn btn-primary">Сохранить</button>
-                    </div>
-                </form>
+                <h2 class="modal-title" id="modal-title">Новая заметка</h2>
+                <div class="form-group">
+                    <label for="note-title">Заголовок</label>
+                    <input type="text" id="note-title" placeholder="Введите заголовок заметки">
+                </div>
+                <div class="form-group">
+                    <label for="note-content">Содержание</label>
+                    <textarea id="note-content" placeholder="Введите содержание заметки"></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn btn-secondary" id="cancel-note">Отмена</button>
+                    <button class="btn btn-primary" id="save-note">Сохранить</button>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
+        // Инициализация при загрузке страницы
         document.addEventListener('DOMContentLoaded', function() {
-            // Загрузка страницы
+            // Имитация загрузки
             const loadingScreen = document.getElementById('loading-screen');
             const loadingProgress = document.getElementById('loading-progress');
             const container = document.querySelector('.container');
             
             let progress = 0;
-            const loadingInterval = setInterval(() => {
+            const interval = setInterval(() => {
                 progress += Math.random() * 15;
                 if (progress >= 100) {
                     progress = 100;
-                    clearInterval(loadingInterval);
+                    clearInterval(interval);
                     
                     setTimeout(() => {
                         loadingScreen.style.opacity = '0';
@@ -885,50 +1130,80 @@
                 loadingProgress.style.width = `${progress}%`;
             }, 200);
             
-            // Переключение вкладок
-            const navTabs = document.querySelectorAll('.nav-tab');
+            // Инициализация приложения
+            initApp();
+        });
+        
+        function initApp() {
+            // Инициализация вкладок
+            initTabs();
+            
+            // Инициализация системы заметок
+            initNotes();
+            
+            // Инициализация рулетки
+            initRoulette();
+            
+            // Инициализация игры "Случайное число"
+            initNumberGame();
+        }
+        
+        // Система вкладок
+        function initTabs() {
+            const tabs = document.querySelectorAll('.nav-tab');
             const tabContents = document.querySelectorAll('.tab-content');
             
-            navTabs.forEach(tab => {
+            tabs.forEach(tab => {
                 tab.addEventListener('click', () => {
-                    // Убираем активный класс у всех вкладок
-                    navTabs.forEach(t => t.classList.remove('active'));
-                    tabContents.forEach(c => c.classList.remove('active'));
+                    const tabId = tab.getAttribute('data-tab');
+                    
+                    // Убираем активный класс со всех вкладок
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(tc => tc.classList.remove('active'));
                     
                     // Добавляем активный класс к выбранной вкладке
                     tab.classList.add('active');
-                    const tabId = tab.getAttribute('data-tab');
                     document.getElementById(tabId).classList.add('active');
                 });
             });
-            
-            // Система заметок
+        }
+        
+        // Система заметок
+        function initNotes() {
             const notesContainer = document.getElementById('notes-container');
             const addNoteBtn = document.getElementById('add-note-btn');
             const noteModal = document.getElementById('note-modal');
-            const closeBtn = document.querySelector('.close-btn');
-            const cancelNoteBtn = document.getElementById('cancel-note-btn');
-            const noteForm = document.getElementById('note-form');
-            const modalNoteTitle = document.getElementById('modal-note-title');
-            const noteTitleInput = document.getElementById('note-title');
-            const noteContentInput = document.getElementById('note-content');
+            const closeModal = document.getElementById('close-modal');
+            const cancelNote = document.getElementById('cancel-note');
+            const saveNote = document.getElementById('save-note');
+            const noteTitle = document.getElementById('note-title');
+            const noteContent = document.getElementById('note-content');
+            const modalTitle = document.getElementById('modal-title');
             
-            let notes = JSON.parse(localStorage.getItem('admin-notes')) || [];
-            let editingNoteId = null;
+            let notes = JSON.parse(localStorage.getItem('notes')) || [];
+            let currentNoteId = null;
             
-            // Функция отображения заметок
+            // Отображение заметок
             function renderNotes() {
                 notesContainer.innerHTML = '';
                 
                 if (notes.length === 0) {
-                    notesContainer.innerHTML = '<div class="no-notes">Заметок пока нет</div>';
+                    notesContainer.innerHTML = `
+                        <div class="note-card" style="grid-column: 1 / -1; text-align: center; padding: 40px;">
+                            <div class="note-content">
+                                <i class="fas fa-sticky-note" style="font-size: 48px; color: var(--text-dark); margin-bottom: 20px;"></i>
+                                <h3 style="color: var(--text-gray); margin-bottom: 10px;">Нет заметок</h3>
+                                <p style="color: var(--text-dark);">Создайте свою первую заметку, нажав на кнопку выше</p>
+                            </div>
+                        </div>
+                    `;
                     return;
                 }
                 
                 notes.forEach(note => {
-                    const noteCard = document.createElement('div');
-                    noteCard.className = 'note-card';
-                    noteCard.innerHTML = `
+                    const noteElement = document.createElement('div');
+                    noteElement.className = 'note-card';
+                    noteElement.innerHTML = `
                         <div class="note-header">
                             <div class="note-title">${note.title}</div>
                             <div class="note-actions">
@@ -942,129 +1217,120 @@
                         </div>
                         <div class="note-content">${note.content}</div>
                         <div class="note-footer">
-                            <span>Создано: ${formatDate(note.createdAt)}</span>
-                            ${note.updatedAt ? `<span>Обновлено: ${formatDate(note.updatedAt)}</span>` : ''}
+                            <span>Создано: ${note.date}</span>
+                            <span>ID: ${note.id}</span>
                         </div>
                     `;
-                    notesContainer.appendChild(noteCard);
+                    notesContainer.appendChild(noteElement);
                 });
                 
-                // Добавляем обработчики для кнопок редактирования и удаления
+                // Добавляем обработчики событий для кнопок редактирования и удаления
                 document.querySelectorAll('.edit-note').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const noteId = this.getAttribute('data-id');
+                    btn.addEventListener('click', (e) => {
+                        const noteId = e.currentTarget.getAttribute('data-id');
                         editNote(noteId);
                     });
                 });
                 
                 document.querySelectorAll('.delete-note').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const noteId = this.getAttribute('data-id');
+                    btn.addEventListener('click', (e) => {
+                        const noteId = e.currentTarget.getAttribute('data-id');
                         deleteNote(noteId);
                     });
                 });
             }
             
-            // Функция форматирования даты
-            function formatDate(timestamp) {
-                const date = new Date(timestamp);
-                return date.toLocaleDateString('ru-RU') + ' ' + date.toLocaleTimeString('ru-RU', {hour: '2-digit', minute: '2-digit'});
-            }
-            
-            // Функция открытия модального окна для новой заметки
-            function openNewNoteModal() {
-                modalNoteTitle.textContent = 'Новая заметка';
-                noteTitleInput.value = '';
-                noteContentInput.value = '';
-                editingNoteId = null;
+            // Открытие модального окна для создания новой заметки
+            function openNoteModal() {
+                currentNoteId = null;
+                noteTitle.value = '';
+                noteContent.value = '';
+                modalTitle.textContent = 'Новая заметка';
                 noteModal.style.display = 'block';
-                document.body.style.overflow = 'hidden';
             }
             
-            // Функция открытия модального окна для редактирования заметки
+            // Редактирование заметки
             function editNote(noteId) {
                 const note = notes.find(n => n.id === noteId);
                 if (note) {
-                    modalNoteTitle.textContent = 'Редактировать заметку';
-                    noteTitleInput.value = note.title;
-                    noteContentInput.value = note.content;
-                    editingNoteId = noteId;
+                    currentNoteId = noteId;
+                    noteTitle.value = note.title;
+                    noteContent.value = note.content;
+                    modalTitle.textContent = 'Редактировать заметку';
                     noteModal.style.display = 'block';
-                    document.body.style.overflow = 'hidden';
                 }
             }
             
-            // Функция удаления заметки
+            // Удаление заметки
             function deleteNote(noteId) {
                 if (confirm('Вы уверены, что хотите удалить эту заметку?')) {
                     notes = notes.filter(note => note.id !== noteId);
-                    saveNotes();
+                    localStorage.setItem('notes', JSON.stringify(notes));
                     renderNotes();
                 }
             }
             
-            // Функция сохранения заметок в localStorage
-            function saveNotes() {
-                localStorage.setItem('admin-notes', JSON.stringify(notes));
-            }
-            
-            // Обработчик отправки формы заметки
-            noteForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                const title = noteTitleInput.value.trim();
-                const content = noteContentInput.value.trim();
+            // Сохранение заметки
+            function saveNoteHandler() {
+                const title = noteTitle.value.trim();
+                const content = noteContent.value.trim();
                 
                 if (!title || !content) {
-                    alert('Заполните все поля');
+                    alert('Пожалуйста, заполните все поля');
                     return;
                 }
                 
-                if (editingNoteId) {
+                const now = new Date();
+                const dateString = now.toLocaleDateString('ru-RU') + ' ' + now.toLocaleTimeString('ru-RU');
+                
+                if (currentNoteId) {
                     // Редактирование существующей заметки
-                    const noteIndex = notes.findIndex(note => note.id === editingNoteId);
+                    const noteIndex = notes.findIndex(note => note.id === currentNoteId);
                     if (noteIndex !== -1) {
                         notes[noteIndex].title = title;
                         notes[noteIndex].content = content;
-                        notes[noteIndex].updatedAt = Date.now();
+                        notes[noteIndex].date = dateString;
                     }
                 } else {
                     // Создание новой заметки
                     const newNote = {
-                        id: Date.now().toString(),
-                        title,
-                        content,
-                        createdAt: Date.now(),
-                        updatedAt: null
+                        id: 'note_' + Date.now(),
+                        title: title,
+                        content: content,
+                        date: dateString
                     };
                     notes.push(newNote);
                 }
                 
-                saveNotes();
-                renderNotes();
-                closeNoteModal();
-            });
-            
-            // Функция закрытия модального окна заметки
-            function closeNoteModal() {
+                localStorage.setItem('notes', JSON.stringify(notes));
                 noteModal.style.display = 'none';
-                document.body.style.overflow = 'auto';
+                renderNotes();
             }
             
-            // Обработчики событий для модального окна заметки
-            addNoteBtn.addEventListener('click', openNewNoteModal);
-            closeBtn.addEventListener('click', closeNoteModal);
-            cancelNoteBtn.addEventListener('click', closeNoteModal);
-            window.addEventListener('click', (event) => {
-                if (event.target === noteModal) {
+            // Закрытие модального окна
+            function closeNoteModal() {
+                noteModal.style.display = 'none';
+            }
+            
+            // Обработчики событий
+            addNoteBtn.addEventListener('click', openNoteModal);
+            closeModal.addEventListener('click', closeNoteModal);
+            cancelNote.addEventListener('click', closeNoteModal);
+            saveNote.addEventListener('click', saveNoteHandler);
+            
+            // Закрытие модального окна при клике вне его
+            window.addEventListener('click', (e) => {
+                if (e.target === noteModal) {
                     closeNoteModal();
                 }
             });
             
-            // Инициализация заметок
+            // Первоначальная загрузка заметок
             renderNotes();
-            
-            // Система рулетки
+        }
+        
+        // Система рулетки
+        function initRoulette() {
             const participantInput = document.getElementById('participant-input');
             const addParticipantBtn = document.getElementById('add-participant-btn');
             const spinBtn = document.getElementById('spin-btn');
@@ -1075,10 +1341,20 @@
             
             let participants = [];
             let winners = [];
-            let currentMode = 'single'; // single или elimination
+            let currentMode = 'single'; // 'single' или 'elimination'
             let isSpinning = false;
             
-            // Функция добавления участника
+            // Смена режима рулетки
+            modeButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    modeButtons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentMode = btn.getAttribute('data-mode');
+                    resetRoulette();
+                });
+            });
+            
+            // Добавление участника
             function addParticipant() {
                 const name = participantInput.value.trim();
                 if (name && !participants.includes(name)) {
@@ -1091,12 +1367,17 @@
                 }
             }
             
-            // Функция отображения участников
+            // Отображение участников
             function renderParticipants() {
                 participantsContainer.innerHTML = '';
                 
                 if (participants.length === 0) {
-                    participantsContainer.innerHTML = '<div class="no-participants">Участники не добавлены</div>';
+                    participantsContainer.innerHTML = `
+                        <div style="color: var(--text-dark); text-align: center; width: 100%;">
+                            <i class="fas fa-users" style="font-size: 48px; margin-bottom: 15px;"></i>
+                            <p>Добавьте участников для розыгрыша</p>
+                        </div>
+                    `;
                     return;
                 }
                 
@@ -1105,123 +1386,163 @@
                     participantElement.className = 'roulette-item';
                     participantElement.textContent = participant;
                     participantElement.setAttribute('data-index', index);
-                    
-                    // Добавляем обработчик для удаления участника
-                    participantElement.addEventListener('click', function() {
-                        if (!isSpinning) {
-                            participants.splice(index, 1);
-                            renderParticipants();
-                            updateSpinButton();
-                        }
-                    });
-                    
                     participantsContainer.appendChild(participantElement);
                 });
             }
             
-            // Функция обновления состояния кнопки "Крутить рулетку"
+            // Обновление состояния кнопки "Крутить рулетку"
             function updateSpinButton() {
                 spinBtn.disabled = participants.length < 2 || isSpinning;
             }
             
-            // Функция запуска рулетки
+            // Кручение рулетки
             function spinRoulette() {
                 if (participants.length < 2) {
-                    alert('Добавьте как минимум 2 участника!');
+                    alert('Добавьте как минимум двух участников!');
                     return;
                 }
                 
                 isSpinning = true;
                 updateSpinButton();
                 
-                let spins = 0;
-                const maxSpins = 20 + Math.floor(Math.random() * 10);
-                const spinInterval = setInterval(() => {
-                    // Убираем активный класс у всех участников
-                    document.querySelectorAll('.roulette-item').forEach(item => {
-                        item.classList.remove('active');
-                    });
-                    
-                    // Выбираем случайного участника и подсвечиваем его
-                    const randomIndex = Math.floor(Math.random() * participants.length);
-                    const activeParticipant = document.querySelector(`.roulette-item[data-index="${randomIndex}"]`);
-                    if (activeParticipant) {
-                        activeParticipant.classList.add('active');
-                    }
-                    
-                    spins++;
-                    if (spins >= maxSpins) {
-                        clearInterval(spinInterval);
-                        
-                        // Определяем победителя
-                        const winnerIndex = Math.floor(Math.random() * participants.length);
-                        const winner = participants[winnerIndex];
-                        
-                        // Анимация победителя
-                        const winnerElement = document.querySelector(`.roulette-item[data-index="${winnerIndex}"]`);
-                        if (winnerElement) {
-                            winnerElement.classList.add('active');
-                            
-                            // Добавляем победителя в список
-                            winners.push(winner);
-                            renderWinners();
-                            
-                            // Обработка в зависимости от режима
-                            if (currentMode === 'single') {
-                                // В режиме одного победителя - завершаем игру
-                                setTimeout(() => {
-                                    isSpinning = false;
-                                    spinBtn.disabled = true;
-                                }, 1000);
-                            } else {
-                                // В режиме выбывания - удаляем победителя из списка участников
-                                participants.splice(winnerIndex, 1);
-                                setTimeout(() => {
-                                    renderParticipants();
-                                    isSpinning = false;
-                                    updateSpinButton();
-                                }, 1000);
-                            }
-                        }
-                    }
-                }, 100);
-            }
-            
-            // Функция отображения победителей
-            function renderWinners() {
-                winnersList.innerHTML = '';
-                
-                if (winners.length === 0) {
-                    winnersList.innerHTML = '<div>Победители еще не определены</div>';
-                    return;
-                }
-                
                 if (currentMode === 'single') {
-                    // В режиме одного победителя показываем только последнего
-                    const lastWinner = winners[winners.length - 1];
-                    winnersList.innerHTML = `<div class="winner">ПОБЕДИТЕЛЬ: ${lastWinner}</div>`;
+                    spinSingleMode();
                 } else {
-                    // В режиме выбывания показываем всех победителей
-                    winners.forEach((winner, index) => {
-                        const winnerElement = document.createElement('div');
-                        winnerElement.className = 'winner';
-                        winnerElement.textContent = `${index + 1}. ${winner}`;
-                        winnersList.appendChild(winnerElement);
-                    });
+                    spinEliminationMode();
                 }
             }
             
-            // Функция сброса рулетки
+            // Режим одного победителя
+            function spinSingleMode() {
+                const participantsElements = document.querySelectorAll('.roulette-item');
+                const spinDuration = 3000; // 3 секунды
+                const startTime = Date.now();
+                
+                // Анимация выбора
+                function animateSelection() {
+                    const elapsed = Date.now() - startTime;
+                    const progress = Math.min(elapsed / spinDuration, 1);
+                    
+                    // Убираем выделение со всех участников
+                    participantsElements.forEach(el => {
+                        el.classList.remove('active');
+                    });
+                    
+                    // Выбираем случайного участника для анимации
+                    const randomIndex = Math.floor(Math.random() * participants.length);
+                    participantsElements[randomIndex].classList.add('active');
+                    
+                    if (progress < 1) {
+                        requestAnimationFrame(animateSelection);
+                    } else {
+                        // Финальный выбор
+                        const winnerIndex = Math.floor(Math.random() * participants.length);
+                        participantsElements.forEach(el => el.classList.remove('active'));
+                        participantsElements[winnerIndex].classList.add('active');
+                        
+                        // Сохраняем победителя
+                        const winner = participants[winnerIndex];
+                        winners = [winner];
+                        
+                        // Отображаем результат
+                        displayWinners();
+                        
+                        isSpinning = false;
+                        updateSpinButton();
+                    }
+                }
+                
+                animateSelection();
+            }
+            
+            // Режим выбывания
+            function spinEliminationMode() {
+                let remainingParticipants = [...participants];
+                const eliminationRounds = participants.length - 1;
+                let currentRound = 0;
+                
+                winnersList.innerHTML = '<h3>Процесс выбывания:</h3>';
+                
+                function nextElimination() {
+                    if (remainingParticipants.length <= 1) {
+                        // Определяем победителя
+                        const winner = remainingParticipants[0];
+                        winners = [winner];
+                        
+                        // Отображаем финального победителя
+                        displayWinners();
+                        
+                        isSpinning = false;
+                        updateSpinButton();
+                        return;
+                    }
+                    
+                    // Выбираем случайного участника для выбывания
+                    const eliminatedIndex = Math.floor(Math.random() * remainingParticipants.length);
+                    const eliminated = remainingParticipants[eliminatedIndex];
+                    
+                    // Удаляем выбывшего из списка
+                    remainingParticipants.splice(eliminatedIndex, 1);
+                    
+                    // Обновляем отображение
+                    updateEliminationDisplay(eliminated, currentRound + 1, remainingParticipants.length);
+                    
+                    currentRound++;
+                    
+                    // Задержка между раундами
+                    setTimeout(nextElimination, 1000);
+                }
+                
+                nextElimination();
+            }
+            
+            // Обновление отображения процесса выбывания
+            function updateEliminationDisplay(eliminated, round, remainingCount) {
+                const eliminationInfo = document.createElement('div');
+                eliminationInfo.innerHTML = `
+                    <div style="margin-bottom: 10px; padding: 10px; background: rgba(255, 46, 46, 0.1); border-radius: 5px;">
+                        <strong>Раунд ${round}:</strong> ${eliminated} выбывает. Осталось участников: ${remainingCount}
+                    </div>
+                `;
+                winnersList.appendChild(eliminationInfo);
+                
+                // Обновляем визуальное отображение участников
+                const participantElements = document.querySelectorAll('.roulette-item');
+                participantElements.forEach(el => {
+                    if (el.textContent === eliminated) {
+                        el.classList.add('eliminated');
+                    }
+                });
+            }
+            
+            // Отображение победителей
+            function displayWinners() {
+                if (currentMode === 'single') {
+                    winnersList.innerHTML = `
+                        <h3>Победитель:</h3>
+                        <div class="winner">${winners[0]}</div>
+                    `;
+                } else {
+                    winnersList.innerHTML += `
+                        <div style="margin-top: 20px;">
+                            <h3>Финальный победитель:</h3>
+                            <div class="winner">${winners[0]}</div>
+                        </div>
+                    `;
+                }
+            }
+            
+            // Сброс рулетки
             function resetRoulette() {
                 participants = [];
                 winners = [];
                 isSpinning = false;
                 renderParticipants();
-                renderWinners();
+                winnersList.innerHTML = '<h3>Результаты:</h3>';
                 updateSpinButton();
             }
             
-            // Обработчики событий для рулетки
+            // Обработчики событий
             addParticipantBtn.addEventListener('click', addParticipant);
             participantInput.addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') {
@@ -1231,20 +1552,109 @@
             spinBtn.addEventListener('click', spinRoulette);
             resetBtn.addEventListener('click', resetRoulette);
             
-            // Обработчики для переключения режимов
-            modeButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    modeButtons.forEach(btn => btn.classList.remove('active'));
-                    this.classList.add('active');
-                    currentMode = this.getAttribute('data-mode');
-                    resetRoulette();
-                });
-            });
-            
-            // Инициализация рулетки
+            // Первоначальная настройка
             renderParticipants();
-            renderWinners();
-        });
+            updateSpinButton();
+        }
+        
+        // Игра "Случайное число"
+        function initNumberGame() {
+            const minNumberInput = document.getElementById('min-number');
+            const maxNumberInput = document.getElementById('max-number');
+            const generateNumberBtn = document.getElementById('generate-number-btn');
+            const clearHistoryBtn = document.getElementById('clear-history-btn');
+            const numberRange = document.getElementById('number-range');
+            const numberResult = document.getElementById('number-result');
+            const numberHistory = document.getElementById('number-history');
+            
+            let history = JSON.parse(localStorage.getItem('numberHistory')) || [];
+            
+            // Обновление отображаемого диапазона
+            function updateRangeDisplay() {
+                const min = parseInt(minNumberInput.value) || 1;
+                const max = parseInt(maxNumberInput.value) || 100;
+                numberRange.textContent = `Диапазон: ${min} - ${max}`;
+            }
+            
+            // Генерация случайного числа
+            function generateNumber() {
+                const min = parseInt(minNumberInput.value) || 1;
+                const max = parseInt(maxNumberInput.value) || 100;
+                
+                if (min >= max) {
+                    alert('Минимальное число должно быть меньше максимального!');
+                    return;
+                }
+                
+                // Анимация генерации
+                let animationSteps = 20;
+                let currentStep = 0;
+                
+                function animateGeneration() {
+                    if (currentStep < animationSteps) {
+                        // Показываем случайное число во время анимации
+                        const tempNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+                        numberResult.textContent = tempNumber;
+                        
+                        currentStep++;
+                        setTimeout(animateGeneration, 100);
+                    } else {
+                        // Финальное число
+                        const finalNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+                        numberResult.textContent = finalNumber;
+                        
+                        // Добавляем в историю
+                        const result = {
+                            number: finalNumber,
+                            range: `${min}-${max}`,
+                            timestamp: new Date().toLocaleString('ru-RU')
+                        };
+                        
+                        history.unshift(result);
+                        if (history.length > 10) history = history.slice(0, 10);
+                        
+                        localStorage.setItem('numberHistory', JSON.stringify(history));
+                        renderHistory();
+                    }
+                }
+                
+                animateGeneration();
+            }
+            
+            // Отображение истории
+            function renderHistory() {
+                numberHistory.innerHTML = '';
+                
+                history.forEach(item => {
+                    const historyItem = document.createElement('div');
+                    historyItem.className = 'history-item';
+                    historyItem.innerHTML = `
+                        <div>${item.number} (${item.range})</div>
+                        <div style="font-size: 12px; color: var(--text-dark);">${item.timestamp}</div>
+                    `;
+                    numberHistory.appendChild(historyItem);
+                });
+            }
+            
+            // Очистка истории
+            function clearHistory() {
+                if (confirm('Вы уверены, что хотите очистить историю?')) {
+                    history = [];
+                    localStorage.setItem('numberHistory', JSON.stringify(history));
+                    renderHistory();
+                }
+            }
+            
+            // Обработчики событий
+            minNumberInput.addEventListener('input', updateRangeDisplay);
+            maxNumberInput.addEventListener('input', updateRangeDisplay);
+            generateNumberBtn.addEventListener('click', generateNumber);
+            clearHistoryBtn.addEventListener('click', clearHistory);
+            
+            // Первоначальная настройка
+            updateRangeDisplay();
+            renderHistory();
+        }
     </script>
 </body>
 </html>
