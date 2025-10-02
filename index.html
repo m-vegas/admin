@@ -853,6 +853,111 @@
             border-left: 4px solid #2e8bff;
             padding-left: 15px;
         }
+        /* Раздел серверов */
+        .servers-container {
+            background-color: rgba(17, 17, 17, 0.7);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid var(--border);
+            backdrop-filter: blur(5px);
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+        }
+        
+        .servers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 25px;
+        }
+        
+        .server-card {
+            background-color: rgba(17, 17, 17, 0.7);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: var(--transition);
+            backdrop-filter: blur(5px);
+            box-shadow: var(--shadow);
+            position: relative;
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .server-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(to right, var(--accent-red), var(--accent-gold));
+            opacity: 0;
+            transition: var(--transition);
+        }
+        
+        .server-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-red);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+        }
+        
+        .server-card:hover::before {
+            opacity: 1;
+        }
+        
+        .server-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .server-name {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--text-white);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .server-status {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .status-active {
+            background: rgba(46, 204, 113, 0.2);
+            color: #2ecc71;
+            border: 1px solid rgba(46, 204, 113, 0.5);
+        }
+        
+        .status-negotiation {
+            background: rgba(255, 204, 0, 0.2);
+            color: var(--accent-gold);
+            border: 1px solid rgba(255, 204, 0, 0.5);
+        }
+        
+        .server-content {
+            padding: 20px;
+            flex-grow: 1;
+            color: var(--text-gray);
+            line-height: 1.6;
+        }
+        
+        .server-footer {
+            padding: 15px 20px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: var(--text-dark);
+        }
         
         /* Адаптивность */
         @media (max-width: 1200px) {
@@ -1083,15 +1188,46 @@
         </div>
     </div>
     <!-- Вкладка серверов -->
-       <div class="tab-content" id="servers">
-    <div class="servers-container">
-        <div class="servers-grid">
-            <div class="server-card">
-                <div class="server-header">
-                    <div class="server-name">
-                        <i class="fas fa-server"></i>
-                        СКОРО
+        <div class="tab-content" id="servers">
+            <div class="servers-container">
+                <div class="servers-grid">
+                    <div class="server-card">
+                        <div class="server-header">
+                            <div class="server-name">
+                                <i class="fas fa-server"></i>
+                                Drake
+                            </div>
+                            <div class="server-status status-active">Активное сотрудничество</div>
+                        </div>
+                        <div class="server-content">
+                            Проект Drake активно сотрудничает с Vegas+. Мы проводим совместные мероприятия, акции и развиваем наши проекты вместе.
+                        </div>
+                        <div class="server-footer">
+                            <div>Статус: <strong>Активно</strong></div>
+                            <div>Сотрудничество с 30.09.2025</div>
+                        </div>
                     </div>
+                    
+                    <div class="server-card">
+                        <div class="server-header">
+                            <div class="server-name">
+                                <i class="fas fa-server"></i>
+                                Red-Rock
+                            </div>
+                            <div class="server-status status-negotiation">Беседуем с руководством</div>
+                        </div>
+                        <div class="server-content">
+                            Ведем переговоры с руководством проекта Red-Rock о возможном сотрудничестве.
+                        </div>
+                        <div class="server-footer">
+                            <div>Статус: <strong>Переговоры</strong></div>
+                            <div>С 30.09.2025</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
                 
 
     <!-- Модальное окно для заметок -->
@@ -1663,6 +1799,7 @@
     </script>
 </body>
 </html>
+
 
 
 
